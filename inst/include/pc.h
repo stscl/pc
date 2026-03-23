@@ -37,6 +37,12 @@
 // Module Headers (Organized by functionality)
 // ============================================================
 
+#include "pc/embed.hpp"
+#include "pc/combn.hpp"
+#include "pc/numericutils.hpp"
+#include "pc/distance.hpp"
+#include "pc/symdync.hpp"
+
 // ============================================================
 // Convenience Converters (Inline helpers for R/C++ interop)
 // ============================================================
