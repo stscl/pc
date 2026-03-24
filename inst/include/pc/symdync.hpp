@@ -419,9 +419,9 @@ namespace symdync
         std::vector<size_t> RealLoop;
 
         // Aggregated statistics (mean over valid entries)
-        double TotalPositive = std::numeric_limits<double>::quiet_NaN();
-        double TotalNegative = std::numeric_limits<double>::quiet_NaN();
-        double TotalDark     = std::numeric_limits<double>::quiet_NaN();
+        double TotalPos  = std::numeric_limits<double>::quiet_NaN();
+        double TotalNeg  = std::numeric_limits<double>::quiet_NaN();
+        double TotalDark = std::numeric_limits<double>::quiet_NaN();
     };
 
     /**
@@ -659,9 +659,9 @@ namespace symdync
             return s / v.size();
         };
 
-        res.TotalPositive = mean(diag_vals);
-        res.TotalNegative = mean(anti_vals);
-        res.TotalDark     = mean(other_vals);
+        res.TotalPos  = mean(diag_vals);
+        res.TotalNeg  = mean(anti_vals);
+        res.TotalDark = mean(other_vals);
 
         return res;
     }

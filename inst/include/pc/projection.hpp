@@ -33,7 +33,7 @@
 #include <algorithm>
 #include <numeric>
 #include <limits>
-#include "pc/numericutils.h"
+#include "pc/numericutils.hpp"
 #include <RcppThread.h>
 
 namespace pc
@@ -158,7 +158,7 @@ namespace projection
           double total_weight = std::accumulate(weights.begin(), weights.end(), 0.0);
 
           for (size_t dim = 0; dim < n_sig_dim; ++dim) {
-            int zero_count = 0;
+            size_t zero_count = 0;
             double weighted_sum = 0.0;
             bool has_valid = false;
 
@@ -179,7 +179,7 @@ namespace projection
           }
         } else {
           for (size_t dim = 0; dim < n_sig_dim; ++dim) {
-            int zero_count = 0;
+            size_t zero_count = 0;
             double weighted_sum = 0.0;
             double used_weight = 0.0;
             bool has_valid = false;
