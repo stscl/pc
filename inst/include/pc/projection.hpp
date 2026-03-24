@@ -64,9 +64,9 @@ namespace projection
      * @param Dx             Distance matrix from prediction points to library points. Shape: (SMy.size(), SMy.size())
      * @param lib_indices    Indices of valid library points used for neighbor search (subset of [0, SMy.size())).
      * @param pred_indices   Indices of points to predict (subset of [0, SMy.size())).
-     * @param num_neighbors  Number of nearest neighbors to use. If <= 0, defaults to E+1.
+     * @param num_neighbors  Number of nearest neighbors to use. If == 0, defaults to E+1.
      * @param zero_tolerance Maximum allowed zero values per dimension before forcing prediction to zero.
-     *                       If <= 0, defaults to E−1.
+     *                       If == 0, defaults to E−1.
      * @param h              Prediction horizon (time shift). Defines how far ahead in time the prediction is performed.
      *                       For each base index p, nearest neighbors are identified at time p, and their future states 
      *                       at time (lib_row + h) are used to predict the target state at time (p + h).
@@ -79,8 +79,8 @@ namespace projection
         const std::vector<std::vector<double>>& Dx,
         const std::vector<size_t>& lib_indices,
         const std::vector<size_t>& pred_indices,
-        int num_neighbors = 0,   /* = std::numeric_limits<int>::min() */
-        int zero_tolerance = 0,  /* = std::numeric_limits<int>::max() */
+        size_t num_neighbors = 0,  
+        size_t zero_tolerance = 0,  
         size_t h = 0,
         size_t threads = 1
     ) {
@@ -88,19 +88,19 @@ namespace projection
       const size_t n_sig_dim = SMy[0].size(); // E−1
 
       // Infer embedding dimension E
-      const int E = static_cast<int>(n_sig_dim + 1);
+      const size_t E = n_sig_dim + 1;
 
       // Set defaults if sentinel values are used
-      if (num_neighbors <= 0) {
+      if (num_neighbors == 0) {
         num_neighbors = E + 1; // E+1 neighbors
       }
-      if (zero_tolerance <= 0) {
+      if (zero_tolerance == 0) {
         zero_tolerance = E - 1; // default: E−1
       }
 
       // Output containers: same size as SMy
       std::vector<std::vector<double>> pred_signatures(
-          n_obs,std::vector<double>(n_sig_dim, std::numeric_limits<double>::quiet_NaN()));
+          n_obs, std::vector<double>(n_sig_dim, std::numeric_limits<double>::quiet_NaN()));
 
       if (SMy.empty() || Dx.empty() || lib_indices.empty() || pred_indices.empty()) {
         return pred_signatures;
@@ -125,7 +125,7 @@ namespace projection
         }
         if (distances.empty()) return;
 
-        size_t k = std::min(static_cast<size_t>(num_neighbors), distances.size());
+        size_t k = std::min(num_neighbors, distances.size());
         std::vector<size_t> neighbor_indices(distances.size());
         std::iota(neighbor_indices.begin(), neighbor_indices.end(), 0);
         std::partial_sort(
