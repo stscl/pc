@@ -181,3 +181,242 @@ Rcpp::List RcppPC(
         Rcpp::Named("summary") = summary_df
     );
 }
+
+// Wrapper function to perform bootstrapped pattern causality analysis
+// [[Rcpp::export(rng = false)]]
+Rcpp::DataFrame RcppPCboot(
+    const Rcpp::NumericVector& target,
+    const Rcpp::NumericVector& source,
+    const Rcpp::IntegerVector& libsizes,
+    const Rcpp::IntegerVector& lib,
+    const Rcpp::IntegerVector& pred,
+    const Rcpp::IntegerVector& E,
+    const Rcpp::IntegerVector& tau,
+    int style = 0,
+    int num_neighbors = 4,
+    int zero_tolerance = 0,
+    const std::string& dist_metric = "euclidean",
+    int boot = 99,
+    bool random_sample = true,
+    unsigned long long seed = 42,
+    bool relative = true,
+    bool weighted = true,
+    int threads = 1,
+    int parallel_level = 0,
+    bool verbose = false,
+    int h = 0,
+    Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
+    Rcpp::Nullable<int> nrows = R_NilValue)
+{
+    // --- Input Conversion and Validation --------------------------------------
+
+    std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
+    std::vector<double> sg = Rcpp::as<std::vector<double>>(source);
+    const size_t n_obs = tg.size();
+
+    // Convert library indices (R 1-based → C++ 0-based)
+    std::vector<size_t> lib_std = Rcpp::as<std::vector<size_t>>(lib);
+    for (auto& idx : lib_std) 
+    {
+        if (idx < 1 || idx > n_obs) {
+            Rcpp::stop("lib index %d out of bounds [1, %d]",
+                       static_cast<int>(idx),
+                       static_cast<int>(n_obs));
+        }
+        idx -= 1;
+    }
+
+    // Convert prediction indices (R 1-based → C++ 0-based)
+    std::vector<size_t> pred_std = Rcpp::as<std::vector<size_t>>(pred);
+    for (auto& idx : pred_std) 
+    {
+        if (idx < 1 || idx > n_obs) {
+            Rcpp::stop("pred index %d out of bounds [1, %d]",
+                       static_cast<int>(idx),
+                       static_cast<int>(n_obs));
+        }
+        idx -= 1;
+    }
+
+    // Validate and preprocess library sizes
+    std::vector<size_t> libsizes_std = Rcpp::as<std::vector<size_t>>(libsizes);
+    std::vector<size_t> valid_libsizes;
+    valid_libsizes.reserve(libsizes_std.size());
+    for (size_t s : libsizes_std) {
+        if (s > static_cast<size_t>(std::abs(num_neighbors)) && s <= lib_std.size())
+        valid_libsizes.push_back(s);
+    }
+
+    std::sort(valid_libsizes.begin(), valid_libsizes.end());
+    valid_libsizes.erase(std::unique(valid_libsizes.begin(), valid_libsizes.end()), valid_libsizes.end());
+
+    if (valid_libsizes.empty()) {
+        Rcpp::warning("[Warning] No valid libsizes after filtering. Using full library size as fallback.");
+        valid_libsizes.push_back(lib_std.size());
+    }
+
+    // Convert Rcpp IntegerVector to std::vector<size_t>
+    std::vector<size_t> E_vec = Rcpp::as<std::vector<size_t>>(E);
+    std::vector<size_t> tau_vec = Rcpp::as<std::vector<size_t>>(tau);
+
+    // Expand E and tau
+    std::vector<size_t> E_std(2);
+    std::vector<size_t> tau_std(2);
+
+    // ---- E ----
+    if (E_vec.size() == 1) 
+    {
+        std::fill(E_std.begin(), E_std.end(), E_vec[0]);
+    } 
+    else 
+    {
+        E_std[0] = E_vec[0];
+        E_std[1] = E_vec[1];
+    }
+
+    // ---- tau ----
+    if (tau_vec.size() == 1) 
+    {
+        std::fill(tau_std.begin(), tau_std.end(), tau_vec[0]);
+    } 
+    else 
+    {
+        tau_std[0] = tau_vec[0];
+        tau_std[1] = tau_vec[1];
+    }
+
+    // --- Embedding Construction ------------------------------------------------
+    std::vector<std::vector<double>> Mx;
+    std::vector<std::vector<double>> My;
+
+    if (nb.isNotNull()) 
+    {
+        // Convert Rcpp::List to std::vector<std::vector<size_t>>
+        std::vector<std::vector<size_t>> nb_std = pc::convert::nb2std(nb.get());
+        Mx = pc::embed::embed(
+            tg, nb_std, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+        My = pc::embed::embed(
+            sg, nb_std, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+    } 
+    else if (nrows.isNotNull())
+    {   
+        size_t n_rows = static_cast<size_t>(std::abs(Rcpp::as<int>(nrows)));
+
+        std::vector<std::vector<double>> tm = 
+            pc::embed::gridVec2Mat(tg, n_rows);
+        Mx = pc::embed::embed(
+            tm, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+
+        std::vector<std::vector<double>> sm = 
+            pc::embed::gridVec2Mat(sg, n_rows);
+        My = pc::embed::embed(
+            sm, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+    }
+    else  
+    {
+        Mx = pc::embed::embed(
+            tg, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+        My = pc::embed::embed(
+            sg, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+    }
+
+    // --- Perform Bootstrapped Pattern Causality Analysis -------------------------
+    std::vector<std::vector<std::vector<double>>> res = pc::patcaus::patcaus(
+        Mx, My, libsizes_std, lib_std, pred_std, 
+        static_cast<size_t>(std::abs(num_neighbors)),
+        static_cast<size_t>(std::abs(zero_tolerance)),
+        static_cast<size_t>(std::abs(h)), dist_metric, 
+        static_cast<size_t>(std::abs(boot)),
+        random_sample, relative, weighted,
+        static_cast<size_t>(std::abs(threads)),
+        static_cast<size_t>(std::abs(parallel_level)),
+        verbose);
+
+    // --- Result Processing -----------------------------------------------------
+
+    // res structure: [3][valid_libsizes][boot]
+    // dimension 0: metric type (0=TotalPos,1=TotalNeg,2=TotalDark)
+    // dimension 1: libsizes index
+    // dimension 2: bootstrap replicates
+
+    int n_types = 3;
+    int n_libsizes = static_cast<int>(valid_libsizes.size());
+    int n_boot = static_cast<int>(res[0][0].size());
+
+    // Prepare vectors to hold dataframe columns
+    std::vector<size_t> df_libsizes;
+    std::vector<std::string> df_type;
+    std::vector<double> df_causality;
+    std::vector<double> df_q05, df_q50, df_q95;  // For quantiles if boot > 1
+
+    bool has_bootstrap = (n_boot > 1);
+    const std::string types[3] = {"positive", "negative", "dark"};
+
+    if (!has_bootstrap) 
+    {
+        // boot == 1, simple long format: columns = libsizes, type, causality
+        df_libsizes.reserve(n_types * n_libsizes);
+        df_type.reserve(n_types * n_libsizes);
+        df_causality.reserve(n_types * n_libsizes);
+
+        for (int t = 0; t < n_types; ++t) 
+        {
+            for (int l = 0; l < n_libsizes; ++l) 
+            {
+                df_libsizes.push_back(valid_libsizes[l]);
+                df_type.push_back(types[t]);
+                if(std::isnan(res[t][l][0])) res[t][l][0] = 0; // replace nan causal strength with 0
+                df_causality.push_back(res[t][l][0]);
+            }
+        }
+
+        return Rcpp::DataFrame::create(
+            Rcpp::Named("libsizes") = df_libsizes,
+            Rcpp::Named("type") = df_type,
+            Rcpp::Named("causality") = df_causality
+        );
+    } 
+    else 
+    {
+        // boot > 1, summary with mean and quantiles
+        df_libsizes.reserve(n_types * n_libsizes);
+        df_type.reserve(n_types * n_libsizes);
+        df_causality.reserve(n_types * n_libsizes);
+        df_q05.reserve(n_types * n_libsizes);
+        df_q50.reserve(n_types * n_libsizes);
+        df_q95.reserve(n_types * n_libsizes);
+
+        for (int t = 0; t < n_types; ++t)
+        {
+            for (int l = 0; l < n_libsizes; ++l) 
+            {
+                const std::vector<double>& boot_vals = res[t][l];
+                double mean_val = pc::numericutils::mean(boot_vals);
+                std::vector<double> qs = pc::numericutils::quantile(boot_vals, {0.05, 0.5, 0.95});
+
+                // replace nan causal strength with 0
+                if(std::isnan(mean_val)) mean_val = 0;
+                for(double& q : qs)
+                {
+                    if(std::isnan(q)) q = 0;
+                }
+
+                df_libsizes.push_back(valid_libsizes[l]);
+                df_type.push_back(types[t]);
+                df_causality.push_back(mean_val);
+                df_q05.push_back(qs[0]);
+                df_q50.push_back(qs[1]);
+                df_q95.push_back(qs[2]);
+            }
+        }
+
+        return Rcpp::DataFrame::create(
+            Rcpp::Named("libsizes") = df_libsizes,
+            Rcpp::Named("type") = df_type,
+            Rcpp::Named("mean") = df_causality,
+            Rcpp::Named("q05") = df_q05,
+            Rcpp::Named("q50") = df_q50,
+            Rcpp::Named("q95") = df_q95
+        );
+    }
+}
