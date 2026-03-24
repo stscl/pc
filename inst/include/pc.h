@@ -49,4 +49,6 @@
 // Convenience Converters (Inline helpers for R/C++ interop)
 // ============================================================
 
+#include "pc/convert.hpp"
+
 #endif // PC_PC_H
