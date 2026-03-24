@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 RcppPC <- function(target, source, lib, pred, E, tau, style = 0L, num_neighbors = 4L, zero_tolerance = 0L, dist_metric = "euclidean", relative = TRUE, weighted = TRUE, threads = 1L, h = 0L, nb = NULL, nrows = NULL) {
-    .Call('_pc_RcppPC', PACKAGE = 'pc', target, source, lib, pred, E, tau, style, num_neighbors, zero_tolerance, dist_metric, relative, weighted, threads, h, nb, nrows)
+    .Call(`_pc_RcppPC`, target, source, lib, pred, E, tau, style, num_neighbors, zero_tolerance, dist_metric, relative, weighted, threads, h, nb, nrows)
 }
 

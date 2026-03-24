@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with infoxtr. If not, see <https://www.gnu.org/licenses/>.
+// along with pc. If not, see <https://www.gnu.org/licenses/>.
 
 #ifndef PC_PC_H
 #define PC_PC_H
