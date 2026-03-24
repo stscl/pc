@@ -7,6 +7,6 @@ register_generic = \(name, def = NULL) {
   }
 }
 
-for (gen in c("pc")) {
+for (gen in c("pc", "ops")) {
   register_generic(gen)
 }

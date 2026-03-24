@@ -1,5 +1,5 @@
 
-.pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
+.pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
            random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
            relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE, verbose = TRUE, h = 0) {
   dist.metric = match.arg(dist.metric)
@@ -91,7 +91,7 @@
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-#' pc::pc(columbus, 1, 3, E = 6, k = 8)
+#' pc::pc(columbus, 1, 3, E = 5, k = 10)
 #'
 methods::setMethod("pc", "data.frame", .pc_ts)
 
