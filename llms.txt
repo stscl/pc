@@ -3,6 +3,8 @@
 [![pc website:
 https://stscl.github.io/pc/](reference/figures/pc.png)](https://stscl.github.io/pc/)
 
+logo by layeyo
+
 ***P**attern **C**ausality Analysis*
 
 *pc* is an R package for pattern-based causality analysis in both time
@@ -21,7 +23,7 @@ analysis.
 - Install from [CRAN](https://CRAN.R-project.org/package=pc) with:
 
 ``` r
-install.packages("pc", dep = TRUE)
+install.packages("pc", dependencies = TRUE)
 ```
 
 - Install binary version from
@@ -31,19 +33,17 @@ install.packages("pc", dep = TRUE)
 install.packages("pc",
                  repos = c("https://stscl.r-universe.dev",
                            "https://cloud.r-project.org"),
-                 dep = TRUE)
+                 dependencies = TRUE)
 ```
 
 - Install from source code on [GitHub](https://github.com/stscl/pc)
   with:
 
 ``` r
-if (!requireNamespace("devtools")) {
-    install.packages("devtools")
+if (!requireNamespace("pak")) {
+    install.packages("pak")
 }
-devtools::install_github("stscl/pc",
-                         build_vignettes = TRUE,
-                         dep = TRUE)
+pak::pak("stscl/pc", dependencies = TRUE)
 ```
 
 # Package index

@@ -25,7 +25,7 @@ pc(
   relative = TRUE,
   weighted = TRUE,
   threads = length(libsizes),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   verbose = TRUE,
   h = 0
 )
@@ -50,7 +50,7 @@ pc(
   relative = TRUE,
   weighted = TRUE,
   threads = length(libsizes),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   verbose = TRUE,
   nb = NULL
 )
@@ -75,7 +75,7 @@ pc(
   relative = TRUE,
   weighted = TRUE,
   threads = length(libsizes),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   verbose = TRUE
 )
 ```
@@ -155,9 +155,9 @@ pc(
 
   (optional) Number of threads used.
 
-- lower.parallel:
+- higher.parallel:
 
-  (optional) Whether to use lower level of parallelism.
+  (optional) Whether to use a higher level of parallelism.
 
 - verbose:
 
@@ -198,7 +198,7 @@ National Academy of Sciences 117, 7599–7605.
 
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::pc(columbus, 1, 3, E = 5, k = 10)
+pc::pc(columbus, 1, 3, E = 5, k = 10, threads = 1)
 #>       type  strength
 #> 1 positive       NaN
 #> 2 negative 0.7761732

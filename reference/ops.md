@@ -22,7 +22,7 @@ ops(
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   h = 0
 )
 
@@ -43,7 +43,7 @@ ops(
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   nb = NULL
 )
 
@@ -64,7 +64,7 @@ ops(
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  lower.parallel = TRUE
+  higher.parallel = TRUE
 )
 ```
 
@@ -132,9 +132,9 @@ ops(
 
   (optional) Number of threads used.
 
-- lower.parallel:
+- higher.parallel:
 
-  (optional) Whether to use lower level of parallelism.
+  (optional) Whether to use a higher level of parallelism.
 
 - h:
 
@@ -161,6 +161,6 @@ A list.
 
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative")
+pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative", threads = 1)
 #> The suggested E, k, tau is 5, 10 and 1 
 ```
