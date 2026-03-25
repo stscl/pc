@@ -76,6 +76,11 @@ Rcpp::List RcppPC(
         E_std[0] = E_vec[0];
         E_std[1] = E_vec[1];
     }
+    
+    // Make sure each E is greater than 2
+    for (auto& singleE : E_std) {
+        if (singleE < 2) singleE = 2;
+    }
 
     // ---- tau ----
     if (tau_vec.size() == 1) 
@@ -278,6 +283,11 @@ Rcpp::DataFrame RcppPCboot(
     {
         E_std[0] = E_vec[0];
         E_std[1] = E_vec[1];
+    }
+
+    // Make sure each E is greater than 2
+    for (auto& singleE : E_std) {
+        if (singleE < 2) singleE = 2;
     }
 
     // ---- tau ----
@@ -655,6 +665,10 @@ Rcpp::List RcppPCops(
 
     // Unique sorted embedding dimensions, neighbor values, and tau values
     std::vector<size_t> Es = Rcpp::as<std::vector<size_t>>(E);
+    // Make sure each E is greater than 2
+    for (auto& singleE : Es) {
+        if (singleE < 2) singleE = 2;
+    }
     std::sort(Es.begin(), Es.end());
     Es.erase(std::unique(Es.begin(), Es.end()), Es.end());
 
@@ -810,26 +824,30 @@ Rcpp::List RcppPCops(
             result[i][3] = std::isnan(res.TotalPos) ? 0.0 : res.TotalPos;
             result[i][4] = std::isnan(res.TotalNeg) ? 0.0 : res.TotalNeg;
             result[i][5] = std::isnan(res.TotalDark) ? 0.0 : res.TotalDark;
-            }, threads_sizet);
+        }, threads_sizet);
     }
     
     // --- Convert performance matrix to r--------------------------
     Rcpp::NumericMatrix pmat = pc::convert::mat_std2r(result, true);
+
     // --- Select optimal parameters ---------------------
     Rcpp::IntegerVector pvec = OptPCparm(pmat, maximize);
 
-    // Assign column names
-    Rcpp::colnames(pmat) = Rcpp::CharacterVector::create(
-        "E", "k", "tau", "Positive", "Negative", "Dark"
+    // --- Proper data.frame construction ----------------
+    Rcpp::DataFrame pdf = Rcpp::DataFrame::create(
+        Rcpp::Named("E")        = pmat(Rcpp::_, 0),
+        Rcpp::Named("k")        = pmat(Rcpp::_, 1),
+        Rcpp::Named("tau")      = pmat(Rcpp::_, 2),
+        Rcpp::Named("Positive") = pmat(Rcpp::_, 3),
+        Rcpp::Named("Negative") = pmat(Rcpp::_, 4),
+        Rcpp::Named("Dark")     = pmat(Rcpp::_, 5)
     );
-    // Convert to data.frame by setting class and row names
-    pmat.attr("class") = "data.frame";
 
     // --- Return structured results --------------------------------------------
 
     Rcpp::List out = Rcpp::List::create(
         Rcpp::Named("param") = pvec,
-        Rcpp::Named("xmap") = pmat
+        Rcpp::Named("xmap") = pdf
     );
     out.attr("class") = Rcpp::CharacterVector::create("pc_ops");
 
