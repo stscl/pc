@@ -173,7 +173,7 @@ pc(
 
 ## Value
 
-A list (when `libsizes` is `NULL`) or dataframe. If `libsizes` is
+A list (when `libsizes` is `NULL`) or data.frame. If `libsizes` is
 `NULL`, a list with two components is returned:
 
 - causality:
