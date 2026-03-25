@@ -26,7 +26,7 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(libsizes),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   verbose = TRUE,
   h = 0
 )
@@ -50,7 +50,7 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(libsizes),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   verbose = TRUE,
   nb = NULL
 )
@@ -74,7 +74,7 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(libsizes),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   verbose = TRUE
 )
 }
@@ -115,7 +115,7 @@
 
 \item{threads}{(optional) Number of threads used.}
 
-\item{lower.parallel}{(optional) Whether to use lower level of parallelism.}
+\item{higher.parallel}{(optional) Whether to use a higher level of parallelism.}
 
 \item{verbose}{(optional) Whether to show the progress bar.}
 
@@ -139,7 +139,7 @@ Pattern Causality
 }
 \examples{
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::pc(columbus, 1, 3, E = 5, k = 10)
+pc::pc(columbus, 1, 3, E = 5, k = 10, threads = 1)
 
 }
 \references{

@@ -18,7 +18,9 @@ experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimenta
 
 <!-- badges: end -->
 
-<a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="15%" alt="pc website: https://stscl.github.io/pc/"/></a>
+<a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="20%" alt="pc website: https://stscl.github.io/pc/"/></a>
+
+<p align="right"; style="font-size:11px">logo by layeyo</p>
 
 ***P**attern **C**ausality Analysis*
 
@@ -37,7 +39,7 @@ provides efficient and flexible tools for data-driven causality analysis.
 - Install from [CRAN](https://CRAN.R-project.org/package=pc) with:
 
 ``` r
-install.packages("pc", dep = TRUE)
+install.packages("pc", dependencies = TRUE)
 ```
 
 - Install binary version from
@@ -47,17 +49,15 @@ install.packages("pc", dep = TRUE)
 install.packages("pc",
                  repos = c("https://stscl.r-universe.dev",
                            "https://cloud.r-project.org"),
-                 dep = TRUE)
+                 dependencies = TRUE)
 ```
 
 - Install from source code on [GitHub](https://github.com/stscl/pc)
   with:
 
 ``` r
-if (!requireNamespace("devtools")) {
-    install.packages("devtools")
+if (!requireNamespace("pak")) {
+    install.packages("pak")
 }
-devtools::install_github("stscl/pc",
-                         build_vignettes = TRUE,
-                         dep = TRUE)
+pak::pak("stscl/pc", dependencies = TRUE)
 ```

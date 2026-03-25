@@ -23,7 +23,7 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   h = 0
 )
 
@@ -43,7 +43,7 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  lower.parallel = TRUE,
+  higher.parallel = TRUE,
   nb = NULL
 )
 
@@ -63,7 +63,7 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  lower.parallel = TRUE
+  higher.parallel = TRUE
 )
 }
 \arguments{
@@ -97,7 +97,7 @@
 
 \item{threads}{(optional) Number of threads used.}
 
-\item{lower.parallel}{(optional) Whether to use lower level of parallelism.}
+\item{higher.parallel}{(optional) Whether to use a higher level of parallelism.}
 
 \item{h}{(optional) Prediction horizon.}
 
@@ -115,6 +115,6 @@ Optimal Parameter Search for Pattern Causality
 }
 \examples{
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative")
+pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative", threads = 1)
 
 }
