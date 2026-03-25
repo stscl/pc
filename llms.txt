@@ -1,7 +1,4 @@
-# pc
-
-[![pc website:
-https://stscl.github.io/pc/](reference/figures/pc.png)](https://stscl.github.io/pc/)
+# pc [![pc website: https://stscl.github.io/pc/](reference/figures/pc.png)](https://stscl.github.io/pc/)
 
 logo by layeyo
 
