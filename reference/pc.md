@@ -12,7 +12,7 @@ pc(
   source,
   libsizes = NULL,
   E = 3,
-  k = E + 1,
+  k = E,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -37,7 +37,7 @@ pc(
   source,
   libsizes = NULL,
   E = 3,
-  k = E + 2,
+  k = E + 1,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -62,7 +62,7 @@ pc(
   source,
   libsizes = NULL,
   E = 3,
-  k = E + 2,
+  k = E + 1,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -201,6 +201,6 @@ columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
 pc::pc(columbus, 1, 3, E = 5, k = 10, threads = 1)
 #>       type  strength
 #> 1 positive       NaN
-#> 2 negative 0.7761732
-#> 3     dark 0.5982743
+#> 2 negative 0.6765119
+#> 3     dark 0.6273476
 ```

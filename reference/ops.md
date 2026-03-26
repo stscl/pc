@@ -11,7 +11,7 @@ ops(
   target,
   source,
   E = 3:5,
-  k = E + 1,
+  k = E,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -32,7 +32,7 @@ ops(
   target,
   source,
   E = 3:5,
-  k = E + 2,
+  k = E + 1,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -53,7 +53,7 @@ ops(
   target,
   source,
   E = 3:5,
-  k = E + 2,
+  k = E + 1,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -162,5 +162,5 @@ A list.
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
 pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative", threads = 1)
-#> The suggested E, k, tau is 5, 10 and 1 
+#> The suggested E, k, tau is 5, 9 and 1 
 ```
