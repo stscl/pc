@@ -1,4 +1,4 @@
-.ops_ts = \(data, target, source, E = 3:5, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL,
+.ops_ts = \(data, target, source, E = 3:5, k = E, tau = 1, style = 1, lib = NULL, pred = NULL,
             maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
             zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), higher.parallel = TRUE, h = 0) {
   maximize = match.arg(maximize)
@@ -12,7 +12,7 @@
                    dist.metric, relative, weighted, threads, higher.parallel, h, NULL, NULL))
 }
 
-.ops_lattice = \(data, target, source, E = 3:5, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, 
+.ops_lattice = \(data, target, source, E = 3:5, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL, 
                  maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
                  zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), higher.parallel = TRUE, nb = NULL) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
@@ -27,7 +27,7 @@
                    dist.metric, relative, weighted, threads, higher.parallel, 0, nb, NULL))
 }
 
-.ops_grid = \(data, target, source, E = 3:5, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL,
+.ops_grid = \(data, target, source, E = 3:5, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL,
               maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
               zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), higher.parallel = TRUE) {
   maximize = match.arg(maximize)
