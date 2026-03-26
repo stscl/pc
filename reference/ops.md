@@ -16,7 +16,7 @@ ops(
   style = 1,
   lib = NULL,
   pred = NULL,
-  maximize = c("positive", "negative", "dark"),
+  maximize = c("dark", "positive", "negative"),
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
   relative = TRUE,
@@ -37,7 +37,7 @@ ops(
   style = 1,
   lib = NULL,
   pred = NULL,
-  maximize = c("positive", "negative", "dark"),
+  maximize = c("dark", "positive", "negative"),
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
   relative = TRUE,
@@ -161,6 +161,6 @@ A list.
 
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::ops(columbus, 1, 3, E = 2:10, maximize = "negative", threads = 1)
-#> The suggested E, k, tau is 5, 9 and 1 
+pc::ops(columbus, 1, 3, E = 2:10, threads = 1)
+#> The suggested E, k, tau is 5, 6 and 1 
 ```
