@@ -1,4 +1,3 @@
-
 # pc <a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="15%" alt="pc website: https://stscl.github.io/pc/"/></a>
 
 <p align="right"; style="font-size:11px">logo by layeyo</p>
@@ -22,15 +21,9 @@ experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimenta
 
 ***P**attern **C**ausality Analysis*
 
-*pc* is an R package for pattern-based causality analysis in both time
-series and spatial cross-sectional data. It uses symbolic pattern
-representations and cross mapping to detect directional interactions 
-and infer causal structure from temporal dynamics and spatial snapshots. 
-Built on a high-performance C++ backend with a lightweight R interface, *pc*
-provides efficient and flexible tools for data-driven causality analysis.
+*pc* is an R package for pattern-based causality analysis in both time series and spatial cross-sectional data. It uses symbolic pattern representations and cross mapping to detect directional interactions and infer causal structure from temporal dynamics and spatial snapshots. Built on a high-performance C++ backend with a lightweight R interface, *pc* provides efficient and flexible tools for data-driven causality analysis.
 
-> *Refer to the package documentation <https://stscl.github.io/pc/>
-> for more detailed information.*
+> *Refer to the package documentation <https://stscl.github.io/pc/> for more detailed information.*
 
 ## Installation
 
@@ -40,8 +33,7 @@ provides efficient and flexible tools for data-driven causality analysis.
 install.packages("pc", dependencies = TRUE)
 ```
 
-- Install binary version from
-  [R-universe](https://stscl.r-universe.dev/pc) with:
+- Install binary version from [R-universe](https://stscl.r-universe.dev/pc) with:
 
 ``` r
 install.packages("pc",
@@ -50,8 +42,7 @@ install.packages("pc",
                  dependencies = TRUE)
 ```
 
-- Install from source code on [GitHub](https://github.com/stscl/pc)
-  with:
+- Install from source code on [GitHub](https://github.com/stscl/pc) with:
 
 ``` r
 if (!requireNamespace("pak")) {
@@ -59,3 +50,11 @@ if (!requireNamespace("pak")) {
 }
 pak::pak("stscl/pc", dependencies = TRUE)
 ```
+
+## References
+
+Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2019. Hidden interactions in financial markets. Proceedings of the National Academy of Sciences 116, 10646–10651. https://doi.org/10.1073/pnas.1819449116.
+
+Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2020. Unveiling causal interactions in complex systems. Proceedings of the National Academy of Sciences 117, 7599–7605. https://doi.org/10.1073/pnas.1918269117.
+
+Zhang, Z., Wang, J., 2025. A model to identify causality for geographic patterns. International Journal of Geographical Information Science 1–21. https://doi.org/10.1080/13658816.2025.2581207.
