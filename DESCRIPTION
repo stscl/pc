@@ -29,4 +29,7 @@ Suggests:
     readr,
     infoxtr,
     spEDM,
-    tEDM
+    tEDM,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
