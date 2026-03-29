@@ -52,6 +52,7 @@
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
+  detrend = FALSE,
   nb = NULL
 )
 
@@ -75,7 +76,8 @@
   weighted = TRUE,
   threads = length(libsizes),
   higher.parallel = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  detrend = FALSE
 )
 }
 \arguments{
@@ -120,6 +122,8 @@
 \item{verbose}{(optional) Whether to show the progress bar.}
 
 \item{h}{(optional) Prediction horizon.}
+
+\item{detrend}{(optional) Whether to remove the linear trend.}
 
 \item{nb}{(optional) Neighbours list.}
 }
