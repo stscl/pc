@@ -52,6 +52,7 @@ pc(
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
+  detrend = FALSE,
   nb = NULL
 )
 
@@ -76,7 +77,8 @@ pc(
   weighted = TRUE,
   threads = length(libsizes),
   higher.parallel = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  detrend = FALSE
 )
 ```
 
@@ -166,6 +168,10 @@ pc(
 - h:
 
   (optional) Prediction horizon.
+
+- detrend:
+
+  (optional) Whether to remove the linear trend.
 
 - nb:
 

@@ -44,6 +44,7 @@ ops(
   weighted = TRUE,
   threads = length(E),
   higher.parallel = TRUE,
+  detrend = FALSE,
   nb = NULL
 )
 
@@ -64,7 +65,8 @@ ops(
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  higher.parallel = TRUE
+  higher.parallel = TRUE,
+  detrend = FALSE
 )
 ```
 
@@ -139,6 +141,10 @@ ops(
 - h:
 
   (optional) Prediction horizon.
+
+- detrend:
+
+  (optional) Whether to remove the linear trend.
 
 - nb:
 
