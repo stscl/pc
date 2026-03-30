@@ -25,8 +25,8 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="pc | Pattern Causality Analysis
 ">
-<meta name="description" content="Infer causation from observational data through pattern causality analysis (PC), with original algorithm for time series data from Stavroglou et al. (2020) &lt;doi:10.1073/pnas.1918269117&gt;, as well as methodological extensions for spatial cross-sectional data introduced by Zhang &amp; Wang (2025) &lt;doi:10.1080/13658816.2025.2581207&gt;, together with a systematic description proposed in Lyu et al. (2026) &lt;doi:10.1016/j.compenvurbsys.2026.102435&gt;.">
-<meta property="og:description" content="Infer causation from observational data through pattern causality analysis (PC), with original algorithm for time series data from Stavroglou et al. (2020) &lt;doi:10.1073/pnas.1918269117&gt;, as well as methodological extensions for spatial cross-sectional data introduced by Zhang &amp; Wang (2025) &lt;doi:10.1080/13658816.2025.2581207&gt;, together with a systematic description proposed in Lyu et al. (2026) &lt;doi:10.1016/j.compenvurbsys.2026.102435&gt;.">
+<meta name="description" content="Infer causation from observational data through pattern causality analysis (PC), with original algorithm for time series data from Stavroglou et al. (2020) &lt;doi:10.1073/pnas.1918269117&gt;, as well as methodological extensions for spatial cross-sectional data introduced by Zhang &amp; Wang (2025) &lt;doi:10.1080/13658816.2025.2581207&gt;, together with a systematic description proposed in Runge et al. (2023) &lt;doi:10.1038/s43017-023-00431-y&gt;.">
+<meta property="og:description" content="Infer causation from observational data through pattern causality analysis (PC), with original algorithm for time series data from Stavroglou et al. (2020) &lt;doi:10.1073/pnas.1918269117&gt;, as well as methodological extensions for spatial cross-sectional data introduced by Zhang &amp; Wang (2025) &lt;doi:10.1080/13658816.2025.2581207&gt;, together with a systematic description proposed in Runge et al. (2023) &lt;doi:10.1038/s43017-023-00431-y&gt;.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -61,13 +61,23 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="pc-">pc <a href="https://stscl.github.io/pc/"><img src="reference/figures/pc.png" align="right" hspace="5" vspace="0" width="15%" alt="pc website: https://stscl.github.io/pc/"></a>
-<a class="anchor" aria-label="anchor" href="#pc-"></a>
+<div class="page-header"><h1 id="pc">pc<a class="anchor" aria-label="anchor" href="#pc"></a>
 </h1></div>
-<p align="right" style="font-size:11px">logo by layeyo</p>
 <!-- badges: start -->
+<!-- [![CRAN](https://www.r-pkg.org/badges/version/pc)](https://CRAN.R-project.org/package=pc)
+[![CRAN
+Release](https://www.r-pkg.org/badges/last-release/pc)](https://CRAN.R-project.org/package=pc)
+[![CRAN
+Checks](https://badges.cranchecks.info/worst/pc.svg)](https://cran.r-project.org/web/checks/check_results_pc.html)
+[![Downloads_all](https://badgen.net/cran/dt/pc?color=orange)](https://CRAN.R-project.org/package=pc)
+[![Downloads_month](https://cranlogs.r-pkg.org/badges/pc)](https://CRAN.R-project.org/package=pc)
+[![License](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![Lifecycle:
+experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
 
 <!-- badges: end -->
+<p><a href="https://stscl.github.io/pc/"><img src="reference/figures/pc.png" align="right" hspace="5" vspace="0" width="20%" alt="pc website: https://stscl.github.io/pc/"></a></p>
+<p align="right" style="font-size:11px">logo by layeyo</p>
 <p><em><strong>P</strong>attern <strong>C</strong>ausality Analysis</em></p>
 <p><em>pc</em> is an R package for pattern-based causality analysis in both time series and spatial cross-sectional data. It uses symbolic pattern representations and cross mapping to detect directional interactions and infer causal structure from temporal dynamics and spatial snapshots. Built on a high-performance C++ backend with a lightweight R interface, <em>pc</em> provides efficient and flexible tools for data-driven causality analysis.</p>
 <blockquote>
@@ -97,15 +107,6 @@
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"stscl/pc"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h2>
-<p>Sugihara, G., May, R., Ye, H., Hsieh, C., Deyle, E., Fogarty, M., Munch, S., 2012. Detecting Causality in Complex Ecosystems. Science 338, 496–500. <a href="https://doi.org/10.1126/science.1227079" class="external-link uri">https://doi.org/10.1126/science.1227079</a>.</p>
-<p>Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2019. Hidden interactions in financial markets. Proceedings of the National Academy of Sciences 116, 10646–10651. <a href="https://doi.org/10.1073/pnas.1819449116" class="external-link uri">https://doi.org/10.1073/pnas.1819449116</a>.</p>
-<p>Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2020. Unveiling causal interactions in complex systems. Proceedings of the National Academy of Sciences 117, 7599–7605. <a href="https://doi.org/10.1073/pnas.1918269117" class="external-link uri">https://doi.org/10.1073/pnas.1918269117</a>.</p>
-<p>Zhang, Z., Wang, J., 2025. A model to identify causality for geographic patterns. International Journal of Geographical Information Science 1–21. <a href="https://doi.org/10.1080/13658816.2025.2581207" class="external-link uri">https://doi.org/10.1080/13658816.2025.2581207</a>.</p>
-<p>Lyu, W., Lei, Y., Yi, W., Song, Y., Li, X., Dai, S., Qin, Y., Zhao, W., 2026. Causal discovery in urban data with temporal empirical dynamic modeling: The R package tEDM. Computers, Environment and Urban Systems 127, 102435. <a href="https://doi.org/10.1016/j.compenvurbsys.2026.102435" class="external-link uri">https://doi.org/10.1016/j.compenvurbsys.2026.102435</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -143,13 +144,6 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=pc" class="external-link"><img src="https://www.r-pkg.org/badges/version/pc" alt="CRAN"></a></li>
-<li><a href="https://CRAN.R-project.org/package=pc" class="external-link"><img src="https://www.r-pkg.org/badges/last-release/pc" alt="CRAN Release"></a></li>
-<li><a href="https://cran.r-project.org/web/checks/check_results_pc.html" class="external-link"><img src="https://badges.cranchecks.info/worst/pc.svg" alt="CRAN Checks"></a></li>
-<li><a href="https://CRAN.R-project.org/package=pc" class="external-link"><img src="https://badgen.net/cran/dt/pc?color=orange" alt="Downloads_all"></a></li>
-<li><a href="https://CRAN.R-project.org/package=pc" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/pc" alt="Downloads_month"></a></li>
-<li><a href="http://www.gnu.org/licenses/gpl-3.0.html" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat" alt="License"></a></li>
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://github.com/stscl/pc/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/stscl/pc/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://stscl.r-universe.dev/pc" class="external-link"><img src="https://stscl.r-universe.dev/badges/pc?color=cyan" alt="R-universe"></a></li>
 </ul>
