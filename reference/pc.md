@@ -12,7 +12,7 @@ pc(
   source,
   libsizes = NULL,
   E = 3,
-  k = E + 1,
+  k = E,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -37,7 +37,7 @@ pc(
   source,
   libsizes = NULL,
   E = 3,
-  k = E + 2,
+  k = E + 1,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -52,6 +52,7 @@ pc(
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
+  detrend = FALSE,
   nb = NULL
 )
 
@@ -62,7 +63,7 @@ pc(
   source,
   libsizes = NULL,
   E = 3,
-  k = E + 2,
+  k = E + 1,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -76,7 +77,8 @@ pc(
   weighted = TRUE,
   threads = length(libsizes),
   higher.parallel = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  detrend = FALSE
 )
 ```
 
@@ -167,6 +169,10 @@ pc(
 
   (optional) Prediction horizon.
 
+- detrend:
+
+  (optional) Whether to remove the linear trend.
+
 - nb:
 
   (optional) Neighbours list.
@@ -198,9 +204,9 @@ National Academy of Sciences 117, 7599–7605.
 
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::pc(columbus, 1, 3, E = 5, k = 10, threads = 1)
+pc::pc(columbus, 1, 3, E = 5, k = 9, threads = 1)
 #>       type  strength
-#> 1 positive       NaN
-#> 2 negative 0.7761732
-#> 3     dark 0.5982743
+#> 1 positive 0.0000000
+#> 2 negative 0.7753134
+#> 3     dark 0.6213416
 ```

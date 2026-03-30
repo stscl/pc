@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/stscl/pc/blob/v0.1/inst/CITATION)
+[`inst/CITATION`](https://github.com/stscl/pc/blob/main/inst/CITATION)
 
 Lyu W (2026). *pc: Pattern Causality Analysis*.
 [doi:10.32614/CRAN.package.pc](https://doi.org/10.32614/CRAN.package.pc),
