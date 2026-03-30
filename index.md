@@ -45,6 +45,10 @@ pak::pak("stscl/pc", dependencies = TRUE)
 
 ## References
 
+Sugihara, G., May, R., Ye, H., Hsieh, C., Deyle, E., Fogarty, M., Munch,
+S., 2012. Detecting Causality in Complex Ecosystems. Science 338,
+496–500. <https://doi.org/10.1126/science.1227079>.
+
 Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2019.
 Hidden interactions in financial markets. Proceedings of the National
 Academy of Sciences 116, 10646–10651.
@@ -58,3 +62,8 @@ National Academy of Sciences 117, 7599–7605.
 Zhang, Z., Wang, J., 2025. A model to identify causality for geographic
 patterns. International Journal of Geographical Information Science
 1–21. <https://doi.org/10.1080/13658816.2025.2581207>.
+
+Lyu, W., Lei, Y., Yi, W., Song, Y., Li, X., Dai, S., Qin, Y., Zhao, W.,
+2026. Causal discovery in urban data with temporal empirical dynamic
+modeling: The R package tEDM. Computers, Environment and Urban Systems
+127, 102435. <https://doi.org/10.1016/j.compenvurbsys.2026.102435>.
