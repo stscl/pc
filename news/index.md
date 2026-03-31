@@ -4,6 +4,9 @@
 
 #### enhancements
 
+- Add Loess Plateau precipitation–soil moisture–NDVI case dataset
+  ([\#41](https://github.com/stscl/pc/issues/41)).
+
 - Support linear trend removal for spatial cross-sectional data
   ([\#36](https://github.com/stscl/pc/issues/36)).
 
