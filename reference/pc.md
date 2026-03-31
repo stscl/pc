@@ -27,7 +27,8 @@ pc(
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
-  h = 0
+  h = 0,
+  ...
 )
 
 # S4 method for class 'sf'
@@ -53,7 +54,8 @@ pc(
   higher.parallel = TRUE,
   verbose = TRUE,
   detrend = FALSE,
-  nb = NULL
+  nb = NULL,
+  ...
 )
 
 # S4 method for class 'SpatRaster'
@@ -78,7 +80,8 @@ pc(
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
-  detrend = FALSE
+  detrend = FALSE,
+  ...
 )
 ```
 
@@ -168,6 +171,10 @@ pc(
 - h:
 
   (optional) Prediction horizon.
+
+- ...:
+
+  Additional arguments to absorb unused inputs in method dispatch.
 
 - detrend:
 

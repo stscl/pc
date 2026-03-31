@@ -23,7 +23,8 @@ ops(
   weighted = TRUE,
   threads = length(E),
   higher.parallel = TRUE,
-  h = 0
+  h = 0,
+  ...
 )
 
 # S4 method for class 'sf'
@@ -45,7 +46,8 @@ ops(
   threads = length(E),
   higher.parallel = TRUE,
   detrend = FALSE,
-  nb = NULL
+  nb = NULL,
+  ...
 )
 
 # S4 method for class 'SpatRaster'
@@ -66,7 +68,8 @@ ops(
   weighted = TRUE,
   threads = length(E),
   higher.parallel = TRUE,
-  detrend = FALSE
+  detrend = FALSE,
+  ...
 )
 ```
 
@@ -141,6 +144,10 @@ ops(
 - h:
 
   (optional) Prediction horizon.
+
+- ...:
+
+  Additional arguments to absorb unused inputs in method dispatch.
 
 - detrend:
 
