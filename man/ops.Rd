@@ -24,7 +24,8 @@
   weighted = TRUE,
   threads = length(E),
   higher.parallel = TRUE,
-  h = 0
+  h = 0,
+  ...
 )
 
 \S4method{ops}{sf}(
@@ -45,7 +46,8 @@
   threads = length(E),
   higher.parallel = TRUE,
   detrend = FALSE,
-  nb = NULL
+  nb = NULL,
+  ...
 )
 
 \S4method{ops}{SpatRaster}(
@@ -65,7 +67,8 @@
   weighted = TRUE,
   threads = length(E),
   higher.parallel = TRUE,
-  detrend = FALSE
+  detrend = FALSE,
+  ...
 )
 }
 \arguments{
@@ -102,6 +105,8 @@
 \item{higher.parallel}{(optional) Whether to use a higher level of parallelism.}
 
 \item{h}{(optional) Prediction horizon.}
+
+\item{...}{Additional arguments to absorb unused inputs in method dispatch.}
 
 \item{detrend}{(optional) Whether to remove the linear trend.}
 

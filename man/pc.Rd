@@ -28,7 +28,8 @@
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
-  h = 0
+  h = 0,
+  ...
 )
 
 \S4method{pc}{sf}(
@@ -53,7 +54,8 @@
   higher.parallel = TRUE,
   verbose = TRUE,
   detrend = FALSE,
-  nb = NULL
+  nb = NULL,
+  ...
 )
 
 \S4method{pc}{SpatRaster}(
@@ -77,7 +79,8 @@
   threads = length(libsizes),
   higher.parallel = TRUE,
   verbose = TRUE,
-  detrend = FALSE
+  detrend = FALSE,
+  ...
 )
 }
 \arguments{
@@ -122,6 +125,8 @@
 \item{verbose}{(optional) Whether to show the progress bar.}
 
 \item{h}{(optional) Prediction horizon.}
+
+\item{...}{Additional arguments to absorb unused inputs in method dispatch.}
 
 \item{detrend}{(optional) Whether to remove the linear trend.}
 

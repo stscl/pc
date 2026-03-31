@@ -1,6 +1,6 @@
 .pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
            random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
-           relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, h = 0) {
+           relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, h = 0, ...) {
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
   tv = dlist[[1]]; sv = dlist[[2]]
@@ -17,8 +17,8 @@
 }
 
 .pc_lattice = \(data, target, source, libsizes = NULL, E = 3, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
-                random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
-                relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, detrend = FALSE, nb = NULL) {
+                random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k), 
+                relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, detrend = FALSE, nb = NULL, ...) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source, detrend)
@@ -36,8 +36,8 @@
 }
 
 .pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
-             random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
-             relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, detrend = FALSE) {
+             random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k), 
+             relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, detrend = FALSE, ...) {
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source, detrend)
   tv = dlist[[1]]; sv = dlist[[2]]
@@ -80,6 +80,7 @@
 #' @param h (optional) Prediction horizon.
 #' @param detrend (optional) Whether to remove the linear trend.
 #' @param nb (optional) Neighbours list.
+#' @param ... Additional arguments to absorb unused inputs in method dispatch.
 #'
 #' @return A list (when `libsizes` is `NULL`) or data.frame.
 #' If `libsizes` is `NULL`, a list with two components is returned:
