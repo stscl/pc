@@ -10,14 +10,14 @@ fnn(
   data,
   target,
   E = 2:10,
-  k = 3,
+  k = 1,
   tau = 1,
   style = 1,
   lib = NULL,
   pred = NULL,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   rt = 10,
-  eps = 2,
+  eps = NULL,
   threads = length(E),
   higher.parallel = TRUE,
   ...
@@ -28,14 +28,14 @@ fnn(
   data,
   target,
   E = 3:10,
-  k = 3,
+  k = 1,
   tau = 1,
   style = 1,
   lib = NULL,
   pred = NULL,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   rt = 10,
-  eps = 2,
+  eps = NULL,
   threads = length(E),
   higher.parallel = TRUE,
   detrend = FALSE,
@@ -48,14 +48,14 @@ fnn(
   data,
   target,
   E = 3:10,
-  k = 3,
+  k = 1,
   tau = 1,
   style = 1,
   lib = NULL,
   pred = NULL,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   rt = 10,
-  eps = 2,
+  eps = NULL,
   threads = length(E),
   higher.parallel = TRUE,
   detrend = FALSE,
@@ -149,7 +149,7 @@ pc::fnn(columbus, 1, threads = 1)
 #> [fnn] Input E values exceeding max embeddable dimension were truncated.
 #> [fnn] Please map output indices to original E inputs before interpretation.
 #>        E:1        E:2        E:3        E:4        E:5        E:6        E:7 
-#> 0.91836735 0.81632653 0.71428571 0.77551020 0.59183673 0.20408163 0.02040816 
+#> 0.73469388 0.12244898 0.00000000 0.12244898 0.06122449 0.00000000 0.00000000 
 #>        E:8 
 #> 0.00000000 
 ```
