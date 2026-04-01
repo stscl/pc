@@ -2,6 +2,7 @@
 
 S3method(print,pc_ops)
 S3method(print,pc_single)
+exportMethods(fnn)
 exportMethods(ops)
 exportMethods(pc)
 useDynLib(pc, .registration = TRUE)

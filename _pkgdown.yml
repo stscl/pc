@@ -28,6 +28,10 @@ reference:
 
 - title: Pattern Causality Analysis
 
+- subtitle: embedding dimension choice
+  contents:
+  - fnn
+
 - subtitle: optimal parameters search
   contents:
   - ops

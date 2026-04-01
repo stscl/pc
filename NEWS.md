@@ -2,6 +2,8 @@
 
 ### new
 
+* Provide `fnn()` generic for *false nearest neighbors* method (#49).
+
 * Add Loess Plateau precipitation–soil moisture–NDVI case dataset (#41).
 
 * Support linear trend removal for spatial cross-sectional data (#36).

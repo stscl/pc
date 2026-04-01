@@ -136,7 +136,7 @@ namespace fnn
             }
 
             // Skip if no neighbor found or minimum distance is zero
-            if (nn_idx == N || pc::numericutils::doubleNearlyEqual(min_dist,0.0)) return;
+            if (nn_idx == N || pc::numericutils::doubleNearlyEqual(min_dist, 0.0)) return;
 
             // Compare the E2-th dimension to check for false neighbors
             double diff = std::abs(embedding[pidx][E2 - 1] - embedding[nn_idx][E2 - 1]);
@@ -191,7 +191,7 @@ namespace fnn
      * each column an embedding dimension), this function evaluates the proportion
      * of false nearest neighbors (FNN) as the embedding dimension increases.
      *
-     * It iteratively calls `singlefNN` for each embedding dimension pair (E1, E2),
+     * It iteratively calls `singlefnn` for each embedding dimension pair (E1, E2),
      * where E1 ranges from 1 to D - 1 (D = number of columns), and E2 = E1 + 1.
      * The FNN ratio measures how often a nearest neighbor in dimension E1 becomes
      * distant in dimension E2, suggesting that E1 is insufficient for reconstructing
