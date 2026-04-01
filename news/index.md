@@ -4,6 +4,10 @@
 
 #### new
 
+- Provide [`fnn()`](https://stscl.github.io/pc/reference/fnn.md) generic
+  for *false nearest neighbors* method
+  ([\#49](https://github.com/stscl/pc/issues/49)).
+
 - Add Loess Plateau precipitation–soil moisture–NDVI case dataset
   ([\#41](https://github.com/stscl/pc/issues/41)).
 

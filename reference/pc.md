@@ -197,10 +197,6 @@ A list (when `libsizes` is `NULL`) or data.frame. If `libsizes` is
 
   A data.frame summarizing overall causality metrics.
 
-## Note
-
-`pc` only supports numeric input data.
-
 ## References
 
 Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2020.
