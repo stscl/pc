@@ -44,6 +44,7 @@
 #include "pc/symdync.hpp"
 #include "pc/projection.hpp"
 #include "pc/patcaus.hpp"
+#include "pc/fnn.hpp"
 
 // ============================================================
 // Convenience Converters (Inline helpers for R/C++ interop)
