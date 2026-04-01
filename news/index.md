@@ -24,6 +24,11 @@
 - Improve handling of large-scale inputs
   ([\#33](https://github.com/stscl/pc/issues/33)).
 
+#### bug fixes
+
+- Fix unintended CCM-style xmap behavior in pattern causality estimation
+  ([\#52](https://github.com/stscl/pc/issues/52)).
+
 ## pc 0.1
 
 CRAN release: 2026-03-30

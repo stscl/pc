@@ -175,5 +175,5 @@ A list.
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
 pc::ops(columbus, 1, 3, E = 3:10, maximize = "negative", threads = 1)
-#> The suggested E, k, tau is 3, 9 and 1 
+#> The suggested E, k, tau is 3, 5 and 1 
 ```

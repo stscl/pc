@@ -207,9 +207,9 @@ National Academy of Sciences 117, 7599–7605.
 
 ``` r
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::pc(columbus, 1, 3, E = 3, k = 9, threads = 1)
+pc::pc(columbus, 1, 3, E = 3, k = 5, threads = 1)
 #>       type  strength
 #> 1 positive 0.0000000
-#> 2 negative 0.3394851
-#> 3     dark 0.2635897
+#> 2 negative 0.5149933
+#> 3     dark 0.2102039
 ```
