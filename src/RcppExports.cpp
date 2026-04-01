@@ -13,8 +13,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // RcppFNN
-Rcpp::NumericVector RcppFNN(const Rcpp::NumericVector& target, const Rcpp::NumericVector& rt, const Rcpp::NumericVector& eps, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, const Rcpp::IntegerVector& E, int tau, int style, const std::string& dist_metric, int threads, int parallel_level, Rcpp::Nullable<Rcpp::List> nb, Rcpp::Nullable<int> nrows);
-RcppExport SEXP _pc_RcppFNN(SEXP targetSEXP, SEXP rtSEXP, SEXP epsSEXP, SEXP libSEXP, SEXP predSEXP, SEXP ESEXP, SEXP tauSEXP, SEXP styleSEXP, SEXP dist_metricSEXP, SEXP threadsSEXP, SEXP parallel_levelSEXP, SEXP nbSEXP, SEXP nrowsSEXP) {
+Rcpp::NumericVector RcppFNN(const Rcpp::NumericVector& target, const Rcpp::NumericVector& rt, const Rcpp::NumericVector& eps, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, const Rcpp::IntegerVector& E, int tau, int style, const std::string& dist_metric, int k, int threads, int parallel_level, Rcpp::Nullable<Rcpp::List> nb, Rcpp::Nullable<int> nrows);
+RcppExport SEXP _pc_RcppFNN(SEXP targetSEXP, SEXP rtSEXP, SEXP epsSEXP, SEXP libSEXP, SEXP predSEXP, SEXP ESEXP, SEXP tauSEXP, SEXP styleSEXP, SEXP dist_metricSEXP, SEXP kSEXP, SEXP threadsSEXP, SEXP parallel_levelSEXP, SEXP nbSEXP, SEXP nrowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type target(targetSEXP);
@@ -26,11 +26,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type tau(tauSEXP);
     Rcpp::traits::input_parameter< int >::type style(styleSEXP);
     Rcpp::traits::input_parameter< const std::string& >::type dist_metric(dist_metricSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
     Rcpp::traits::input_parameter< int >::type parallel_level(parallel_levelSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::List> >::type nb(nbSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<int> >::type nrows(nrowsSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppFNN(target, rt, eps, lib, pred, E, tau, style, dist_metric, threads, parallel_level, nb, nrows));
+    rcpp_result_gen = Rcpp::wrap(RcppFNN(target, rt, eps, lib, pred, E, tau, style, dist_metric, k, threads, parallel_level, nb, nrows));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -119,7 +120,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_pc_RcppFNN", (DL_FUNC) &_pc_RcppFNN, 13},
+    {"_pc_RcppFNN", (DL_FUNC) &_pc_RcppFNN, 14},
     {"_pc_RcppPC", (DL_FUNC) &_pc_RcppPC, 16},
     {"_pc_RcppPCboot", (DL_FUNC) &_pc_RcppPCboot, 22},
     {"_pc_RcppPCops", (DL_FUNC) &_pc_RcppPCops, 18},

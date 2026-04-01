@@ -11,6 +11,7 @@
   data,
   target,
   E = 2:10,
+  k = 3,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -27,6 +28,7 @@
   data,
   target,
   E = 3:10,
+  k = 3,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -45,6 +47,7 @@
   data,
   target,
   E = 3:10,
+  k = 3,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -64,6 +67,8 @@
 \item{target}{Integer of column indice for the target variable.}
 
 \item{E}{(optional) Embedding dimensions.}
+
+\item{k}{(optional) Number of nearest neighbors used for evaluation.}
 
 \item{tau}{(optional) Step of lag.}
 

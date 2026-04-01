@@ -20,6 +20,7 @@ Rcpp::NumericVector RcppFNN(
     int tau = 1,
     int style = 0,
     const std::string& dist_metric = "euclidean",
+    int k = 3,
     int threads = 1,
     int parallel_level = 0,
     Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
@@ -206,6 +207,7 @@ Rcpp::NumericVector RcppFNN(
         // --- Full data: no slicing needed ---
         res = pc::fnn::fnn(
             Mx, lib_std, pred_std, rt_std, eps_std, dist_metric,
+            static_cast<size_t>(std::abs(k)), 
             static_cast<size_t>(std::abs(threads)), 
             static_cast<size_t>(std::abs(parallel_level)));
     }
@@ -245,6 +247,7 @@ Rcpp::NumericVector RcppFNN(
         // --- Run patcaus on subset ---
         res = pc::fnn::fnn(
             Mx_sub, lib_std, pred_std, rt_std, eps_std, dist_metric,
+            static_cast<size_t>(std::abs(k)), 
             static_cast<size_t>(std::abs(threads)), 
             static_cast<size_t>(std::abs(parallel_level)));
     }
