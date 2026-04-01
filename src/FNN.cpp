@@ -9,7 +9,7 @@
 #include "pc.h"
 
 // Wrapper function to perform false nearest neighbor analysis
-
+// [[Rcpp::export(rng = false)]]
 Rcpp::NumericVector RcppFNN(
     const Rcpp::NumericVector& target,
     const Rcpp::NumericVector& rt,
