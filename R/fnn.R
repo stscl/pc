@@ -1,8 +1,9 @@
-.fnn_ts = \(data, target, E = 2:10, k = 3, tau = 1, style = 1, lib = NULL, pred = NULL,
-            dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = 2,
+.fnn_ts = \(data, target, E = 2:10, k = 1, tau = 1, style = 1, lib = NULL, pred = NULL,
+            dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = NULL,
             threads = length(E), higher.parallel = TRUE, ...) {
   dist.metric = match.arg(dist.metric)
   tv = .validate_var(data, target)[[1]]
+  if (is.null(eps)) eps = stats::sd(tv, na.rm = TRUE)
   if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
@@ -10,12 +11,13 @@
                  k, threads, higher.parallel, NULL, NULL))
 }
 
-.fnn_lattice = \(data, target, E = 3:10, k = 3, tau = 1, style = 1, lib = NULL, pred = NULL, 
-                 dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = 2,
+.fnn_lattice = \(data, target, E = 3:10, k = 1, tau = 1, style = 1, lib = NULL, pred = NULL, 
+                 dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = NULL,
                  threads = length(E), higher.parallel = TRUE, detrend = FALSE, nb = NULL, ...) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
   dist.metric = match.arg(dist.metric)
   tv = .validate_var(data, target, detrend = detrend)[[1]]
+  if (is.null(eps)) eps = stats::sd(tv, na.rm = TRUE)
   if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
@@ -23,11 +25,12 @@
                  k, threads, higher.parallel, nb, NULL))
 }
 
-.fnn_grid = \(data, target, E = 3:10, k = 3, tau = 1, style = 1, lib = NULL, pred = NULL, 
-              dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = 2, 
+.fnn_grid = \(data, target, E = 3:10, k = 1, tau = 1, style = 1, lib = NULL, pred = NULL, 
+              dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = NULL, 
               threads = length(E), higher.parallel = TRUE, detrend = FALSE, ...) {
   dist.metric = match.arg(dist.metric)
   tv = .validate_var(data, target, detrend = detrend)[[1]]
+  if (is.null(eps)) eps = stats::sd(tv, na.rm = TRUE)
   if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 

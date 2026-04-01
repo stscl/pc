@@ -22,6 +22,7 @@ Imports:
     methods,
     sdsfun,
     sf,
+    stats,
     terra
 Suggests: 
     Rcpp,
