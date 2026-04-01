@@ -10,6 +10,7 @@ fnn(
   data,
   target,
   E = 2:10,
+  k = 3,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -27,6 +28,7 @@ fnn(
   data,
   target,
   E = 3:10,
+  k = 3,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -46,6 +48,7 @@ fnn(
   data,
   target,
   E = 3:10,
+  k = 3,
   tau = 1,
   style = 1,
   lib = NULL,
@@ -73,6 +76,10 @@ fnn(
 - E:
 
   (optional) Embedding dimensions.
+
+- k:
+
+  (optional) Number of nearest neighbors used for evaluation.
 
 - tau:
 
@@ -141,6 +148,8 @@ pc::fnn(columbus, 1, threads = 1)
 #> [fnn] Output 'E:i' corresponds to the i-th valid embedding dimension.
 #> [fnn] Input E values exceeding max embeddable dimension were truncated.
 #> [fnn] Please map output indices to original E inputs before interpretation.
-#>       E:1       E:2       E:3       E:4       E:5       E:6       E:7       E:8 
-#> 0.9387755 0.7755102 0.7142857 0.5714286 0.3061224 0.1224490 0.0000000 0.0000000 
+#>        E:1        E:2        E:3        E:4        E:5        E:6        E:7 
+#> 0.91836735 0.81632653 0.71428571 0.77551020 0.59183673 0.20408163 0.02040816 
+#>        E:8 
+#> 0.00000000 
 ```

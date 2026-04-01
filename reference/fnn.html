@@ -50,6 +50,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">target</span>,</span>
 <span>  E <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  tau <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  style <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  lib <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -67,6 +68,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">target</span>,</span>
 <span>  E <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  tau <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  style <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  lib <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -86,6 +88,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">target</span>,</span>
 <span>  E <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  tau <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  style <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  lib <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -114,6 +117,10 @@
 
 <dt id="arg-e">E<a class="anchor" aria-label="anchor" href="#arg-e"></a></dt>
 <dd><p>(optional) Embedding dimensions.</p></dd>
+
+
+<dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
+<dd><p>(optional) Number of nearest neighbors used for evaluation.</p></dd>
 
 
 <dt id="arg-tau">tau<a class="anchor" aria-label="anchor" href="#arg-tau"></a></dt>
@@ -180,8 +187,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [fnn] Output 'E:i' corresponds to the i-th valid embedding dimension.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [fnn] Input E values exceeding max embeddable dimension were truncated.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [fnn] Please map output indices to original E inputs before interpretation.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       E:1       E:2       E:3       E:4       E:5       E:6       E:7       E:8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.9387755 0.7755102 0.7142857 0.5714286 0.3061224 0.1224490 0.0000000 0.0000000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        E:1        E:2        E:3        E:4        E:5        E:6        E:7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.91836735 0.81632653 0.71428571 0.77551020 0.59183673 0.20408163 0.02040816 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        E:8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.00000000 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
