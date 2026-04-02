@@ -331,7 +331,7 @@ Rcpp::List RcppPC(
 
 // Wrapper function to perform bootstrapped pattern causality analysis
 // [[Rcpp::export(rng = false)]]
-Rcpp::DataFrame RcppPCboot(
+Rcpp::List RcppPCboot(
     const Rcpp::NumericVector& target,
     const Rcpp::NumericVector& source,
     const Rcpp::IntegerVector& libsizes,
@@ -627,6 +627,8 @@ Rcpp::DataFrame RcppPCboot(
 
     bool has_bootstrap = (n_boot > 1);
     const std::string types[3] = {"positive", "negative", "dark"};
+    
+    Rcpp::DataFrame causality_out;
 
     if (!has_bootstrap) 
     {
@@ -646,7 +648,7 @@ Rcpp::DataFrame RcppPCboot(
             }
         }
 
-        return Rcpp::DataFrame::create(
+        causality_out = Rcpp::DataFrame::create(
             Rcpp::Named("libsizes") = df_libsizes,
             Rcpp::Named("type") = df_type,
             Rcpp::Named("causality") = df_causality
@@ -686,7 +688,7 @@ Rcpp::DataFrame RcppPCboot(
             }
         }
 
-        return Rcpp::DataFrame::create(
+        causality_out = Rcpp::DataFrame::create(
             Rcpp::Named("libsizes") = df_libsizes,
             Rcpp::Named("type") = df_type,
             Rcpp::Named("mean") = df_causality,
@@ -695,6 +697,15 @@ Rcpp::DataFrame RcppPCboot(
             Rcpp::Named("q95") = df_q95
         );
     }
+
+    // --- Return structured results --------------------------------------------
+
+    Rcpp::List out = Rcpp::List::create(
+        Rcpp::Named("causality") = causality_out
+    );
+    out.attr("class") = Rcpp::CharacterVector::create("pc_boot");
+
+    return out;
 }
 
 /**

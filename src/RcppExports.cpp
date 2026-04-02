@@ -61,7 +61,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppPCboot
-Rcpp::DataFrame RcppPCboot(const Rcpp::NumericVector& target, const Rcpp::NumericVector& source, const Rcpp::IntegerVector& libsizes, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, const Rcpp::IntegerVector& E, const Rcpp::IntegerVector& tau, int style, int num_neighbors, int zero_tolerance, const std::string& dist_metric, int boot, bool random_sample, int seed, bool relative, bool weighted, int threads, int parallel_level, bool verbose, int h, Rcpp::Nullable<Rcpp::List> nb, Rcpp::Nullable<int> nrows);
+Rcpp::List RcppPCboot(const Rcpp::NumericVector& target, const Rcpp::NumericVector& source, const Rcpp::IntegerVector& libsizes, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, const Rcpp::IntegerVector& E, const Rcpp::IntegerVector& tau, int style, int num_neighbors, int zero_tolerance, const std::string& dist_metric, int boot, bool random_sample, int seed, bool relative, bool weighted, int threads, int parallel_level, bool verbose, int h, Rcpp::Nullable<Rcpp::List> nb, Rcpp::Nullable<int> nrows);
 RcppExport SEXP _pc_RcppPCboot(SEXP targetSEXP, SEXP sourceSEXP, SEXP libsizesSEXP, SEXP libSEXP, SEXP predSEXP, SEXP ESEXP, SEXP tauSEXP, SEXP styleSEXP, SEXP num_neighborsSEXP, SEXP zero_toleranceSEXP, SEXP dist_metricSEXP, SEXP bootSEXP, SEXP random_sampleSEXP, SEXP seedSEXP, SEXP relativeSEXP, SEXP weightedSEXP, SEXP threadsSEXP, SEXP parallel_levelSEXP, SEXP verboseSEXP, SEXP hSEXP, SEXP nbSEXP, SEXP nrowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
