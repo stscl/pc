@@ -227,12 +227,14 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list (when <code>libsizes</code> is <code>NULL</code>) or data.frame.
-If <code>libsizes</code> is <code>NULL</code>, a list with two components is returned:</p><dl><dt>causality</dt>
-<dd><p>A data.frame containing per-sample causality results.</p></dd>
+    <p>A list.</p><dl><dt>causality</dt>
+<dd><p>A data.frame of causality results. When <code>libsizes</code> is <code>NULL</code>, it contains
+per-sample causality estimates; otherwise, it contains causality results
+evaluated across different library sizes.</p></dd>
 
 <dt>summary</dt>
-<dd><p>A data.frame summarizing overall causality metrics.</p></dd>
+<dd><p>A data.frame summarizing overall causality metrics. Only returned when
+<code>libsizes</code> is <code>NULL</code>.</p></dd>
 
 
 </dl></div>
