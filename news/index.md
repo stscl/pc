@@ -4,8 +4,10 @@
 
 #### new
 
-- Provide [`fnn()`](https://stscl.github.io/pc/reference/fnn.md) generic
-  for *false nearest neighbors* method
+- Extend `pc` generic with visualization capabilities
+  ([\#55](https://github.com/stscl/pc/issues/55)).
+
+- Provide `fnn` generic for *false nearest neighbors* method
   ([\#49](https://github.com/stscl/pc/issues/49)).
 
 - Add Loess Plateau precipitation–soil moisture–NDVI case dataset
@@ -16,9 +18,7 @@
 
 #### enhancements
 
-- Enable method dispatch compatibility in
-  [`pc()`](https://stscl.github.io/pc/reference/pc.md) and
-  [`ops()`](https://stscl.github.io/pc/reference/ops.md) generics via
+- Enable method dispatch compatibility in `pc` and `ops` generics via
   `...` ([\#43](https://github.com/stscl/pc/issues/43)).
 
 - Improve handling of large-scale inputs
