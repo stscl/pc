@@ -18,6 +18,10 @@
 
 #### enhancements
 
+- Support sampling with and without replacement in the bootstrapped
+  version of pattern causality
+  ([\#58](https://github.com/stscl/pc/issues/58)).
+
 - Enable method dispatch compatibility in `pc` and `ops` generics via
   `...` ([\#43](https://github.com/stscl/pc/issues/43)).
 

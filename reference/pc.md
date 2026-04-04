@@ -18,7 +18,7 @@ pc(
   lib = NULL,
   pred = NULL,
   boot = 99,
-  random = TRUE,
+  replace = TRUE,
   seed = 42L,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
@@ -44,7 +44,7 @@ pc(
   lib = NULL,
   pred = NULL,
   boot = 99,
-  random = TRUE,
+  replace = TRUE,
   seed = 42L,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
@@ -71,7 +71,7 @@ pc(
   lib = NULL,
   pred = NULL,
   boot = 99,
-  random = TRUE,
+  replace = TRUE,
   seed = 42L,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
@@ -132,9 +132,9 @@ pc(
 
   (optional) Number of bootstraps to perform.
 
-- random:
+- replace:
 
-  (optional) Whether to use random sampling.
+  (optional) Should sampling be with replacement?
 
 - seed:
 
