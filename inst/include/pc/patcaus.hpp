@@ -224,7 +224,7 @@ namespace patcaus
         const size_t& h = 0,
         const std::string& dist_metric = "euclidean",
         size_t boot = 99,
-        bool random_sample = true,
+        bool replace_sampling = true,
         unsigned long long seed = 42,
         bool relative = true,
         bool weighted = true,
@@ -236,9 +236,6 @@ namespace patcaus
     // Step 1: Configure threads and random generators
     // --------------------------------------------------------------------------
     threads = std::min(static_cast<size_t>(std::thread::hardware_concurrency()), threads);
-
-    // Enforce boot = 1 for deterministic sampling
-    if (!random_sample) boot = 1;
 
     // Prebuild 64-bit RNG pool for reproducibility
     std::vector<std::mt19937_64> rng_pool(boot);
@@ -305,16 +302,30 @@ namespace patcaus
 
         auto process_boot = [&](size_t b) 
         {
-            std::vector<size_t> sampled_lib, sampled_pred;
+            std::vector<size_t> sampled_lib;
+            // std::vector<size_t> sampled_pred;
+            
+            if (boot == 1)
+            {
+                sampled_lib.assign(lib_indices.begin(), lib_indices.begin() + L);
+                // sampled_pred = sampled_lib;
+            }
+            else if (replace_sampling) 
+            {   
+                sampled_lib.resize(L);
+                std::uniform_int_distribution<size_t> dist(0, lib_indices.size() - 1);
 
-            if (random_sample) 
+                for (size_t i = 0; i < L; ++i)
+                {
+                    sampled_lib[i] = lib_indices[dist(rng_pool[b])];
+                }
+                // sampled_pred = sampled_lib;
+            } 
+            else 
             {
                 std::vector<size_t> shuffled_lib = lib_indices;
                 std::shuffle(shuffled_lib.begin(), shuffled_lib.end(), rng_pool[b]);
                 sampled_lib.assign(shuffled_lib.begin(), shuffled_lib.begin() + L);
-                // sampled_pred = sampled_lib;
-            } else {
-                sampled_lib.assign(lib_indices.begin(), lib_indices.begin() + L);
                 // sampled_pred = sampled_lib;
             }
 

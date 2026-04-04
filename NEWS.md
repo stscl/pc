@@ -12,6 +12,8 @@
 
 ### enhancements
 
+* Support sampling with and without replacement in the bootstrapped version of pattern causality (#58).
+
 * Enable method dispatch compatibility in `pc` and `ops` generics via `...` (#43).
 
 * Improve handling of large-scale inputs (#33).

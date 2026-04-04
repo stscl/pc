@@ -344,7 +344,7 @@ Rcpp::List RcppPCboot(
     int zero_tolerance = 0,
     const std::string& dist_metric = "euclidean",
     int boot = 99,
-    bool random_sample = true,
+    bool replace_sampling = true,
     int seed = 42,
     bool relative = true,
     bool weighted = true,
@@ -554,7 +554,7 @@ Rcpp::List RcppPCboot(
             static_cast<size_t>(std::abs(num_neighbors)),
             static_cast<size_t>(std::abs(zero_tolerance)),
             static_cast<size_t>(std::abs(h)), dist_metric, 
-            static_cast<size_t>(std::abs(boot)), random_sample, 
+            static_cast<size_t>(std::abs(boot)), replace_sampling, 
             static_cast<unsigned long long>(std::abs(seed)),
             relative, weighted, static_cast<size_t>(std::abs(threads)),
             static_cast<size_t>(std::abs(parallel_level)), verbose);
@@ -602,7 +602,7 @@ Rcpp::List RcppPCboot(
             static_cast<size_t>(std::abs(num_neighbors)),
             static_cast<size_t>(std::abs(zero_tolerance)),
             static_cast<size_t>(std::abs(h)), dist_metric, 
-            static_cast<size_t>(std::abs(boot)), random_sample, 
+            static_cast<size_t>(std::abs(boot)), replace_sampling, 
             static_cast<unsigned long long>(std::abs(seed)),
             relative, weighted, static_cast<size_t>(std::abs(threads)),
             static_cast<size_t>(std::abs(parallel_level)), verbose);

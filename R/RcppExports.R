@@ -9,8 +9,8 @@ RcppPC <- function(target, source, lib, pred, E, tau, style = 0L, num_neighbors 
     .Call(`_pc_RcppPC`, target, source, lib, pred, E, tau, style, num_neighbors, zero_tolerance, dist_metric, relative, weighted, threads, h, nb, nrows)
 }
 
-RcppPCboot <- function(target, source, libsizes, lib, pred, E, tau, style = 0L, num_neighbors = 4L, zero_tolerance = 0L, dist_metric = "euclidean", boot = 99L, random_sample = TRUE, seed = 42L, relative = TRUE, weighted = TRUE, threads = 1L, parallel_level = 0L, verbose = FALSE, h = 0L, nb = NULL, nrows = NULL) {
-    .Call(`_pc_RcppPCboot`, target, source, libsizes, lib, pred, E, tau, style, num_neighbors, zero_tolerance, dist_metric, boot, random_sample, seed, relative, weighted, threads, parallel_level, verbose, h, nb, nrows)
+RcppPCboot <- function(target, source, libsizes, lib, pred, E, tau, style = 0L, num_neighbors = 4L, zero_tolerance = 0L, dist_metric = "euclidean", boot = 99L, replace_sampling = TRUE, seed = 42L, relative = TRUE, weighted = TRUE, threads = 1L, parallel_level = 0L, verbose = FALSE, h = 0L, nb = NULL, nrows = NULL) {
+    .Call(`_pc_RcppPCboot`, target, source, libsizes, lib, pred, E, tau, style, num_neighbors, zero_tolerance, dist_metric, boot, replace_sampling, seed, relative, weighted, threads, parallel_level, verbose, h, nb, nrows)
 }
 
 RcppPCops <- function(target, source, lib, pred, E, tau, k, maximize = "positive", style = 0L, zero_tolerance = 0L, dist_metric = "euclidean", relative = TRUE, weighted = TRUE, threads = 1L, parallel_level = 0L, h = 0L, nb = NULL, nrows = NULL) {

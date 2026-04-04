@@ -1,5 +1,5 @@
 .pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
-           random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
+           replace = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
            relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, h = 0, ...) {
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
@@ -12,12 +12,12 @@
                   dist.metric, relative, weighted, threads, h, NULL, NULL))
   } else {
     return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
-                      random, seed, relative, weighted, threads, higher.parallel, verbose, h, NULL, NULL))
+                      replace, seed, relative, weighted, threads, higher.parallel, verbose, h, NULL, NULL))
   }
 }
 
 .pc_lattice = \(data, target, source, libsizes = NULL, E = 3, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
-                random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k), 
+                replace = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k), 
                 relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, detrend = FALSE, nb = NULL, ...) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
   dist.metric = match.arg(dist.metric)
@@ -31,12 +31,12 @@
                   dist.metric, relative, weighted, threads, 0, nb, NULL))
   } else {
     return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
-                      random, seed, relative, weighted, threads, higher.parallel, verbose, 0, nb, NULL))
+                      replace, seed, relative, weighted, threads, higher.parallel, verbose, 0, nb, NULL))
   }
 }
 
 .pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
-             random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k), 
+             replace = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k), 
              relative = TRUE, weighted = TRUE, threads = length(libsizes), higher.parallel = TRUE, verbose = TRUE, detrend = FALSE, ...) {
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source, detrend)
@@ -48,7 +48,7 @@
     return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, dist.metric,
                   relative, weighted, threads, 0, NULL, terra::nrow(data)))
   } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, random,
+    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, replace,
                       seed, relative, weighted, threads, higher.parallel, verbose, 0, NULL, terra::nrow(data)))
   }
 }
@@ -60,7 +60,7 @@
 #' @param libsizes (optional) Number of observations used.
 #' @param k (optional) Number of nearest neighbors used for projection.
 #' @param boot (optional) Number of bootstraps to perform.
-#' @param random (optional) Whether to use random sampling.
+#' @param replace (optional) Should sampling be with replacement?
 #' @param seed (optional) Random seed.
 #' @param zero.tolerance (optional) Maximum number of zeros tolerated in signature space.
 #' @param relative (optional) Whether to calculate relative changes in embedding.
