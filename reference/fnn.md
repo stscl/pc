@@ -143,13 +143,13 @@ construction. Physical Review A 45, 3403–3411.
 ## Examples
 
 ``` r
-columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::fnn(columbus, 1, threads = 1)
+crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
+pc::fnn(crash, 1, threads = 1)
 #> [fnn] Output 'E:i' corresponds to the i-th valid embedding dimension.
 #> [fnn] Input E values exceeding max embeddable dimension were truncated.
 #> [fnn] Please map output indices to original E inputs before interpretation.
-#>        E:1        E:2        E:3        E:4        E:5        E:6        E:7 
-#> 0.73469388 0.12244898 0.00000000 0.12244898 0.06122449 0.00000000 0.00000000 
-#>        E:8 
-#> 0.00000000 
+#>         E:1         E:2         E:3         E:4         E:5         E:6 
+#> 0.622093023 0.209302326 0.029069767 0.005813953 0.023255814 0.005813953 
+#>         E:7         E:8         E:9 
+#> 0.000000000 0.005813953 0.000000000 
 ```

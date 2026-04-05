@@ -245,12 +245,38 @@ evaluated across different library sizes.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">columbus</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"case/columbus.gpkg"</span>, package<span class="op">=</span><span class="st">"spEDM"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">pc</span><span class="fu">::</span><span class="fu">pc</span><span class="op">(</span><span class="va">columbus</span>, <span class="fl">1</span>, <span class="fl">3</span>, E <span class="op">=</span> <span class="fl">3</span>, k <span class="op">=</span> <span class="fl">5</span>, threads <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       type  strength</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 positive 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 negative 0.5149933</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     dark 0.2102039</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">crash</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"case/crash.gpkg"</span>, package <span class="op">=</span> <span class="st">"pc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p1</span> <span class="op">=</span> <span class="fu">pc</span><span class="fu">::</span><span class="fu">pc</span><span class="op">(</span><span class="va">crash</span>, <span class="fl">1</span>, <span class="fl">2</span>, E <span class="op">=</span> <span class="fl">8</span>, k <span class="op">=</span> <span class="fl">8</span>, threads <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       type   strength</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 positive 0.49969746</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 negative 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     dark 0.01034483</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="pc-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convergence diagnostics</span></span></span>
+<span class="r-in"><span><span class="va">p2</span> <span class="op">=</span> <span class="fu">pc</span><span class="fu">::</span><span class="fu">pc</span><span class="op">(</span><span class="va">crash</span>, <span class="fl">1</span>, <span class="fl">2</span>, libsizes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">172</span>,<span class="fl">40</span><span class="op">)</span>, E <span class="op">=</span> <span class="fl">8</span>, k <span class="op">=</span> <span class="fl">8</span>, threads <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Computing: [========================================] 100% (done)                         </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    libsizes     type        mean         q05        q50        q95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        10 positive 0.015376669 0.000000000 0.00000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        50 positive 0.063568472 0.000000000 0.00000000 0.49977149</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        90 positive 0.136579574 0.000000000 0.00000000 0.99815552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       130 positive 0.186631291 0.000000000 0.00000000 0.99890072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       170 positive 0.476135903 0.299818474 0.49969746 0.49969746</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        10 negative 0.011110787 0.000000000 0.00000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        50 negative 0.065172928 0.000000000 0.00000000 0.49995337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        90 negative 0.005044505 0.000000000 0.00000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       130 negative 0.000000000 0.000000000 0.00000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      170 negative 0.000000000 0.000000000 0.00000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       10     dark 0.012385738 0.000000000 0.01067757 0.02948670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       50     dark 0.017525127 0.002500290 0.01653382 0.03506015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       90     dark 0.022218695 0.006429697 0.02189141 0.04178204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      130     dark 0.021216780 0.006645161 0.01973684 0.04173889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      170     dark 0.011373253 0.006891828 0.01034483 0.01765704</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="pc-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
