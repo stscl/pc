@@ -166,7 +166,7 @@ namespace distance
     inline double distance(
         const std::vector<double>& vec,
         const double scalar,
-        std::string method = "euclidean",
+        const std::string& method = "euclidean",
         bool na_rm = true)
     {
         if (vec.empty() || std::isnan(scalar))
@@ -225,7 +225,7 @@ namespace distance
     inline double distance(
         const double scalar,
         const std::vector<double>& vec,
-        std::string method = "euclidean",
+        const std::string& method = "euclidean",
         bool na_rm = true)
     {
         return distance(vec, scalar, method, na_rm);
@@ -263,7 +263,7 @@ namespace distance
     inline double distance(
         const std::vector<double>& vec1,
         const std::vector<double>& vec2,
-        std::string method = "euclidean",
+        const std::string& method = "euclidean",
         bool na_rm = true)
     {   
         if (vec1.empty() || vec2.empty() || vec1.size() != vec2.size())
@@ -383,7 +383,7 @@ namespace distance
      ***************************************************************************/
     inline std::vector<std::vector<double>> distance(
         const std::vector<std::vector<double>>& mat,
-        std::string method = "euclidean",
+        const std::string& method = "euclidean",
         bool na_rm = true,
         bool byrow = true)
     {
@@ -510,7 +510,7 @@ namespace distance
         const std::vector<std::vector<double>>& mat,
         const std::vector<size_t>& lib,
         const std::vector<size_t>& pred,
-        std::string method = "euclidean",
+        const std::string& method = "euclidean",
         bool na_rm = true,
         bool byrow = true)
     {
