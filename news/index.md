@@ -4,14 +4,14 @@
 
 #### new
 
+- Document and maintain built-in case datasets for reproducible analysis
+  ([\#61](https://github.com/stscl/pc/issues/61)).
+
 - Extend `pc` generic with visualization capabilities
   ([\#55](https://github.com/stscl/pc/issues/55)).
 
 - Provide `fnn` generic for *false nearest neighbors* method
   ([\#49](https://github.com/stscl/pc/issues/49)).
-
-- Add Loess Plateau precipitation–soil moisture–NDVI case dataset
-  ([\#41](https://github.com/stscl/pc/issues/41)).
 
 - Support linear trend removal for spatial cross-sectional data
   ([\#36](https://github.com/stscl/pc/issues/36)).
