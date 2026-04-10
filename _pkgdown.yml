@@ -1,4 +1,3 @@
-
 url: https://stscl.github.io/pc/
 template:
   bootstrap: 5
@@ -14,8 +13,8 @@ navbar:
   #   articles:
   #     text: Vignettes
   #     menu:
-  #     - text: Synergistic-Unique-Redundant Decomposition of Causality
-  #       href: articles/surd.html
+  #     - text: Pattern Causality Analysis
+  #       href: articles/pc.html
 
 home:
   title: |
