@@ -4,6 +4,8 @@
 
 ## pc 0.2
 
+CRAN release: 2026-04-10
+
 #### new
 
 - Document and maintain built-in case datasets for reproducible analysis
