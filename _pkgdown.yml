@@ -9,12 +9,12 @@ navbar:
     right:  [search, github]
     left: [reference, articles, news]
   bg: custom
-  # components:
-  #   articles:
-  #     text: Vignettes
-  #     menu:
-  #     - text: Pattern Causality Analysis
-  #       href: articles/pc.html
+  components:
+    articles:
+      text: Vignettes
+      menu:
+      - text: Pattern Causality Analysis
+        href: articles/pc.html
 
 home:
   title: |

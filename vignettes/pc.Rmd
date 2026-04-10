@@ -1,0 +1,26 @@
+---
+title: "Pattern Causality Analysis"
+author: "Wenbo Lyu"
+date: |
+  | Last update: 2026-04-10
+  | Last run: `r Sys.Date()`
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/pc/"
+)
+```
+
+## Model principles
+
+The methodological details are pending peer review and will be made available thereafter.
+
+## Usage examples
