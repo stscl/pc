@@ -1,4 +1,4 @@
-.onLoad = function(...) {
+.onLoad = \(...) {
   loadNamespace("sf")
   loadNamespace("terra")
 }

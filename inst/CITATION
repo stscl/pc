@@ -5,6 +5,6 @@ bibentry(
   title    = "{pc: Pattern Causality Analysis}",
   author   = "Wenbo Lyu",
   year     = "2026",
-  note     = "R package version 0.1",
+  note     = "R package version 0.2",
   doi      = "10.32614/CRAN.package.pc"
 )
