@@ -9,7 +9,7 @@ False Nearest Neighbors
 fnn(
   data,
   target,
-  E = 2:10,
+  E = 10,
   k = 1,
   tau = 1,
   style = 1,
@@ -27,7 +27,7 @@ fnn(
 fnn(
   data,
   target,
-  E = 3:10,
+  E = 10,
   k = 1,
   tau = 1,
   style = 1,
@@ -47,7 +47,7 @@ fnn(
 fnn(
   data,
   target,
-  E = 3:10,
+  E = 10,
   k = 1,
   tau = 1,
   style = 1,
@@ -145,9 +145,9 @@ construction. Physical Review A 45, 3403–3411.
 ``` r
 crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
 pc::fnn(crash, 1, threads = 1)
-#> [fnn] Output 'E:i' corresponds to the i-th valid embedding dimension.
-#> [fnn] Input E values exceeding max embeddable dimension were truncated.
-#> [fnn] Please map output indices to original E inputs before interpretation.
+#> [fnn] Input E values exceeding max embeddable dimension were truncated, and values < 2 were clamped to 2.
+#> [fnn] Max embedding dimension E_max is auto-computed, with results returned for dimensions 1 through E_max.
+#> [fnn] Output 'E:i' (where i = 1 to E_max-1) corresponds to the comparison between dimension i and i+1.
 #>         E:1         E:2         E:3         E:4         E:5         E:6 
 #> 0.622093023 0.209302326 0.029069767 0.005813953 0.023255814 0.005813953 
 #>         E:7         E:8         E:9 
