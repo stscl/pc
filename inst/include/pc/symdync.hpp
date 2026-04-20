@@ -173,7 +173,7 @@ namespace symdync
     * @return          Signature space matrix [n_rows x (n_cols - 1)].
     * @throws std::invalid_argument if input is empty or has fewer than 2 columns.
     */
-    inline std::vector<std::vector<double>> GenSignatureSpace(
+    inline std::vector<std::vector<double>> genSignatureSpace(
         const std::vector<std::vector<double>>& mat,
         bool relative = false
     ) {
@@ -205,7 +205,7 @@ namespace symdync
 
                 // NaN diff remains NaN
                 if (!std::isnan(diff)) {
-                    if (NumericUtils::doubleNearlyEqual(diff, 0.0)) {
+                    if (pc::numericutils::doubleNearlyEqual(diff, 0.0)) {
                         out_row[j] = 0.0;
                     } else if (relative) {
                         out_row[j] = diff / row[j];
@@ -263,7 +263,7 @@ namespace symdync
     * @param na_rm  Whether to remove rows containing NaN.
     * @return       Vector of encoded patterns.
     */
-    inline std::vector<std::vector<uint8_t>> GenPatternSpace(
+    inline std::vector<std::vector<uint8_t>> genPatternSpace(
         const std::vector<std::vector<double>>& mat,
         bool na_rm = true
     ) {
@@ -288,7 +288,7 @@ namespace symdync
                     has_nan = true;
                     pat.push_back(static_cast<uint8_t>(0));
                 }
-                else if (NumericUtils::doubleNearlyEqual(v, 0.0)) {
+                else if (pc::numericutils::doubleNearlyEqual(v, 0.0)) {
                     pat.push_back(static_cast<uint8_t>(2));
                 }
                 else if (v > 0.0) {
@@ -335,7 +335,7 @@ namespace symdync
     * @return          Symbolic pattern matrix [n_rows x (n_cols - 1)], each row is a uint8_t vector.
     * @throws std::invalid_argument if input is empty or has fewer than 2 columns.
     */
-    inline std::vector<std::vector<uint8_t>> GenSymbolicPattern(
+    inline std::vector<std::vector<uint8_t>> genSymbolicPattern(
         const std::vector<std::vector<double>>& mat,
         bool relative = false,
         bool na_rm = true
@@ -374,7 +374,7 @@ namespace symdync
                     pat.push_back(static_cast<uint8_t>(0));
                     has_nan = true;
                 } 
-                else if (NumericUtils::doubleNearlyEqual(diff, 0.0)) {
+                else if (pc::numericutils::doubleNearlyEqual(diff, 0.0)) {
                     pat.push_back(static_cast<uint8_t>(2));
                 } 
                 else if (diff > 0.0) {
