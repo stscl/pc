@@ -740,64 +740,38 @@ namespace symdync
         }
 
         /* ------------------------------------------------------------
-        *  7. Normalize heatmap
-        * ------------------------------------------------------------ */
+         * 7. Normalize + aggregate
+         * ------------------------------------------------------------ */
+        std::vector<double> diag_vals, anti_vals, other_vals;
+
         for (size_t i = 0; i < K; ++i)
         {
             for (size_t j = 0; j < K; ++j)
             {
-                if (counts[i][j] > 0)
-                    heatmap[i][j] /= static_cast<double>(counts[i][j]);
+                if (counts[i][j] == 0) continue;
+
+                double val = heatmap[i][j] / counts[i][j];
+
+                if (i == j)
+                    diag_vals.push_back(val);
+                else if (j == opposite_id[i])
+                    anti_vals.push_back(val);
                 else
-                    heatmap[i][j] = std::numeric_limits<double>::quiet_NaN();
+                    other_vals.push_back(val);
             }
         }
 
-        /* ------------------------------------------------------------
-        *  8. Aggregated metrics
-        * ------------------------------------------------------------ */
-        std::vector<double> diag_vals;
-        std::vector<double> anti_vals;
-        std::vector<double> other_vals;
-
-        for (size_t i = 0; i < K; ++i)
+        auto mean = [](const std::vector<double>& v)
         {
-            if (!std::isnan(heatmap[i][i]))
-                diag_vals.push_back(heatmap[i][i]);
-
-            size_t anti_j = K - 1 - i;
-
-            if (!std::isnan(heatmap[i][anti_j]))
-                anti_vals.push_back(heatmap[i][anti_j]);
-
-            for (size_t j = 0; j < K; ++j)
-            {
-                if (j == i || j == anti_j) continue;
-                if (!std::isnan(heatmap[i][j]))
-                    other_vals.push_back(heatmap[i][j]);
-            }
-        }
-
-        auto nanmean = [](const std::vector<double>& v)
-        {
-            double s = 0.0;
-            size_t c = 0;
-            for (double x : v)
-            {
-                if (!std::isnan(x))
-                {
-                    s += x;
-                    ++c;
-                }
-            }
-            return c > 0
-                ? s / static_cast<double>(c)
-                : std::numeric_limits<double>::quiet_NaN();
+            if (v.empty()) return std::numeric_limits<double>::quiet_NaN();
+            double s = 0;
+            for (double x : v) s += x;
+            return s / v.size();
         };
 
-        res.TotalPositive = nanmean(diag_vals);
-        res.TotalNegative = nanmean(anti_vals);
-        res.TotalDark     = nanmean(other_vals);
+        res.TotalPositive = mean(diag_vals);
+        res.TotalNegative = mean(anti_vals);
+        res.TotalDark     = mean(other_vals);
 
         return res;
     }
