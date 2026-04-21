@@ -628,8 +628,33 @@ namespace symdync
         if (K == 0) return res;
 
         /* ------------------------------------------------------------
-        *  4. Heatmap structures
-        * ------------------------------------------------------------ */
+         * 4. Precompute opposite index
+         * ------------------------------------------------------------ */
+        std::vector<size_t> opposite_id(K);
+
+        for (size_t i = 0; i < K; ++i)
+        {
+            auto opp = all_patterns[i];
+            for (auto& v : opp)
+            {
+                if (v == 1) v = 3;
+                else if (v == 3) v = 1;
+            }
+
+            auto it = std::lower_bound(all_patterns.begin(), all_patterns.end(), opp);
+            opposite_id[i] = std::distance(all_patterns.begin(), it);
+        }
+
+        /* ------------------------------------------------------------
+         *  5. Init result
+         * ------------------------------------------------------------ */
+        res.NoCausality.assign(n, 0.0);
+        res.PositiveCausality.assign(n, 0.0);
+        res.NegativeCausality.assign(n, 0.0);
+        res.DarkCausality.assign(n, 0.0);
+        res.PatternTypes.reserve(n);
+        res.RealLoop.reserve(n);
+
         std::vector<std::vector<double>> heatmap(
             K, std::vector<double>(K, std::numeric_limits<double>::quiet_NaN())
         );
@@ -638,18 +663,7 @@ namespace symdync
             K, std::vector<size_t>(K, 0)
         );
 
-        res.NoCausality.assign(n, 0.0);
-        res.PositiveCausality.assign(n, 0.0);
-        res.NegativeCausality.assign(n, 0.0);
-        res.DarkCausality.assign(n, 0.0);
-        res.PatternTypes.reserve(n);
-        res.RealLoop.reserve(n);
-
-        const double midpoint = static_cast<double>(K - 1) / 2.0;
-
-        /* ------------------------------------------------------------
-        *  5. Norm utility
-        * ------------------------------------------------------------ */
+        // Norm utility
         auto norm_ignore_nan = [](const std::vector<double>& v)
         {
             double sum = 0.0;
@@ -659,8 +673,8 @@ namespace symdync
         };
 
         /* ------------------------------------------------------------
-        *  6. Main loop
-        * ------------------------------------------------------------ */
+         *  6. Main loop
+         * ------------------------------------------------------------ */
         for (size_t t = 0; t < n; ++t)
         {
             if (contains_zero(PX[t]) ||
