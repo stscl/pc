@@ -74,7 +74,7 @@ std::vector<std::vector<double>> projection(
 
   // Output containers: same size as SMy
   std::vector<std::vector<double>> pred_signatures(
-      n_obs,std::vector<double>(n_sig_dim,std::numeric_limits<double>::quiet_NaN()));
+      n_obs,std::vector<double>(n_sig_dim, std::numeric_limits<double>::quiet_NaN()));
 
   if (SMy.empty() || Dx.empty() || lib_indices.empty() || pred_indices.empty()) {
     return pred_signatures;
