@@ -241,7 +241,10 @@ std::vector<std::vector<double>> projection(
 
       for (size_t i = 0; i < k; ++i) {
         size_t lib_row = valid_libs[neighbor_indices[i]];
-        double val = SMy[lib_row][dim];
+        // double val = SMy[lib_row][dim]; // no projection horizon
+        size_t target_row = lib_row + h;
+        if (target_row >= n_obs) continue;
+        double val = SMy[target_row][dim];
         if (std::isnan(val)) continue;
         if (pc::numericutils::doubleNearlyEqual(val,0.0)) zero_count++;
         weighted_sum += val * weights[i];
