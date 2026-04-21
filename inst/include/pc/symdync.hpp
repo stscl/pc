@@ -534,121 +534,6 @@ namespace symdync
         double TotalDark     = std::numeric_limits<double>::quiet_NaN();
     };
 
-    /***************************************************************
-     *  Build Pattern Index and Opposite Mapping
-     *
-     *  This function:
-     *    1. Collects all valid patterns from X, Y_real, Y_pred
-     *    2. Removes patterns containing symbol 0
-     *    3. Deduplicates via sort + unique
-     *    4. Adds symmetric opposite patterns (1 <-> 3)
-     *    5. Builds a deterministic lexicographic pattern space
-     *    6. Precomputes opposite pattern mapping (ID -> ID)
-     *
-     *  Output:
-     *    patterns : sorted unique pattern space
-     *    opp_id   : mapping from pattern ID to its opposite ID
-     *
-     *  Notes:
-     *    - Pattern IDs are 1-based (0 reserved for invalid)
-     *    - No hash is used, deterministic ordering is preserved
-    ***************************************************************/
-    inline void buildPatternIndex(
-        const std::vector<std::vector<uint8_t>>& PX,
-        const std::vector<std::vector<uint8_t>>& PY_real,
-        const std::vector<std::vector<uint8_t>>& PY_pred,
-        std::vector<std::vector<uint8_t>>& patterns,
-        std::vector<size_t>& opp_id
-    )
-    {
-        const size_t n = PX.size();
-
-        // Utility: check if pattern contains invalid symbol
-        auto contains_zero = [](const std::vector<uint8_t>& p)
-        {
-            for (uint8_t v : p)
-                if (v == 0) return true;
-            return false;
-        };
-
-        // ------------------------------------------------------------
-        // 1. Collect valid patterns
-        // ------------------------------------------------------------
-        std::vector<std::vector<uint8_t>> all_patterns;
-        all_patterns.reserve(n * 3);
-
-        for (size_t i = 0; i < n; ++i)
-        {
-            if (!contains_zero(PX[i]))       all_patterns.push_back(PX[i]);
-            if (!contains_zero(PY_real[i]))  all_patterns.push_back(PY_real[i]);
-            if (!contains_zero(PY_pred[i]))  all_patterns.push_back(PY_pred[i]);
-        }
-
-        if (all_patterns.empty()) return;
-
-        // ------------------------------------------------------------
-        // 2. Deduplicate
-        // ------------------------------------------------------------
-        std::sort(all_patterns.begin(), all_patterns.end());
-        all_patterns.erase(
-            std::unique(all_patterns.begin(), all_patterns.end()),
-            all_patterns.end()
-        );
-
-        // ------------------------------------------------------------
-        // 3. Symmetric closure (1 <-> 3)
-        // ------------------------------------------------------------
-        size_t base_size = all_patterns.size();
-
-        for (size_t i = 0; i < base_size; ++i)
-        {
-            std::vector<uint8_t> opp = all_patterns[i];
-
-            for (auto& v : opp)
-            {
-                if (v == 1) v = 3;
-                else if (v == 3) v = 1;
-            }
-
-            all_patterns.push_back(std::move(opp));
-        }
-
-        // Deduplicate again
-        std::sort(all_patterns.begin(), all_patterns.end());
-        all_patterns.erase(
-            std::unique(all_patterns.begin(), all_patterns.end()),
-            all_patterns.end()
-        );
-
-        patterns = all_patterns;
-
-        const size_t K = patterns.size();
-
-        // ------------------------------------------------------------
-        // 4. Build opposite mapping (ID-based)
-        // ------------------------------------------------------------
-        opp_id.assign(K + 1, 0); // 1-based indexing
-
-        for (size_t i = 0; i < K; ++i)
-        {
-            std::vector<uint8_t> opp = patterns[i];
-
-            for (auto& v : opp)
-            {
-                if (v == 1) v = 3;
-                else if (v == 3) v = 1;
-            }
-
-            auto it = std::lower_bound(patterns.begin(), patterns.end(), opp);
-
-            if (it != patterns.end())
-            {
-                size_t j = std::distance(patterns.begin(), it);
-                opp_id[i + 1] = j + 1;
-            }
-        }
-    }
-
     /**
      * Compute symbolic pattern causality between X and Y.
      *
@@ -741,8 +626,6 @@ namespace symdync
 
         const size_t K = all_patterns.size();
         if (K == 0) return res;
-
-        res.PatternSpace = all_patterns;
 
         /* ------------------------------------------------------------
         *  4. Heatmap structures
@@ -899,8 +782,6 @@ namespace symdync
         res.TotalPositive = nanmean(diag_vals);
         res.TotalNegative = nanmean(anti_vals);
         res.TotalDark     = nanmean(other_vals);
-
-        res.Heatmap = std::move(heatmap);
 
         return res;
     }
