@@ -699,6 +699,7 @@ namespace symdync
                     (norm_ignore_nan(SMy[t]) + 1e-6))
                 : 1.0;
 
+            /* --- index lookup --- */
             auto it_i = std::lower_bound(all_patterns.begin(), all_patterns.end(), PX[t]);
             auto it_j = std::lower_bound(all_patterns.begin(), all_patterns.end(), PY_pred[t]);
 
@@ -708,12 +709,13 @@ namespace symdync
             size_t i = std::distance(all_patterns.begin(), it_i);
             size_t j = std::distance(all_patterns.begin(), it_j);
 
-            if (i == j && static_cast<double>(i) != midpoint)
+            /* --- classification (correct version) --- */
+            if (i == j)
             {
                 res.PositiveCausality[t] = strength;
                 res.PatternTypes.push_back(1);
             }
-            else if ((i + j) == (K - 1) && static_cast<double>(i) != midpoint)
+            else if (j == opposite_id[i])
             {
                 res.NegativeCausality[t] = strength;
                 res.PatternTypes.push_back(2);
@@ -724,6 +726,7 @@ namespace symdync
                 res.PatternTypes.push_back(3);
             }
 
+            /* --- heatmap --- */
             if (std::isnan(heatmap[i][j]))
             {
                 heatmap[i][j] = strength;
