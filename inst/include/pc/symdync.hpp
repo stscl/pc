@@ -523,10 +523,10 @@ namespace symdync
         // 1: Positive
         // 2: Negative
         // 3: Dark
-        std::vector<int> PatternTypes;
+        std::vector<size_t> PatternTypes;
 
         // Indices of valid observations (after filtering)
-        std::vector<int> RealLoop;
+        std::vector<size_t> RealLoop;
 
         // Aggregated statistics (mean over valid entries)
         double TotalPositive = std::numeric_limits<double>::quiet_NaN();
@@ -682,7 +682,7 @@ namespace symdync
                 contains_zero(PY_pred[t]))
                 continue;
 
-            res.RealLoop.push_back(static_cast<int>(t));
+            res.RealLoop.push_back(t);
 
             /* --- causality existence --- */
             if (PY_pred[t] != PY_real[t])
