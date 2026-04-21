@@ -1,3 +1,6 @@
+#ifndef PC_PROJECTION_HPP
+#define PC_PROJECTION_HPP
+
 #include <vector>
 #include <cmath>
 #include <algorithm>
@@ -6,8 +9,14 @@
 #include "pc/numericutils.h"
 #include <RcppThread.h>
 
+namespace pc
+{
+
+namespace projection
+{ 
+
 /**
- * @brief Predicts signature vectors for a subset of target points using weighted nearest neighbors.
+ * Predicts signature vectors for a subset of target points using weighted nearest neighbors.
  *
  * This function performs local weighted prediction in the signature space as follows:
  *   1. For each prediction index `p` in `pred_indices`, find its `num_neighbors` nearest neighbors
@@ -252,3 +261,9 @@ std::vector<std::vector<double>> projection(
 
   return pred_signatures;
 }
+
+} // namespace projection
+
+}
+
+#endif // PC_PROJECTION_HPP
