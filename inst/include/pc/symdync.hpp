@@ -397,8 +397,7 @@ namespace symdync
      * Compute sign agreement proportions between two pattern spaces.
      *
      * This function compares two symbolic pattern spaces and evaluates the 
-     * proportion of positive and
-     * negative sign agreements.
+     * proportion of positive and negative sign agreements.
      *
      * Comparison logic:
      *
