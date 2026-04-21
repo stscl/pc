@@ -150,29 +150,29 @@ namespace pc
 namespace symdync
 {
     /**
-    * @brief Computes the Signature Space Matrix from a State Space Matrix.
-    *
-    * This function transforms a state space matrix into a signature space matrix by
-    * computing the differences between successive elements in each row. The transformation
-    * captures dynamic patterns in state space.
-    *
-    * For each row in the input matrix:
-    * - If relative == true, computes relative changes: (x[i+1] - x[i]) / x[i]
-    * - If relative == false, computes absolute changes: x[i+1] - x[i]
-    *
-    * The output matrix has the same number of rows as the input, but the number of columns
-    * is reduced by one.
-    *
-    * Special handling:
-    * - Input validation (non-empty, at least 2 columns)
-    * - When the difference is numerically zero, the signature value is set to 0.0
-    * - NaN values propagate naturally
-    *
-    * @param mat       Input state space matrix [n_rows x n_cols].
-    * @param relative  If true, compute relative change, otherwise absolute change.
-    * @return          Signature space matrix [n_rows x (n_cols - 1)].
-    * @throws std::invalid_argument if input is empty or has fewer than 2 columns.
-    */
+     * Computes the Signature Space Matrix from a State Space Matrix.
+     *
+     * This function transforms a state space matrix into a signature space matrix by
+     * computing the differences between successive elements in each row. The transformation
+     * captures dynamic patterns in state space.
+     *
+     * For each row in the input matrix:
+     * - If relative == true, computes relative changes: (x[i+1] - x[i]) / x[i]
+     * - If relative == false, computes absolute changes: x[i+1] - x[i]
+     *
+     * The output matrix has the same number of rows as the input, but the number of columns
+     * is reduced by one.
+     *
+     * Special handling:
+     * - Input validation (non-empty, at least 2 columns)
+     * - When the difference is numerically zero, the signature value is set to 0.0
+     * - NaN values propagate naturally
+     *
+     * @param mat       Input state space matrix [n_rows x n_cols].
+     * @param relative  If true, compute relative change, otherwise absolute change.
+     * @return          Signature space matrix [n_rows x (n_cols - 1)].
+     * @throws std::invalid_argument if input is empty or has fewer than 2 columns.
+     */
     inline std::vector<std::vector<double>> genSignatureSpace(
         const std::vector<std::vector<double>>& mat,
         bool relative = false
