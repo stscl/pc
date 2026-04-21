@@ -220,49 +220,49 @@ namespace symdync
     }
 
     /**
-    * @brief Converts a continuous signature space matrix into a discrete
-    *        pattern representation using compact uint8 encoding.
-    *
-    * Each numerical signature value is mapped to a categorical symbol:
-    *
-    *   Encoding:
-    *     0  -> NA / undefined (NaN)
-    *     1  -> negative change   (value < 0)
-    *     2  -> no change         (value == 0)
-    *     3  -> positive change   (value > 0)
-    *
-    * Output type:
-    *   std::vector<std::vector<uint8_t>>
-    *   Each inner vector represents one pattern instance.
-    *
-    * Behavior controlled by na_rm:
-    *
-    *   na_rm = true (default)
-    *     - If a row contains any NaN, the entire pattern is replaced by a
-    *       single-element vector {0}.
-    *
-    *   na_rm = false
-    *     - All rows are encoded.
-    *     - NaN values are encoded as 0 inside the pattern vector.
-    *
-    * Example:
-    *
-    *   Input row:
-    *     [ 0.1, -0.2, 0.0, NaN ]
-    *
-    *   na_rm = true  -> {0}
-    *   na_rm = false -> {3, 1, 2, 0}
-    *
-    * Design rationale:
-    *   - uint8_t encoding is memory efficient and cache friendly.
-    *   - Avoids string allocation and hashing overhead.
-    *   - Directly compatible with high performance information theoretic
-    *     estimators and bit packing pipelines.
-    *
-    * @param mat    Input signature matrix [n_rows x n_cols], may contain NaN.
-    * @param na_rm  Whether to remove rows containing NaN.
-    * @return       Vector of encoded patterns.
-    */
+     * Converts a continuous signature space matrix into a discrete
+     * pattern representation using compact uint8 encoding.
+     *
+     * Each numerical signature value is mapped to a categorical symbol:
+     *
+     *   Encoding:
+     *     0  -> NA / undefined (NaN)
+     *     1  -> negative change   (value < 0)
+     *     2  -> no change         (value == 0)
+     *     3  -> positive change   (value > 0)
+     *
+     * Output type:
+     *   std::vector<std::vector<uint8_t>>
+     *   Each inner vector represents one pattern instance.
+     *
+     * Behavior controlled by na_rm:
+     *
+     *   na_rm = true (default)
+     *     - If a row contains any NaN, the entire pattern is replaced by a
+     *       single-element vector {0}.
+     *
+     *   na_rm = false
+     *     - All rows are encoded.
+     *     - NaN values are encoded as 0 inside the pattern vector.
+     *
+     * Example:
+     *
+     *   Input row:
+     *     [ 0.1, -0.2, 0.0, NaN ]
+     *
+     *   na_rm = true  -> {0}
+     *   na_rm = false -> {3, 1, 2, 0}
+     *
+     * Design rationale:
+     *   - uint8_t encoding is memory efficient and cache friendly.
+     *   - Avoids string allocation and hashing overhead.
+     *   - Directly compatible with high performance information theoretic
+     *     estimators and bit packing pipelines.
+     *
+     * @param mat    Input signature matrix [n_rows x n_cols], may contain NaN.
+     * @param na_rm  Whether to remove rows containing NaN.
+     * @return       Vector of encoded patterns.
+     */
     inline std::vector<std::vector<uint8_t>> genPatternSpace(
         const std::vector<std::vector<double>>& mat,
         bool na_rm = true
