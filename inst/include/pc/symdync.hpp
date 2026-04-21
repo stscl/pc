@@ -684,22 +684,20 @@ namespace symdync
 
             res.RealLoop.push_back(static_cast<int>(t));
 
-            double strength = 0.0;
-
-            if (PY_pred[t] == PY_real[t])
+            /* --- causality existence --- */
+            if (PY_pred[t] != PY_real[t])
             {
-                strength = weighted
-                    ? std::erf(
-                        norm_ignore_nan(pred_SMy[t]) /
-                        (norm_ignore_nan(SMy[t]) + 1e-6))
-                    : 1.0;
-            }
-            else 
-            {   
                 res.NoCausality[t] = 1.0;
                 res.PatternTypes.push_back(0);
                 continue;
             }
+
+            /* --- strength --- */
+            double strength = weighted
+                ? std::erf(
+                    norm_ignore_nan(pred_SMy[t]) /
+                    (norm_ignore_nan(SMy[t]) + 1e-6))
+                : 1.0;
 
             auto it_i = std::lower_bound(all_patterns.begin(), all_patterns.end(), PX[t]);
             auto it_j = std::lower_bound(all_patterns.begin(), all_patterns.end(), PY_pred[t]);
