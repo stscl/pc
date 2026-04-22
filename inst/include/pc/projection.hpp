@@ -75,7 +75,7 @@ namespace projection
  *
  * @return A matrix of predicted signature vectors, sized SMy.size() × (E−1).
  */
-std::vector<std::vector<double>> projection(
+inline std::vector<std::vector<double>> projection(
     const std::vector<std::vector<double>>& SMy,
     const std::vector<std::vector<double>>& Dx,
     const std::vector<size_t>& lib_indices,
