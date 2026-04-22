@@ -203,7 +203,7 @@ inline std::vector<std::vector<std::vector<double>>> patcaus(
     else
       for (int b = 0; b < boot; ++b) process_boot(b);
 
-    if (progressbar) (*bar)++;
+    if (verbose) (*bar)++;
   }
 
   return all_results;
