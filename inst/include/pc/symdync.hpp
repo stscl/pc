@@ -398,7 +398,7 @@ namespace symdync
     }
 
     /***************************************************************
-     *  Symbolic Pattern Causality Analysis Result
+     *  Pattern Causality Analysis Result
      ***************************************************************/
     struct PatternCausalityRes
     {
@@ -425,7 +425,7 @@ namespace symdync
     };
 
     /**
-     * Compute symbolic pattern causality between X and Y.
+     * Compute pattern causality from Y to X.
      *
      *
      * Pipeline:
