@@ -16,9 +16,9 @@ pc::symdync::PatternCausalityRes patcaus(
     const std::vector<std::vector<double>>& My,
     const std::vector<size_t>& lib_indices,
     const std::vector<size_t>& pred_indices,
-    int num_neighbors = 0,
-    int zero_tolerance = 0,
-    int dist_metric = 2,
+    size_t num_neighbors = 0,
+    size_t zero_tolerance = 0,
+    std::string dist_metric = "euclidean",
     bool relative = true,
     bool weighted = true,
     size_t threads = 1
@@ -32,16 +32,13 @@ pc::symdync::PatternCausalityRes patcaus(
   std::vector<std::vector<double>> Dx(
       n_obs, std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN()));
 
-  // Determine distance metric: true → L1 norm, false → L2 norm
-  bool L1norm = (dist_metric == 1);
-
   // --------------------------------------------------------------------------
   // Step 1: Compute pairwise distances between prediction and library indices
   // --------------------------------------------------------------------------
   auto compute_distance = [&](size_t p) {
     size_t pi = pred_indices[p];
     for (size_t li : lib_indices) {
-      double dist = CppDistance(Mx[pi], Mx[li], L1norm, true);
+      double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
       if (!std::isnan(dist)) {
         Dx[pi][li] = dist;  // assign distance; no mirroring required
       }
@@ -49,11 +46,11 @@ pc::symdync::PatternCausalityRes patcaus(
   };
 
   // Parallel or serial execution depending on thread configuration
-  if (threads_sizet <= 1) {
+  if (threads <= 1) {
     for (size_t p = 0; p < pred_indices.size(); ++p)
       compute_distance(p);
   } else {
-    RcppThread::parallelFor(0, pred_indices.size(), compute_distance, threads_sizet);
+    RcppThread::parallelFor(0, pred_indices.size(), compute_distance, threads);
   }
 
   // --------------------------------------------------------------------------
