@@ -48,7 +48,23 @@ namespace pc
 {
 
 namespace patcaus
-{ 
+{   
+    /************************************************************************
+     *  Compute pattern-based causality from Mx to My using a fixed
+     *  library and prediction set.
+     *
+     *  Parameters:
+     *      Mx, My          : Reconstructed state-space matrices
+     *      lib_indices     : Indices used as library (reference points)
+     *      pred_indices    : Indices used for prediction
+     *      num_neighbors   : Number of nearest neighbors (0 = auto)
+     *      zero_tolerance  : Threshold for zero-distance handling
+     *      h               : Prediction horizon
+     *      dist_metric     : Distance metric ("euclidean", "manhattan", "maximum".)
+     *      relative        : Use relative symbolic encoding
+     *      weighted        : Use weighted pattern comparison
+     *      threads         : Number of threads for parallel execution
+     ************************************************************************/
     inline pc::symdync::PatternCausalityRes patcaus(
         const std::vector<std::vector<double>>& Mx,
         const std::vector<std::vector<double>>& My,
