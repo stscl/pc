@@ -119,7 +119,7 @@ inline std::vector<std::vector<std::vector<double>>> patcaus(
 
   // Prebuild 64-bit RNG pool for reproducibility
   std::vector<std::mt19937_64> rng_pool(boot);
-  for (int i = 0; i < boot; ++i) {
+  for (sized i = 0; i < boot; ++i) {
     std::seed_seq seq{static_cast<uint64_t>(seed), static_cast<uint64_t>(i)};
     rng_pool[i] = std::mt19937_64(seq);
   }
