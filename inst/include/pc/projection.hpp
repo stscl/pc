@@ -1,3 +1,30 @@
+/**************************************************************************
+ * File: projection.hpp
+ *
+ * Nonparametric time-delay projection using weighted nearest neighbors.
+ *
+ * Provides functionality for:
+ *   - Predicting future signature vectors in a reconstructed space.
+ *   - Performing local neighbor-based forecasting with distance weighting.
+ *   - Supporting time-delay prediction via a configurable horizon (h).
+ *
+ * The method:
+ *   - Selects nearest neighbors based on a distance matrix.
+ *   - Applies exponential weighting to emphasize closer neighbors.
+ *   - Projects neighbor states forward in time (t + h).
+ *   - Computes robust weighted averages with NaN handling and zero filtering.
+ *
+ * Designed for:
+ *   - Nonlinear time series prediction
+ *   - State-space reconstruction workflows
+ *   - Causality analysis (e.g., cross mapping, symbolic methods)
+ *
+ * Parallel execution is supported via RcppThread.
+ *
+ * Author: Wenbo Lyu (Github: @SpatLyu)
+ * License: GPL-3
+ *************************************************************************/
+
 #ifndef PC_PROJECTION_HPP
 #define PC_PROJECTION_HPP
 
