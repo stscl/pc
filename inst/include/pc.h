@@ -42,6 +42,7 @@
 #include "pc/numericutils.hpp"
 #include "pc/distance.hpp"
 #include "pc/symdync.hpp"
+#include "pc/projection.hpp"
 
 // ============================================================
 // Convenience Converters (Inline helpers for R/C++ interop)
