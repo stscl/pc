@@ -25,8 +25,10 @@
 
 #include <cmath>
 #include <limits>
-#include <numeric>
+#include <vector>
 #include <algorithm>
+#include <numeric>
+#include <stdexcept>
 #include <initializer_list>
 
 namespace pc
