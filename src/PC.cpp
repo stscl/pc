@@ -85,8 +85,10 @@ Rcpp::List RcppPC(
     }
     else  
     {
-        lagged_values = infoxtr::lagg::lagg(
-            cppMat, static_cast<size_t>(std::abs(lag)), false);
+        Mx = pc::embed::embed(
+            tg, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+        My = pc::embed::embed(
+            sg, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
     }
 
     // Discrete lagged values for agent variables
