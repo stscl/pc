@@ -77,11 +77,18 @@ Rcpp::List RcppPC(
             sg, nb_std, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
     } 
     else if (nrows.isNotNull())
-    {
-        lagged_values = infoxtr::lagg::lagg(
-            cppMat, 
-            static_cast<size_t>(std::abs(Rcpp::as<int>(nrows))), 
-            static_cast<size_t>(std::abs(lag)), false);
+    {   
+        size_t n_rows = static_cast<size_t>(std::abs(Rcpp::as<int>(nrows)));
+
+        std::vector<std::vector<double>> tm = 
+            pc::embed::gridVec2Mat(tg, n_rows);
+        Mx = pc::embed::embed(
+            tm, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+
+        std::vector<std::vector<double>> sm = 
+            pc::embed::gridVec2Mat(sg, n_rows);
+        My = pc::embed::embed(
+            sm, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
     }
     else  
     {
