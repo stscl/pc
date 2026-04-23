@@ -56,12 +56,6 @@ Rcpp::List RcppPC(
       pred_std.push_back(static_cast<size_t>(pred[i] - 1));
   }
 
-  // Check neighbor and embedding parameters
-  if (b < 2 || b > validSampleNum)
-    Rcpp::stop("k cannot be less than or equal to 2 or greater than the number of non-NA values.");
-  else if (b + 1 > static_cast<int>(lib_std.size()))
-    Rcpp::stop("Please check `libsizes` or `lib`; no valid libraries available for running GPCM.");
-
   // Convert Rcpp IntegerVector to std::vector<int>
   std::vector<int> E_std = Rcpp::as<std::vector<int>>(E);
   std::vector<int> tau_std = Rcpp::as<std::vector<int>>(tau);
