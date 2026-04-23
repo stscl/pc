@@ -46,7 +46,7 @@ Rcpp::List RcppPC(
     }
 
     // Convert prediction indices (R 1-based → C++ 0-based)
-    const size_t n_pred = static_cast<size_t>(n_pred.size());
+    const size_t n_pred = static_cast<size_t>(pred.size());
     std::vector<size_t> pred_std;
     pred_std.reserve(n_pred);
     for (size_t i = 0; i < n_pred; ++i) 
