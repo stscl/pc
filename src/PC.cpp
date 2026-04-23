@@ -124,7 +124,7 @@ Rcpp::List RcppPC(
     }
 
     // --- Perform Pattern Causality Analysis -------------------------
-    pc::patcaus::PatternCausalityRes res = pc::patcaus::patcaus(
+    pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
         Mx, My, lib_std, pred_std, 
         static_cast<size_t>(std::abs(num_neighbors)),
         static_cast<size_t>(std::abs(zero_tolerance)),
