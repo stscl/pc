@@ -133,16 +133,16 @@ Rcpp::List RcppPC(
     for (size_t rl = 0; rl < res.RealLoop.size(); ++rl) {
         size_t idx = res.RealLoop[rl];
         if (idx < n_samples) {
-        // Record validated samples
-        real_loop[idx] = true;
-        // Map pattern_types (0–3) → descriptive string labels
-        switch (res.PatternTypes[rl]) {
-            case 0: pattern_labels[idx]  = "no"; break;
-            case 1: pattern_labels[idx]  = "positive"; break;
-            case 2: pattern_labels[idx]  = "negative"; break;
-            case 3: pattern_labels[idx]  = "dark"; break;
-            default: pattern_labels[idx] = "unknown"; break;
-        }
+            // Record validated samples
+            real_loop[idx] = true;
+            // Map pattern_types (0–3) → descriptive string labels
+            switch (res.PatternTypes[rl]) {
+                case 0: pattern_labels[idx]  = "no"; break;
+                case 1: pattern_labels[idx]  = "positive"; break;
+                case 2: pattern_labels[idx]  = "negative"; break;
+                case 3: pattern_labels[idx]  = "dark"; break;
+                default: pattern_labels[idx] = "unknown"; break;
+            }
         }
     }
 
