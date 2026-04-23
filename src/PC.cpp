@@ -99,8 +99,12 @@ Rcpp::List RcppPC(
 
     // --- Perform Pattern Causality Analysis -------------------------
     pc::patcaus::PatternCausalityRes res = pc::patcaus::patcaus(
-        Mx, My, lib_std, pred_std, b, zero_tolerance,
-        dist_metric, relative, weighted, threads);
+        Mx, My, lib_std, pred_std, 
+        static_cast<size_t>(std::abs(num_neighbors)),
+        static_cast<size_t>(std::abs(zero_tolerance)),
+        static_cast<size_t>(std::abs(h)),
+        dist_metric, relative, weighted,
+        static_cast<size_t>(std::abs(threads)));
 
     // --- Convert result.matrice to Rcpp::NumericMatrix ------------------------
 
