@@ -68,7 +68,7 @@ Rcpp::List RcppPC(
     std::vector<std::vector<double>> My;
 
     if (nb.isNotNull()) 
-        {
+    {
         // Convert Rcpp::List to std::vector<std::vector<size_t>>
         std::vector<std::vector<size_t>> nb_std = pc::convert::nb2std(nb.get());
         Mx = pc::embed::embed(
