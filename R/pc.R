@@ -21,8 +21,13 @@
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
   
-  return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
-                  threads, base, normalize, abs(bin), method, nb))
+  if (is.null(libsizes)) {
+    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, 
+                  dist.metric, relative, weighted, threads, 0, nb, NULL))
+  } else {
+    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, 
+                      random, seed, relative, weighted, threads, lower.parallel, verbose, 0, nb, NULL))
+  }
 }
 
 .pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
