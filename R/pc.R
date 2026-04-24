@@ -54,17 +54,9 @@
   }
 }
 
-#' SURD
+#' Pattern Causality
 #' 
-#' Synergistic-Unique-Redundant Decomposition
-#' 
-#' @note `pc` only supports numeric input data. Both `bin` and `method`
-#'   support variable-specific settings using R-style recycling:
-#'   \itemize{
-#'     \item length 1: applied to the target and all agent variables
-#'     \item length 2: first for the target, second for all agents
-#'     \item length > 2: first for the target, remaining values are recycled across agents
-#'   }
+#' @note `pc` only supports numeric input data.
 #'
 #' @inheritParams te
 #' @param lag (optional) Lag of the agent variables.
@@ -87,11 +79,11 @@
 #' @name pc
 #' @aliases pc,data.frame-method
 #' @references
-#' Martinez-Sanchez, A., Arranz, G., Lozano-Duran, A., 2024. Decomposing causality into its synergistic, unique, and redundant components. Nature Communications 15.
+#' Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2020. Unveiling causal interactions in complex systems. Proceedings of the National Academy of Sciences 117, 7599–7605.
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-#' pc::pc(columbus, 1, 3)
+#' pc::pc(columbus, 1, 3, E = 6, k = 8)
 #'
 methods::setMethod("pc", "data.frame", .pc_ts)
 
