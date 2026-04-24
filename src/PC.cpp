@@ -320,14 +320,17 @@ Rcpp::DataFrame RcppPCboot(
             sg, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
     }
 
-    // --- Perform Pattern Causality Analysis -------------------------
-    pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
+    // --- Perform Bootstrapped Pattern Causality Analysis -------------------------
+    std::vector<std::vector<std::vector<double>>> res = pc::patcaus::patcaus(
         Mx, My, libsizes_std, lib_std, pred_std, 
         static_cast<size_t>(std::abs(num_neighbors)),
         static_cast<size_t>(std::abs(zero_tolerance)),
-        static_cast<size_t>(std::abs(h)),
-        dist_metric, relative, weighted,
-        static_cast<size_t>(std::abs(threads)));
+        static_cast<size_t>(std::abs(h)), dist_metric, 
+        static_cast<size_t>(std::abs(boot)),
+        random_sample, relative, weighted,
+        static_cast<size_t>(std::abs(threads)),
+        static_cast<size_t>(std::abs(parallel_level)),
+        verbose);
 
     // --- Create DataFrame for per-sample causality ----------------------------
 
