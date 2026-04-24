@@ -1,14 +1,20 @@
 
 .pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
            random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
-           relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE) {
+           relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE, h = 0) {
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
-  return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
-                  threads, base, normalize, abs(bin), method))
+  
+  if (is.null(libsizes)) {
+    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, 
+                  dist.metric, relative, weighted, threads, h, NULL, NULL))
+  } else {
+    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, 
+                      random, seed, relative, weighted, threads, lower.parallel, verbose, h, NULL, NULL))
+  }
 }
 
 .pc_lattice = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
