@@ -2,6 +2,7 @@
 .pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
            random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
            relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE) {
+  dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
@@ -14,10 +15,12 @@
                 random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
                 relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE, nb = NULL) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
+  dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
+  
   return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
                   threads, base, normalize, abs(bin), method, nb))
 }
@@ -25,13 +28,16 @@
 .pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
              random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
              relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE) {
+  dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
   
   if (is.null(libsizes)) {
-    return(RcppPC(dlist[[1]], dlist[[2]]))
+    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, dist.metric))
+  } else {
+
   }
   return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, threads, base, 
                   normalize, abs(bin), method, NULL, terra::nrow(data[[1]])))
