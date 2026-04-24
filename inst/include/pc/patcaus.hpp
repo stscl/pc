@@ -76,8 +76,8 @@ namespace patcaus
         const std::string& dist_metric = "euclidean",
         bool relative = true,
         bool weighted = true,
-        size_t threads = 1
-    ){
+        size_t threads = 1)
+    {
     // Configure threads (cap at hardware concurrency)
     threads = std::min(static_cast<size_t>(std::thread::hardware_concurrency()), threads);
 
@@ -90,21 +90,27 @@ namespace patcaus
     // --------------------------------------------------------------------------
     // Step 1: Compute pairwise distances between prediction and library indices
     // --------------------------------------------------------------------------
-    auto compute_distance = [&](size_t p) {
+    auto compute_distance = [&](size_t p) 
+    {
         size_t pi = pred_indices[p];
-        for (size_t li : lib_indices) {
-        double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
-        if (!std::isnan(dist)) {
-            Dx[pi][li] = dist;  // assign distance; no mirroring required
-        }
+        for (size_t li : lib_indices) 
+        {
+            double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
+            if (!std::isnan(dist)) 
+            {
+                Dx[pi][li] = dist;  // assign distance; no mirroring required
+            }
         }
     };
 
     // Parallel or serial execution depending on thread configuration
-    if (threads <= 1) {
+    if (threads <= 1) 
+    {
         for (size_t p = 0; p < pred_indices.size(); ++p)
-        compute_distance(p);
-    } else {
+            compute_distance(p);
+    } 
+    else 
+    {
         RcppThread::parallelFor(0, pred_indices.size(), compute_distance, threads);
     }
 
@@ -190,8 +196,8 @@ namespace patcaus
         bool weighted = true,
         size_t threads = 1,
         size_t parallel_level = 0,
-        bool verbose = false
-    ){
+        bool verbose = false)
+    {
     // --------------------------------------------------------------------------
     // Step 1: Configure threads and random generators
     // --------------------------------------------------------------------------
@@ -214,13 +220,16 @@ namespace patcaus
     std::vector<std::vector<double>> Dx(
         n_obs, std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN()));
 
-    auto compute_distance = [&](size_t p) {
+    auto compute_distance = [&](size_t p) 
+    {
         size_t pi = pred_indices[p];
-        for (size_t li : lib_indices) {
-        double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
-        if (!std::isnan(dist)) {
-            Dx[pi][li] = dist;  // assign distance; no mirroring required
-        }
+        for (size_t li : lib_indices) 
+        {
+            double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
+            if (!std::isnan(dist)) 
+            {
+                Dx[pi][li] = dist;  // assign distance; no mirroring required
+            }
         }
     };
 
