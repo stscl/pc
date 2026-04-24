@@ -18,3 +18,15 @@ Depends:
 LinkingTo: 
     Rcpp,
     RcppThread
+Imports: 
+    methods,
+    sdsfun,
+    sf,
+    terra
+Suggests: 
+    Rcpp,
+    RcppThread,
+    readr,
+    infoxtr,
+    spEDM,
+    tEDM
