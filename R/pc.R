@@ -58,9 +58,9 @@
 #'
 #' @note `pc` only supports numeric input data.
 #'
-#' @param data
-#' @param target
-#' @param source
+#' @param data Observation data.
+#' @param target Integer of column indice for the target variable.
+#' @param source Integer of column indice for the source variable.
 #' @param libsizes (optional) Number of observations used.
 #' @param E (optional) Embedding dimensions.
 #' @param k (optional) Number of nearest neighbors used for projection.
@@ -68,11 +68,10 @@
 #' @param style (optional) Embedding style (`0` includes current state, `1` excludes it).
 #' @param lib (optional) Libraries indices (input requirement same as `libsizes`).
 #' @param pred (optional) Predictions indices (input requirement same as `libsizes`).
-#' @param dist.metric (optional) distance metric (`L1`: Manhattan, `L2`: Euclidean).
-#' @param boot (optional) number of bootstraps to perform.
-#' @param random (optional) whether to use random sampling.
-#' @param seed (optional) random seed.
-#' @param dist.metric
+#' @param boot (optional) Number of bootstraps to perform.
+#' @param random (optional) Whether to use random sampling.
+#' @param seed (optional) Random seed.
+#' @param dist.metric (optional) Distance measure to be used
 #' @param zero.tolerance (optional) Maximum number of zeros tolerated in signature space.
 #' @param relative (optional) Whether to calculate relative changes in embedding.
 #' @param weighted (optional) Whether to weight causal strength.
@@ -80,6 +79,7 @@
 #' @param lower.parallel (optional) Whether to use lower level of parallelism.
 #' @param verbose (optional) Whether to show the progress bar.
 #' @param nb (optional) Neighbours list.
+#' @param h (optional) Prediction horizon.
 #'
 #' @return A list.
 #' \describe{
