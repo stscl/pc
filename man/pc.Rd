@@ -95,9 +95,9 @@
 
 \item{style}{(optional) Embedding style (\code{0} includes current state, \code{1} excludes it).}
 
-\item{lib}{(optional) Libraries indices (input requirement same as \code{libsizes}).}
+\item{lib}{(optional) Libraries indices.}
 
-\item{pred}{(optional) Predictions indices (input requirement same as \code{libsizes}).}
+\item{pred}{(optional) Predictions indices.}
 
 \item{boot}{(optional) Number of bootstraps to perform.}
 
@@ -105,7 +105,7 @@
 
 \item{seed}{(optional) Random seed.}
 
-\item{dist.metric}{(optional) Distance measure to be used}
+\item{dist.metric}{(optional) Distance measure to be used.}
 
 \item{zero.tolerance}{(optional) Maximum number of zeros tolerated in signature space.}
 
