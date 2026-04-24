@@ -196,7 +196,7 @@ Rcpp::DataFrame RcppPCboot(
     int num_neighbors = 4,
     int zero_tolerance = 0,
     const std::string& dist_metric = "euclidean",
-    size_t boot = 99,
+    int boot = 99,
     bool random_sample = true,
     unsigned long long seed = 42,
     bool relative = true,
