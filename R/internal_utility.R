@@ -8,8 +8,8 @@
   }
 
   res = vector("list", 4)
-  res[1] = mat[, target, drop = TRUE]
-  res[2] = mat[, source, drop = TRUE]
+  res[[1]] = mat[, target, drop = TRUE]
+  res[[2]] = mat[, source, drop = TRUE]
   
   return(res)
 }
