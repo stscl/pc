@@ -599,7 +599,7 @@ namespace symdync
             size_t i = std::distance(all_patterns.begin(), it_i);
             size_t j = std::distance(all_patterns.begin(), it_j);
 
-            /* --- classification (correct version) --- */
+            /* --- classification --- */
             if (i == j)
             {
                 res.PositiveCausality[t] = strength;

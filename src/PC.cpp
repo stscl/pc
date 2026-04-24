@@ -238,23 +238,6 @@ Rcpp::DataFrame RcppPCboot(
         idx -= 1;
     }
 
-    // Validate and preprocess library sizes
-    std::vector<size_t> libsizes_std = Rcpp::as<std::vector<size_t>>(libsizes);
-    std::vector<size_t> valid_libsizes;
-    valid_libsizes.reserve(libsizes_std.size());
-    for (size_t s : libsizes_std) {
-        if (s > static_cast<size_t>(std::abs(num_neighbors)) && s <= lib_std.size())
-        valid_libsizes.push_back(s);
-    }
-
-    std::sort(valid_libsizes.begin(), valid_libsizes.end());
-    valid_libsizes.erase(std::unique(valid_libsizes.begin(), valid_libsizes.end()), valid_libsizes.end());
-
-    if (valid_libsizes.empty()) {
-        Rcpp::warning("[Warning] No valid libsizes after filtering. Using full library size as fallback.");
-        valid_libsizes.push_back(lib_std.size());
-    }
-
     // Convert Rcpp IntegerVector to std::vector<size_t>
     std::vector<size_t> E_vec = Rcpp::as<std::vector<size_t>>(E);
     std::vector<size_t> tau_vec = Rcpp::as<std::vector<size_t>>(tau);
@@ -318,6 +301,23 @@ Rcpp::DataFrame RcppPCboot(
             tg, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
         My = pc::embed::embed(
             sg, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+    }
+
+    // Validate and preprocess library sizes
+    std::vector<size_t> libsizes_std = Rcpp::as<std::vector<size_t>>(libsizes);
+    std::vector<size_t> valid_libsizes;
+    valid_libsizes.reserve(libsizes_std.size());
+    for (size_t s : libsizes_std) {
+        if (s > static_cast<size_t>(std::abs(num_neighbors)) && s <= lib_std.size())
+        valid_libsizes.push_back(s);
+    }
+
+    std::sort(valid_libsizes.begin(), valid_libsizes.end());
+    valid_libsizes.erase(std::unique(valid_libsizes.begin(), valid_libsizes.end()), valid_libsizes.end());
+
+    if (valid_libsizes.empty()) {
+        Rcpp::warning("[Warning] No valid libsizes after filtering. Using full library size as fallback.");
+        valid_libsizes.push_back(lib_std.size());
     }
 
     // --- Perform Bootstrapped Pattern Causality Analysis -------------------------
