@@ -71,7 +71,7 @@
 #' @param boot (optional) Number of bootstraps to perform.
 #' @param random (optional) Whether to use random sampling.
 #' @param seed (optional) Random seed.
-#' @param dist.metric (optional) Distance measure to be used
+#' @param dist.metric (optional) Distance measure to be used.
 #' @param zero.tolerance (optional) Maximum number of zeros tolerated in signature space.
 #' @param relative (optional) Whether to calculate relative changes in embedding.
 #' @param weighted (optional) Whether to weight causal strength.
