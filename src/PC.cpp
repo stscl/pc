@@ -202,6 +202,8 @@ Rcpp::DataFrame RcppPCboot(
     bool relative = true,
     bool weighted = true,
     int threads = 1,
+    int parallel_level = 0,
+    bool verbose = false,
     int h = 0,
     Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
     Rcpp::Nullable<int> nrows = R_NilValue)
@@ -320,7 +322,7 @@ Rcpp::DataFrame RcppPCboot(
 
     // --- Perform Pattern Causality Analysis -------------------------
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
-        Mx, My, lib_std, pred_std, 
+        Mx, My, libsizes_std, lib_std, pred_std, 
         static_cast<size_t>(std::abs(num_neighbors)),
         static_cast<size_t>(std::abs(zero_tolerance)),
         static_cast<size_t>(std::abs(h)),
