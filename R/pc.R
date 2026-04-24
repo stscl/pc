@@ -2,7 +2,7 @@
 .pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
            random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
            relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE) {
-  mat = .convert2mat(data, contain_type = FALSE)
+  dlist = .validate_var(data, target, source)
   return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
                   threads, base, normalize, abs(bin), method))
 }
@@ -11,7 +11,7 @@
                 random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
                 relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE, nb = NULL) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
-  mat = .convert2mat(data, contain_type = FALSE)
+  dlist = .validate_var(data, target, source)
   return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, 
                   threads, base, normalize, abs(bin), method, nb))
 }
@@ -19,7 +19,7 @@
 .pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
              random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
              relative = TRUE, weighted = TRUE, threads = detectThreads(), lower.parallel = TRUE, verbose = TRUE) {
-  mat = .convert2mat(data, contain_type = FALSE)
+  dlist = .validate_var(data, target, source)
   return(RcppSURD(mat, abs(target), abs(agent), lag, max.order, threads, base, 
                   normalize, abs(bin), method, NULL, terra::nrow(data[[1]])))
 }
