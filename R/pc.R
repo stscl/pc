@@ -81,12 +81,7 @@
 #' @param nb (optional) Neighbours list.
 #' @param h (optional) Prediction horizon.
 #'
-#' @return A list.
-#' \describe{
-#'   \item{vars}{Character vector indicating the variable combination associated with each information component.}
-#'   \item{types}{Character vector indicating the information type of each component.}
-#'   \item{values}{Numeric vector giving the magnitude of each information component.}
-#' }
+#' @return A list (if `libsizes` is `NULL`) or dataframe.
 #'
 #' @export
 #' @name pc
