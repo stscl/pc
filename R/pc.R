@@ -1,5 +1,5 @@
 
-.pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
+.pc_ts = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
            random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
            relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE, verbose = TRUE, h = 0) {
   dist.metric = match.arg(dist.metric)
@@ -7,17 +7,17 @@
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
-  
+
   if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, 
+    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance,
                   dist.metric, relative, weighted, threads, h, NULL, NULL))
   } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, 
+    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
                       random, seed, relative, weighted, threads, lower.parallel, verbose, h, NULL, NULL))
   }
 }
 
-.pc_lattice = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
+.pc_lattice = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
                 random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
                 relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE, verbose = TRUE, nb = NULL) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
@@ -26,17 +26,17 @@
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
-  
+
   if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, 
+    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance,
                   dist.metric, relative, weighted, threads, 0, nb, NULL))
   } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, 
+    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
                       random, seed, relative, weighted, threads, lower.parallel, verbose, 0, nb, NULL))
   }
 }
 
-.pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99, 
+.pc_grid = \(data, target, source, libsizes = NULL, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, boot = 99,
              random = TRUE, seed = 42L, dist.metric = c("euclidean", "manhattan", "maximum"), zero.tolerance = max(k),
              relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE, verbose = TRUE) {
   dist.metric = match.arg(dist.metric)
@@ -44,28 +44,41 @@
   tv = dlist[[1]]; sv = dlist[[2]]
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
-  
+
   if (is.null(libsizes)) {
     return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, dist.metric,
                   relative, weighted, threads, 0, NULL, terra::nrow(data)))
   } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, random, 
+    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, random,
                       seed, relative, weighted, threads, lower.parallel, verbose, 0, NULL, terra::nrow(data)))
   }
 }
 
 #' Pattern Causality
-#' 
+#'
 #' @note `pc` only supports numeric input data.
 #'
-#' @inheritParams te
-#' @param lag (optional) Lag of the agent variables.
-#' @param bin (optional) Number of discretization bins.
-#' @param method (optional) Discretization method. One of
-#'   `"sd"`, `"equal"`, `"geometric"`, `"quantile"`,
-#'   `"natural("jenks")"`, or `"headtail"("headtails")`.
-#' @param max.order (optional) Maximum combination order.
+#' @param data
+#' @param target
+#' @param source
+#' @param libsizes (optional) Number of observations used.
+#' @param E (optional) Embedding dimensions.
+#' @param k (optional) Number of nearest neighbors used for projection.
+#' @param tau (optional) Step of lag.
+#' @param style (optional) Embedding style (`0` includes current state, `1` excludes it).
+#' @param lib (optional) Libraries indices (input requirement same as `libsizes`).
+#' @param pred (optional) Predictions indices (input requirement same as `libsizes`).
+#' @param dist.metric (optional) distance metric (`L1`: Manhattan, `L2`: Euclidean).
+#' @param boot (optional) number of bootstraps to perform.
+#' @param random (optional) whether to use random sampling.
+#' @param seed (optional) random seed.
+#' @param dist.metric
+#' @param zero.tolerance (optional) Maximum number of zeros tolerated in signature space.
+#' @param relative (optional) Whether to calculate relative changes in embedding.
+#' @param weighted (optional) Whether to weight causal strength.
 #' @param threads (optional) Number of threads used.
+#' @param lower.parallel (optional) Whether to use lower level of parallelism.
+#' @param verbose (optional) Whether to show the progress bar.
 #' @param nb (optional) Neighbours list.
 #'
 #' @return A list.
