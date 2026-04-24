@@ -66,8 +66,8 @@
 #' @param k (optional) Number of nearest neighbors used for projection.
 #' @param tau (optional) Step of lag.
 #' @param style (optional) Embedding style (`0` includes current state, `1` excludes it).
-#' @param lib (optional) Libraries indices (input requirement same as `libsizes`).
-#' @param pred (optional) Predictions indices (input requirement same as `libsizes`).
+#' @param lib (optional) Libraries indices.
+#' @param pred (optional) Predictions indices.
 #' @param boot (optional) Number of bootstraps to perform.
 #' @param random (optional) Whether to use random sampling.
 #' @param seed (optional) Random seed.
