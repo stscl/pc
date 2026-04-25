@@ -507,34 +507,8 @@ Rcpp::List RcppPCops(
     }
 
     // Convert Rcpp IntegerVector to std::vector<size_t>
-    std::vector<size_t> E_vec = Rcpp::as<std::vector<size_t>>(E);
-    std::vector<size_t> tau_vec = Rcpp::as<std::vector<size_t>>(tau);
-
-    // Expand E and tau
-    std::vector<size_t> E_std(2);
-    std::vector<size_t> tau_std(2);
-
-    // ---- E ----
-    if (E_vec.size() == 1) 
-    {
-        std::fill(E_std.begin(), E_std.end(), E_vec[0]);
-    } 
-    else 
-    {
-        E_std[0] = E_vec[0];
-        E_std[1] = E_vec[1];
-    }
-
-    // ---- tau ----
-    if (tau_vec.size() == 1) 
-    {
-        std::fill(tau_std.begin(), tau_std.end(), tau_vec[0]);
-    } 
-    else 
-    {
-        tau_std[0] = tau_vec[0];
-        tau_std[1] = tau_vec[1];
-    }
+    std::vector<size_t> E_std = Rcpp::as<std::vector<size_t>>(E);
+    std::vector<size_t> tau_std = Rcpp::as<std::vector<size_t>>(tau);
 
     // --- Embedding Construction ------------------------------------------------
     std::vector<std::vector<double>> Mx;
