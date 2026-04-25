@@ -1,2 +1,4 @@
 ^pc\.Rproj$
 ^\.Rproj\.user$
+^pkgdown$
+^_pkgdown\.yml$
