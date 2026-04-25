@@ -1,7 +1,9 @@
 #include <vector>
 #include <cmath>
+#include <tuple>
 #include <limits>
 #include <string>
+#include <utility>
 #include <numeric>
 #include <algorithm>
 #include "pc.h"
