@@ -813,7 +813,7 @@ Rcpp::List RcppPCops(
     // --- Convert performance matrix to r--------------------------
     Rcpp::NumericMatrix pmat = pc::convert::mat_std2r(result, true);
     // --- Select optimal parameters ---------------------
-    Rcpp::NumericMatrix pvec = OptPCparm(pmat, maximize);
+    Rcpp::IntegerVector pvec = OptPCparm(pmat, maximize);
 
     // --- Return structured results --------------------------------------------
 
