@@ -23,13 +23,8 @@
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
 
-  if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance,
-                  dist.metric, relative, weighted, threads, 0, nb, NULL))
-  } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
-                      random, seed, relative, weighted, threads, lower.parallel, verbose, 0, nb, NULL))
-  }
+  return(RcppPCops(tv, sv, lib, pred, E, tau, k, maximize, style, zero.tolerance,
+                   dist.metric, relative, weighted, threads, lower.parallel, h, nb, NULL))
 }
 
 .ops_grid = \(data, target, source, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL,
@@ -42,13 +37,8 @@
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
 
-  if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance, dist.metric,
-                  relative, weighted, threads, 0, NULL, terra::nrow(data)))
-  } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot, random,
-                      seed, relative, weighted, threads, lower.parallel, verbose, 0, NULL, terra::nrow(data)))
-  }
+  return(RcppPCops(tv, sv, lib, pred, E, tau, k, maximize, style, zero.tolerance,
+                   dist.metric, relative, weighted, threads, lower.parallel, h, NULL, terra::nrow(data)))
 }
 
 #' Pattern Causality
