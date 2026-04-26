@@ -41,7 +41,7 @@
                    relative, weighted, threads, lower.parallel, h, NULL, terra::nrow(data)))
 }
 
-#' Pattern Causality
+#' Optimal Parameter Search for Pattern Causality
 #'
 #' @inheritParams pc
 #' @param maximize (optional) Causality metric to maximize: one of "positive", "negative", or "dark".
@@ -54,7 +54,7 @@
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-#' pc::ops(columbus, 1, 3, E = 5:10,maximize = "negative")
+#' pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative")
 #'
 methods::setMethod("ops", "data.frame", .ops_ts)
 
