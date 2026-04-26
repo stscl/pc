@@ -458,6 +458,146 @@ Rcpp::DataFrame RcppPCboot(
     }
 }
 
+/**
+ * Select optimal embedding parameters (E k tau) for pattern causality metrics
+ * using a global scan and full tie tracking across three causality measures.
+ *
+ * The input matrix must contain six columns in the following order:
+ *   1. E      embedding dimension
+ *   2. k      number of nearest neighbors
+ *   3. tau    lag parameter
+ *   4. pos    positive causality score
+ *   5. neg    negative causality score
+ *   6. dark   dark causality score
+ *
+ * The argument `maximize` specifies which causality metric should be given
+ * primary priority. The three metrics are compared in a hierarchical order:
+ *
+ *   maximize = "positive":  pos then dark then neg
+ *   maximize = "negative":  neg then dark then pos
+ *   maximize = "dark":      dark then pos then neg
+ *
+ * The function performs a single pass global scan. During the scan it collects
+ * all rows that achieve the joint optimum across the three prioritized metrics
+ * within numerical tolerance. When multiple rows tie for the optimum a final
+ * deterministic choice is made by selecting the smallest E then the smallest
+ * tau then the smallest k. A warning is issued when this final tie breaking
+ * procedure is required.
+ *
+ * @param Emat A numeric matrix with columns: E k tau pos neg dark.
+ * @param maximize A string specifying which metric to prioritize.
+ * @return IntegerVector containing E k tau in this order.
+ */
+Rcpp::IntegerVector OptPCparm(Rcpp::NumericMatrix Emat,
+                              const std::string maximize& = "positive") {
+
+  if (Emat.ncol() != 6) {
+    Rcpp::stop("Input matrix must have exactly six columns: E k tau pos neg dark.");
+  }
+  int n = Emat.nrow();
+  if (n == 0) {
+    Rcpp::stop("Input matrix must not be empty.");
+  }
+
+  if (maximize != "positive" && maximize != "negative" && maximize != "dark") {
+    Rcpp::stop("maximize must be one of positive negative or dark.");
+  }
+
+  // establish metric priority order
+  std::vector<int> priority(3);
+  if (maximize == "positive") {
+    priority = {3, 5, 4};  // pos dark neg
+  } else if (maximize == "negative") {
+    priority = {4, 5, 3};  // neg dark pos
+  } else {
+    priority = {5, 3, 4};  // dark pos neg
+  }
+
+  // helper to get metric value
+  auto get_metric = [&](int row, int idx) {
+    return Emat(row, idx);
+  };
+
+  // record of the best metrics for comparison
+  std::vector<double> best_vals(3);
+  for (int j = 0; j < 3; ++j) {
+    best_vals[j] = get_metric(0, priority[j]);
+  }
+
+  std::vector<int> best_rows;
+  best_rows.push_back(0);
+
+  // global scan
+  for (int i = 1; i < n; ++i) {
+
+    bool better = false;
+    bool equal_all = true;
+
+    for (int p = 0; p < 3; ++p) {
+      double a = get_metric(i, priority[p]);
+      double b = best_vals[p];
+
+      if (!doubleNearlyEqual(a, b)) {
+        if (a > b) {
+          better = true;
+        }
+        equal_all = false;
+        break;
+      }
+    }
+
+    if (better) {
+      best_rows.clear();
+      best_rows.push_back(i);
+      for (int p = 0; p < 3; ++p) {
+        best_vals[p] = get_metric(i, priority[p]);
+      }
+    }
+    else if (equal_all) {
+      best_rows.push_back(i);
+    }
+  }
+
+  // if only one globally optimal row return directly
+  if (best_rows.size() == 1) {
+    int row = best_rows[0];
+    return Rcpp::IntegerVector::create(
+      static_cast<int>(Emat(row, 0)),
+      static_cast<int>(Emat(row, 1)),
+      static_cast<int>(Emat(row, 2))
+    );
+  }
+
+  // issue tie warning
+  Rcpp::warning("Multiple parameter sets share the global optimum. The final choice is determined by smallest E then tau then k.");
+
+  // tie break by E then tau then k
+  int best_idx = best_rows[0];
+  int bestE = Emat(best_idx, 0);
+  int bestTau = Emat(best_idx, 2);
+  int bestK = Emat(best_idx, 1);
+
+  for (int idx : best_rows) {
+    int E = Emat(idx, 0);
+    int tau = Emat(idx, 2);
+    int k = Emat(idx, 1);
+
+    bool better =
+      (E < bestE) ||
+      (E == bestE && tau < bestTau) ||
+      (E == bestE && tau == bestTau && k < bestK);
+
+    if (better) {
+      best_idx = idx;
+      bestE = E;
+      bestTau = tau;
+      bestK = k;
+    }
+  }
+
+  return Rcpp::IntegerVector::create(bestE, bestK, bestTau);
+}
+
 // Wrapper function to perform optimal parameters search for pattern causality analysis
 // [[Rcpp::export(rng = false)]]
 Rcpp::List RcppPCops(
