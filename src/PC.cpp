@@ -489,7 +489,7 @@ Rcpp::DataFrame RcppPCboot(
  * @return IntegerVector containing E k tau in this order.
  */
 Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
-                              const std::string maximize& = "positive") {
+                              const std::string& maximize = "positive") {
 
   if (Emat.ncol() != 6) {
     Rcpp::stop("Input matrix must have exactly six columns: E k tau pos neg dark.");
@@ -608,7 +608,7 @@ Rcpp::List RcppPCops(
     const Rcpp::IntegerVector& E,
     const Rcpp::IntegerVector& tau,
     const Rcpp::IntegerVector& k,
-    const std::string maximize& = "positive",
+    const std::string& maximize = "positive",
     int style = 0,
     int zero_tolerance = 0,
     const std::string& dist_metric = "euclidean",
