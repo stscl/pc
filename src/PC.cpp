@@ -509,13 +509,6 @@ Rcpp::List RcppPCops(
         idx -= 1;
     }
 
-    // Convert Rcpp::List to std::vector<std::vector<size_t>>
-    std::vector<std::vector<size_t>> nb_std;
-    if (nb.isNotNull()) 
-    {
-        nb_std = pc::convert::nb2std(nb.get());
-    }
-
     // Unique sorted embedding dimensions, neighbor values, and tau values
     std::vector<size_t> Es = Rcpp::as<std::vector<size_t>>(E);
     std::sort(Es.begin(), Es.end());
@@ -536,12 +529,49 @@ Rcpp::List RcppPCops(
         for (size_t tt : taus)
             unique_EkTau.emplace_back(ee, kk, tt);
 
+    // Process necessay data
+    std::vector<std::vector<size_t>> nb_std;
+    std::vector<std::vector<double>> tm;
+    std::vector<std::vector<double>> sm;
+    if (nb.isNotNull()) 
+    {   
+        // Convert Rcpp::List to std::vector<std::vector<size_t>>
+        nb_std = pc::convert::nb2std(nb.get());
+    }
+    else if (nrows.isNotNull())
+    {
+        size_t n_rows = static_cast<size_t>(std::abs(Rcpp::as<int>(nrows)));
+        tm = pc::embed::gridVec2Mat(tg, n_rows);
+        sm = pc::embed::gridVec2Mat(sg, n_rows);
+    }
+    else  
+    {
+        size_t max_E = *std::max_element(Es.begin(), Es.end());
+        size_t max_tau = *std::max_element(taus.begin(), taus.end());
+        size_t max_lag = (max_tau == 0) 
+            ? (max_E - 1)
+            : ((max_E - 1) * max_tau);
+
+        lib_std.erase(
+            std::remove_if(lib_std.begin(), lib_std.end(), 
+                [&](size_t idx){ return idx + 1 < max_lag; }),
+                lib_std.end()
+        );
+
+        pred_std.erase(
+            std::remove_if(pred_std.begin(), pred_std.end(), 
+                [&](size_t idx){ return idx + 1 < max_lag; }),
+                    pred_std.end()
+        );
+    }
+    
+    // --- Perform Pattern Causality Analysis -------------------------
     std::vector<std::vector<double>> result(unique_EkTau.size(), std::vector<double>(6));
 
     if (parallel_level == 0) {
         for (size_t i = 0; i < unique_EkTau.size(); ++i) {
             const size_t Ei   = std::get<0>(unique_EkTau[i]);
-            const size_t bi   = std::get<1>(unique_EkTau[i]);
+            const size_t ki   = std::get<1>(unique_EkTau[i]);
             const size_t taui = std::get<2>(unique_EkTau[i]);
             // auto [Ei, ki, taui] = unique_EkTau[i]; // C++17 structured binding
 
@@ -552,9 +582,9 @@ Rcpp::List RcppPCops(
             if (nb.isNotNull()) 
             {
                 Mx = pc::embed::embed(
-                    tg, nb_std, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+                    tg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
                 My = pc::embed::embed(
-                    sg, nb_std, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+                    sg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
             } 
             else if (nrows.isNotNull())
             {   
@@ -563,37 +593,21 @@ Rcpp::List RcppPCops(
                 std::vector<std::vector<double>> tm = 
                     pc::embed::gridVec2Mat(tg, n_rows);
                 Mx = pc::embed::embed(
-                    tm, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+                    tm, Ei, taui, static_cast<size_t>(std::abs(style)));
 
                 std::vector<std::vector<double>> sm = 
                     pc::embed::gridVec2Mat(sg, n_rows);
                 My = pc::embed::embed(
-                    sm, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+                    sm, Ei, taui, static_cast<size_t>(std::abs(style)));
             }
             else  
             {
                 Mx = pc::embed::embed(
-                    tg, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+                    tg, Ei, taui, static_cast<size_t>(std::abs(style)));
                 My = pc::embed::embed(
-                    sg, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+                    sg, Ei, taui, static_cast<size_t>(std::abs(style)));
 
-                size_t max_E = *std::max_element(E_std.begin(), E_std.end());
-                size_t max_tau = *std::max_element(tau_std.begin(), tau_std.end());
-                size_t max_lag = (max_tau == 0) 
-                    ? (max_E - 1)
-                    : ((max_E - 1) * max_tau);
-
-                lib_std.erase(
-                    std::remove_if(lib_std.begin(), lib_std.end(), 
-                        [&](size_t idx){ return idx + 1 < max_lag; }),
-                    lib_std.end()
-                );
-
-                pred_std.erase(
-                    std::remove_if(pred_std.begin(), pred_std.end(), 
-                        [&](size_t idx){ return idx + 1 < max_lag; }),
-                    pred_std.end()
-                );
+                
             }
 
             PatternCausalityRes res = PatternCausality(
@@ -634,7 +648,7 @@ Rcpp::List RcppPCops(
             }, threads_sizet);
     }
 
-    // --- Perform Pattern Causality Analysis -------------------------
+    
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
         Mx, My, lib_std, pred_std, 
         static_cast<size_t>(std::abs(num_neighbors)),
