@@ -810,6 +810,9 @@ Rcpp::List RcppPCops(
             }, threads_sizet);
     }
 
+    Rcpp::NumericMatrix pmat = pc::convert::mat_std2r(result, true);
+    Rcpp::NumericMatrix pvec = OptPCparm(pmat, maximize);
+
     
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
         Mx, My, lib_std, pred_std, 
