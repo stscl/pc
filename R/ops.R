@@ -1,4 +1,4 @@
-.ops_ts = \(data, target, source, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL,
+.ops_ts = \(data, target, source, E = 3, k = E+1, tau = 1, style = 1, lib = NULL, pred = NULL,
             maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
             zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), lower.parallel = TRUE, h = 0) {
   maximize = match.arg(maximize)
@@ -44,8 +44,7 @@
 #' Pattern Causality
 #'
 #' @inheritParams pc
-#'
-#' 
+#' @param maximize (optional) Causality metric to maximize: one of "positive", "negative", or "dark".
 #'
 #' @return A list.
 #'
@@ -55,7 +54,7 @@
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-#' pc::ops(columbus, 1, 3, E = 6, k = 8)
+#' pc::ops(columbus, 1, 3, E = 5:10,maximize = "negative")
 #'
 methods::setMethod("ops", "data.frame", .ops_ts)
 
