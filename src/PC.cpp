@@ -588,15 +588,9 @@ Rcpp::List RcppPCops(
             } 
             else if (nrows.isNotNull())
             {   
-                size_t n_rows = static_cast<size_t>(std::abs(Rcpp::as<int>(nrows)));
-
-                std::vector<std::vector<double>> tm = 
-                    pc::embed::gridVec2Mat(tg, n_rows);
                 Mx = pc::embed::embed(
                     tm, Ei, taui, static_cast<size_t>(std::abs(style)));
 
-                std::vector<std::vector<double>> sm = 
-                    pc::embed::gridVec2Mat(sg, n_rows);
                 My = pc::embed::embed(
                     sm, Ei, taui, static_cast<size_t>(std::abs(style)));
             }
@@ -606,13 +600,14 @@ Rcpp::List RcppPCops(
                     tg, Ei, taui, static_cast<size_t>(std::abs(style)));
                 My = pc::embed::embed(
                     sg, Ei, taui, static_cast<size_t>(std::abs(style)));
-
-                
             }
 
-            PatternCausalityRes res = PatternCausality(
-                Mx, My, lib_indices, pred_indices, bi, zero_tolerance,
-                dist_metric, relative, weighted, threads);
+            pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
+                Mx, My, lib_std, pred_std, ki,
+                static_cast<size_t>(std::abs(zero_tolerance)),
+                static_cast<size_t>(std::abs(h)),
+                dist_metric, relative, weighted,
+                static_cast<size_t>(std::abs(threads)));
 
             result[i][0] = Ei;
             result[i][1] = ki;
@@ -632,15 +627,41 @@ Rcpp::List RcppPCops(
             const size_t taui = std::get<2>(unique_EkTau[i]);
             // auto [Ei, ki, taui] = unique_EkTau[i]; // C++17 structured binding
 
-            auto Mx = GenLatticeEmbeddings(source, nb_vec, Ei, taui, style);
-            auto My = GenLatticeEmbeddings(target, nb_vec, Ei, taui, style);
+            // --- Embedding Construction ------------------------------------------------
+            std::vector<std::vector<double>> Mx;
+            std::vector<std::vector<double>> My;
 
-            PatternCausalityRes res = PatternCausality(
-                Mx, My, lib_indices, pred_indices, bi, zero_tolerance,
+            if (nb.isNotNull()) 
+            {
+                Mx = pc::embed::embed(
+                    tg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
+                My = pc::embed::embed(
+                    sg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
+            } 
+            else if (nrows.isNotNull())
+            {   
+                Mx = pc::embed::embed(
+                    tm, Ei, taui, static_cast<size_t>(std::abs(style)));
+
+                My = pc::embed::embed(
+                    sm, Ei, taui, static_cast<size_t>(std::abs(style)));
+            }
+            else  
+            {
+                Mx = pc::embed::embed(
+                    tg, Ei, taui, static_cast<size_t>(std::abs(style)));
+                My = pc::embed::embed(
+                    sg, Ei, taui, static_cast<size_t>(std::abs(style)));
+            }
+
+            pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
+                Mx, My, lib_std, pred_std, ki,
+                static_cast<size_t>(std::abs(zero_tolerance)),
+                static_cast<size_t>(std::abs(h)),
                 dist_metric, relative, weighted, 1);
 
             result[i][0] = Ei;
-            result[i][1] = bi;
+            result[i][1] = ki;
             result[i][2] = taui;
             result[i][3] = std::isnan(res.TotalPos) ? 0.0 : res.TotalPos;
             result[i][4] = std::isnan(res.TotalNeg) ? 0.0 : res.TotalNeg;
