@@ -537,7 +537,7 @@ Rcpp::IntegerVector OptPCparm(Rcpp::NumericMatrix Emat,
       double a = get_metric(i, priority[p]);
       double b = best_vals[p];
 
-      if (!doubleNearlyEqual(a, b)) {
+      if (!pc::numericutils::doubleNearlyEqual(a, b)) {
         if (a > b) {
           better = true;
         }
