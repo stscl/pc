@@ -14,7 +14,7 @@
 
 .ops_lattice = \(data, target, source, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, 
                  maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
-                 zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE, nb = NULL) {
+                 zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), lower.parallel = TRUE, nb = NULL) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
   maximize = match.arg(maximize)
   dist.metric = match.arg(dist.metric)
@@ -34,7 +34,7 @@
 
 .ops_grid = \(data, target, source, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL,
               maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
-              zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE) {
+              zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), lower.parallel = TRUE) {
   maximize = match.arg(maximize)
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
