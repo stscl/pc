@@ -1,6 +1,6 @@
 .ops_ts = \(data, target, source, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL,
             maximize = c("positive", "negative", "dark"), dist.metric = c("euclidean", "manhattan", "maximum"), 
-            zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(libsizes), lower.parallel = TRUE, h = 0) {
+            zero.tolerance = max(k), relative = TRUE, weighted = TRUE, threads = length(E), lower.parallel = TRUE, h = 0) {
   maximize = match.arg(maximize)
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source)
@@ -8,13 +8,8 @@
   if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
   if (is.null(pred)) pred = lib
 
-  if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance,
-                  dist.metric, relative, weighted, threads, h, NULL, NULL))
-  } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
-                      random, seed, relative, weighted, threads, lower.parallel, verbose, h, NULL, NULL))
-  }
+  return(RcppPCops(tv, sv, lib, pred, E, tau, k, maximize, style, zero.tolerance,
+                   dist.metric, relative, weighted, threads, lower.parallel, h, NULL, NULL))
 }
 
 .ops_lattice = \(data, target, source, E = 3, k = E+2, tau = 1, style = 1, lib = NULL, pred = NULL, 
