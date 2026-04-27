@@ -826,6 +826,6 @@ Rcpp::List RcppPCops(
 
     return Rcpp::List::create(
         Rcpp::Named("param") = pvec,
-        Rcpp::Named("detail") = pmat
+        Rcpp::Named("xmap") = pmat
     );
 }
