@@ -1,0 +1,10 @@
+citHeader("To cite package pc in publications, please use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "{pc: Pattern Causality Analysis}",
+  author   = "Wenbo Lyu",
+  year     = "2026",
+  note     = "R package version 0.1",
+  doi      = "10.32614/CRAN.package.pc"
+)
