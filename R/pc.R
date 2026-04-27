@@ -81,7 +81,7 @@
 #' @param nb (optional) Neighbours list.
 #' @param h (optional) Prediction horizon.
 #'
-#' @return A list (if `libsizes` is `NULL`) or dataframe.
+#' @return A list (when `libsizes` is `NULL`) or dataframe.
 #'
 #' @export
 #' @name pc
