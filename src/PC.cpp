@@ -820,7 +820,7 @@ Rcpp::List RcppPCops(
     Rcpp::IntegerVector pvec = OptPCparm(pmat, maximize);
 
     // --- Proper data.frame construction ----------------
-    Rcpp::List pdf = Rcpp::List::create(
+    Rcpp::DataFrame pdf = Rcpp::DataFrame::create(
         Rcpp::Named("E")        = pmat(Rcpp::_, 0),
         Rcpp::Named("k")        = pmat(Rcpp::_, 1),
         Rcpp::Named("tau")      = pmat(Rcpp::_, 2),
