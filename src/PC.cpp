@@ -824,6 +824,7 @@ Rcpp::List RcppPCops(
     );
     // Convert to data.frame by setting class and row names
     pmat.attr("class") = "data.frame";
+    pmat.attr("row.names") = Rcpp::IntegerVector::create(NA_INTEGER, -pmat.nrow());
 
     // --- Return structured results --------------------------------------------
 
