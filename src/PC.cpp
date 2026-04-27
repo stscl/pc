@@ -824,8 +824,12 @@ Rcpp::List RcppPCops(
 
     // --- Return structured results --------------------------------------------
 
-    return Rcpp::List::create(
+    Rcpp::List out = Rcpp::List::create(
         Rcpp::Named("param") = pvec,
         Rcpp::Named("xmap") = pmat
     );
+
+    out.attr("class") = Rcpp::CharacterVector::create("pc_ops");
+
+    return out;
 }
