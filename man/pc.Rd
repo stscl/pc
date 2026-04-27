@@ -124,7 +124,12 @@
 \item{nb}{(optional) Neighbours list.}
 }
 \value{
-A list (if \code{libsizes} is \code{NULL}) or dataframe.
+A list (when \code{libsizes} is \code{NULL}) or dataframe.
+If \code{libsizes} is \code{NULL}, a list with two components is returned:
+\describe{
+\item{causality}{A data.frame containing per-sample causality results.}
+\item{summary}{A data.frame summarizing overall causality metrics.}
+}
 }
 \description{
 Pattern Causality

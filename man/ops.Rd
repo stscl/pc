@@ -11,7 +11,7 @@
   data,
   target,
   source,
-  E = 3,
+  E = 3:5,
   k = E + 1,
   tau = 1,
   style = 1,
@@ -31,7 +31,7 @@
   data,
   target,
   source,
-  E = 3,
+  E = 3:5,
   k = E + 2,
   tau = 1,
   style = 1,
@@ -51,7 +51,7 @@
   data,
   target,
   source,
-  E = 3,
+  E = 3:5,
   k = E + 2,
   tau = 1,
   style = 1,
@@ -105,6 +105,10 @@
 }
 \value{
 A list.
+\describe{
+\item{\code{param}}{The selected optimal parameter combination.}
+\item{\code{xmap}}{A data.frame containing cross-mapping performance across parameter settings.}
+}
 }
 \description{
 Optimal Parameter Search for Pattern Causality
