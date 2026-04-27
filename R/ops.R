@@ -47,6 +47,10 @@
 #' @param maximize (optional) Causality metric to maximize: one of "positive", "negative", or "dark".
 #'
 #' @return A list.
+#' \describe{
+#' \item{\code{param}}{selected optimal parameter}
+#' \item{\code{xmap}}{cross mapping performance}
+#' }
 #'
 #' @export
 #' @name ops
