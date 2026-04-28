@@ -18,7 +18,19 @@ experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimenta
 
 <!-- badges: end -->
 
-The goal of pc is to ...
+<a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="15%" alt="pc website: https://stscl.github.io/pc/"/></a>
+
+***Information**-Theoretic Measures for Revealing Variable
+**Interactions***
+
+*pc* is an R package for analyzing variable interactions using
+information-theoretic measures. Originally tailored for time series, its
+methods extend seamlessly to spatial cross-sectional data. Powered by a
+pure C++ engine with a lightweight R interface, the package also exposes
+its headers for direct integration into other R packages.
+
+> *Refer to the package documentation <https://stscl.github.io/pc/>
+> for more detailed information.*
 
 ## Installation
 
