@@ -22,11 +22,12 @@ experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimenta
 
 ***P**attern **C**ausality Analysis*
 
-*pc* is an R package for analyzing variable interactions using
-information-theoretic measures. Originally tailored for time series, its
-methods extend seamlessly to spatial cross-sectional data. Powered by a
-pure C++ engine with a lightweight R interface, the package also exposes
-its headers for direct integration into other R packages.
+*pc* is an R package for pattern-based causality analysis in both time
+series and spatial cross-sectional data. It uses symbolic pattern
+representations and cross mapping to detect directional interactions 
+and infer causal structure from temporal dynamics and spatial snapshots. 
+Built on a high-performance C++ backend with a lightweight R interface, *pc*
+provides efficient and flexible tools for data-driven causality analysis.
 
 > *Refer to the package documentation <https://stscl.github.io/pc/>
 > for more detailed information.*
