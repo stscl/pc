@@ -56,10 +56,8 @@ install.packages("pc",
   with:
 
 ``` r
-if (!requireNamespace("devtools")) {
-    install.packages("devtools")
+if (!requireNamespace("pak")) {
+    install.packages("pak")
 }
-devtools::install_github("stscl/pc",
-                         build_vignettes = TRUE,
-                         dep = TRUE)
+pak::pak("stscl/pc", dependencies = TRUE)
 ```
