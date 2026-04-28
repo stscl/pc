@@ -75,7 +75,7 @@
 #' @param relative (optional) Whether to calculate relative changes in embedding.
 #' @param weighted (optional) Whether to weight causal strength.
 #' @param threads (optional) Number of threads used.
-#' @param lower.parallel (optional) Whether to use lower level of parallelism.
+#' @param higher.parallel (optional) Whether to use a higher level of parallelism.
 #' @param verbose (optional) Whether to show the progress bar.
 #' @param nb (optional) Neighbours list.
 #' @param h (optional) Prediction horizon.
