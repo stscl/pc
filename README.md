@@ -20,8 +20,7 @@ experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimenta
 
 <a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="15%" alt="pc website: https://stscl.github.io/pc/"/></a>
 
-***Information**-Theoretic Measures for Revealing Variable
-**Interactions***
+***P**attern **C**ausality Analysis*
 
 *pc* is an R package for analyzing variable interactions using
 information-theoretic measures. Originally tailored for time series, its
