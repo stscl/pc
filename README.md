@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 
-[![CRAN](https://www.r-pkg.org/badges/version/pc)](https://CRAN.R-project.org/package=pc)
+<!-- [![CRAN](https://www.r-pkg.org/badges/version/pc)](https://CRAN.R-project.org/package=pc)
 [![CRAN
 Release](https://www.r-pkg.org/badges/last-release/pc)](https://CRAN.R-project.org/package=pc)
 [![CRAN
@@ -12,7 +12,7 @@ Checks](https://badges.cranchecks.info/worst/pc.svg)](https://cran.r-project.org
 [![Downloads_month](https://cranlogs.r-pkg.org/badges/pc)](https://CRAN.R-project.org/package=pc)
 [![License](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![Lifecycle:
-experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
 [![R-CMD-check](https://github.com/stscl/pc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stscl/pc/actions/workflows/R-CMD-check.yaml)
 [![R-universe](https://stscl.r-universe.dev/badges/pc?color=cyan)](https://stscl.r-universe.dev/pc)
 
