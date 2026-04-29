@@ -18,7 +18,7 @@ experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimenta
 
 <!-- badges: end -->
 
-<a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="20%" alt="pc website: https://stscl.github.io/pc/"/></a>
+<a href="https://stscl.github.io/pc/"><img src="man/figures/pc.png" align="right" hspace="5" vspace="0" width="15%" alt="pc website: https://stscl.github.io/pc/"/></a>
 
 <p align="right"; style="font-size:11px">logo by layeyo</p>
 
