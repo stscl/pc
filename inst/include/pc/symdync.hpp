@@ -643,10 +643,8 @@ namespace symdync
         /* ------------------------------------------------------------
          * 7. Normalize + aggregate
          * ------------------------------------------------------------ */
-        std::vector<double> diag_vals, anti_vals, other_vals;
-        diag_vals.reserve(K);
-        anti_vals.reserve(K);
-        other_vals.reserve((K - 2) * K);
+        double diag_sum = 0.0, anti_sum = 0.0, other_sum = 0.0;
+        size_t diag_cnt = 0, anti_cnt = 0, other_cnt = 0;
 
         for (size_t i = 0; i < K; ++i)
         {
@@ -657,25 +655,26 @@ namespace symdync
                 double val = heatmap[i][j] / counts[i][j];
 
                 if (i == j)
-                    diag_vals.push_back(val);
+                {
+                    diag_sum += val;
+                    diag_cnt++;
+                }
                 else if (j == opposite_id[i])
-                    anti_vals.push_back(val);
+                {
+                    anti_sum += val;
+                    anti_cnt++;
+                }
                 else
-                    other_vals.push_back(val);
+                {
+                    other_sum += val;
+                    other_cnt++;
+                }
             }
         }
 
-        auto mean = [](const std::vector<double>& v)
-        {
-            if (v.empty()) return std::numeric_limits<double>::quiet_NaN();
-            double s = 0;
-            for (double x : v) s += x;
-            return s / v.size();
-        };
-
-        res.TotalPos  = mean(diag_vals);
-        res.TotalNeg  = mean(anti_vals);
-        res.TotalDark = mean(other_vals);
+        res.TotalPos  = (diag_cnt  > 0) ? diag_sum  / diag_cnt  : 0.0;
+        res.TotalNeg  = (anti_cnt  > 0) ? anti_sum  / anti_cnt  : 0.0;
+        res.TotalDark = (other_cnt > 0) ? other_sum / other_cnt : 0.0;
 
         return res;
     }
