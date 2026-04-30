@@ -292,7 +292,7 @@ namespace patcaus
                 PredSMy = pc::projection::projection(SMy, Dx, sampled_lib, pred_indices, num_neighbors, zero_tolerance, h, 1);
 
             pc::symdync::PatternCausalityRes res = pc::symdync::computePatternCausality(
-                SMx, SMy, PredSMy, weighted);
+                SMx, SMy, PredSMy, weighted, false);
 
             all_results[0][li][b] = res.TotalPos;
             all_results[1][li][b] = res.TotalNeg;
