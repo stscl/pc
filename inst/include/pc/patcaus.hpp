@@ -94,7 +94,9 @@ namespace patcaus
     {
         size_t pi = pred_indices[p];
         for (size_t li : lib_indices) 
-        {
+        {   
+            if (pi == li) continue;
+            
             double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
             if (!std::isnan(dist)) 
             {
@@ -226,7 +228,7 @@ namespace patcaus
         for (size_t li : lib_indices) 
         {   
             if (pi == li) continue;
-            
+
             double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
             if (!std::isnan(dist)) 
             {
