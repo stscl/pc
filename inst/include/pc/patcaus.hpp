@@ -64,6 +64,7 @@ namespace patcaus
      *      relative        : Use relative symbolic encoding
      *      weighted        : Use weighted pattern comparison
      *      threads         : Number of threads for parallel execution
+     *      save_detail     : Make per-sample causality output
      ************************************************************************/
     inline pc::symdync::PatternCausalityRes patcaus(
         const std::vector<std::vector<double>>& Mx,
@@ -76,7 +77,8 @@ namespace patcaus
         const std::string& dist_metric = "euclidean",
         bool relative = true,
         bool weighted = true,
-        size_t threads = 1)
+        size_t threads = 1,
+        bool save_detail = true)
     {
     // Configure threads (cap at hardware concurrency)
     threads = std::min(static_cast<size_t>(std::thread::hardware_concurrency()), threads);
@@ -96,7 +98,7 @@ namespace patcaus
         for (size_t li : lib_indices) 
         {   
             if (pi == li) continue;
-            
+
             double dist = pc::distance::distance(Mx[pi], Mx[li], dist_metric, true);
             if (!std::isnan(dist)) 
             {
