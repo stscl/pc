@@ -134,7 +134,7 @@ namespace patcaus
     // Step 4: Compute pattern-based causality using symbolic pattern comparison
     // --------------------------------------------------------------------------
     pc::symdync::PatternCausalityRes res = 
-        pc::symdync::computePatternCausality(SMx, SMy, PredSMy, weighted);
+        pc::symdync::computePatternCausality(SMx, SMy, PredSMy, weighted, save_detail);
 
     return res;
     }
