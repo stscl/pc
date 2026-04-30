@@ -680,12 +680,19 @@ Rcpp::List RcppPCops(
     std::sort(taus.begin(), taus.end());
     taus.erase(std::unique(taus.begin(), taus.end()), taus.end());
 
-    // Generate unique (E, b, tau) combinations
+    // Generate unique (E, k, tau) combinations
     std::vector<std::tuple<size_t, size_t, size_t>> unique_EkTau;
     for (size_t ee : Es)
+    {
         for (size_t kk : ks)
-        for (size_t tt : taus)
-            unique_EkTau.emplace_back(ee, kk, tt);
+        {   
+            if (kk < ee) continue;
+            
+            for (size_t tt : taus)
+                unique_EkTau.emplace_back(ee, kk, tt);
+
+        }
+    }
 
     // Process necessay data
     std::vector<std::vector<size_t>> nb_std;
