@@ -115,6 +115,6 @@ Optimal Parameter Search for Pattern Causality
 }
 \examples{
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::ops(columbus, 1, 3, E = 5:10, maximize = "negative", threads = 1)
+pc::ops(columbus, 1, 3, E = 2:10, maximize = "negative", threads = 1)
 
 }
