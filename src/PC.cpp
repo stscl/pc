@@ -160,6 +160,27 @@ Rcpp::List RcppPC(
     );
 
     // ---- filter lib/pred (remove NaN in target/source) ----
+    size_t write = 0;
+    for (size_t i = 0; i < lib_std.size(); ++i)
+    {
+        size_t idx = lib_std[i];
+        if (!(std::isnan(tg[idx]) || std::isnan(sg[idx])))
+        {
+            lib_std[write++] = idx;
+        }
+    }
+    lib_std.resize(write);
+
+    write = 0;
+    for (size_t i = 0; i < pred_std.size(); ++i)
+    {
+        size_t idx = pred_std[i];
+        if (!(std::isnan(tg[idx]) || std::isnan(sg[idx])))
+        {
+            pred_std[write++] = idx;
+        }
+    }
+    pred_std.resize(write);
 
     // --- Perform Pattern Causality Analysis ---
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
