@@ -956,6 +956,55 @@ Rcpp::List RcppPCops(
                     pred_std.end()
         );
     }
+
+    // ---- sort + unique lib/pred ----
+    std::sort(lib_std.begin(), lib_std.end());
+    lib_std.erase(
+        std::unique(lib_std.begin(), lib_std.end()),
+        lib_std.end()
+    );
+
+    std::sort(pred_std.begin(), pred_std.end());
+    pred_std.erase(
+        std::unique(pred_std.begin(), pred_std.end()),
+        pred_std.end()
+    );
+
+    // ---- filter lib/pred (remove NaN in target/source) ----
+    size_t write = 0;
+    for (size_t i = 0; i < lib_std.size(); ++i)
+    {
+        size_t idx = lib_std[i];
+        if (!(std::isnan(tg[idx]) || std::isnan(sg[idx])))
+        {
+            lib_std[write++] = idx;
+        }
+    }
+    lib_std.resize(write);
+
+    write = 0;
+    for (size_t i = 0; i < pred_std.size(); ++i)
+    {
+        size_t idx = pred_std[i];
+        if (!(std::isnan(tg[idx]) || std::isnan(sg[idx])))
+        {
+            pred_std[write++] = idx;
+        }
+    }
+    pred_std.resize(write);
+    
+    // --- Prepare for data slicing ---
+    std::vector<size_t> selected_indices;
+    selected_indices.reserve(lib_std.size() + pred_std.size());
+    for (size_t i = 0; i < lib_std.size(); ++i)
+        selected_indices.push_back(lib_std[i]);
+    for (size_t i = 0; i < pred_std.size(); ++i)
+        selected_indices.push_back(pred_std[i]);
+    std::sort(selected_indices.begin(), selected_indices.end());
+    selected_indices.erase(
+        std::unique(selected_indices.begin(), selected_indices.end()),
+        selected_indices.end()
+    );
     
     // --- Perform Pattern Causality Analysis -------------------------
     std::vector<std::vector<double>> result(unique_EkTau.size(), std::vector<double>(6));
@@ -992,6 +1041,77 @@ Rcpp::List RcppPCops(
                     tg, Ei, taui, static_cast<size_t>(std::abs(style)));
                 My = pc::embed::embed(
                     sg, Ei, taui, static_cast<size_t>(std::abs(style)));
+            }
+
+            // --- Check if full set is used ---
+            bool use_subset = (selected_indices.size() < Mx.size());
+
+            // --- Perform Pattern Causality Analysis ---
+            pc::symdync::PatternCausalityRes res;
+
+            if (!use_subset)
+            {
+                // --- Full data: no slicing needed ---
+                res = pc::patcaus::patcaus(
+                    Mx, My, lib_std, pred_std, 
+                    static_cast<size_t>(std::abs(num_neighbors)),
+                    static_cast<size_t>(std::abs(zero_tolerance)),
+                    static_cast<size_t>(std::abs(h)),
+                    dist_metric, relative, weighted,
+                    static_cast<size_t>(std::abs(threads)), true);
+            }
+            else
+            {
+                // --- Subset mode: build index map ---
+                std::unordered_map<size_t, size_t> index_map;
+                index_map.reserve(selected_indices.size());
+
+                for (size_t i = 0; i < selected_indices.size(); ++i)
+                {
+                    index_map[selected_indices[i]] = i;
+                }
+
+                // --- Slice Mx and My ---
+                std::vector<std::vector<double>> Mx_sub;
+                std::vector<std::vector<double>> My_sub;
+
+                Mx_sub.reserve(selected_indices.size());
+                My_sub.reserve(selected_indices.size());
+
+                for (size_t i = 0; i < selected_indices.size(); ++i)
+                {
+                    size_t idx = selected_indices[i];
+                    Mx_sub.push_back(Mx[idx]);
+                    My_sub.push_back(My[idx]);
+                }
+
+                // --- Remap lib indices ---
+                for (size_t i = 0; i < lib_std.size(); ++i)
+                {
+                    lib_std[i] = index_map[lib_std[i]];
+                }
+
+                // --- Remap pred indices ---
+                for (size_t i = 0; i < pred_std.size(); ++i)
+                {
+                    pred_std[i] = index_map[pred_std[i]];
+                }
+
+                // --- Run patcaus on subset ---
+                res = pc::patcaus::patcaus(
+                    Mx_sub, My_sub, lib_std, pred_std, 
+                    static_cast<size_t>(std::abs(num_neighbors)),
+                    static_cast<size_t>(std::abs(zero_tolerance)),
+                    static_cast<size_t>(std::abs(h)),
+                    dist_metric, relative, weighted,
+                    static_cast<size_t>(std::abs(threads)), true);
+
+                // --- Recover original indices for RealLoop ---
+                for (size_t i = 0; i < res.RealLoop.size(); ++i)
+                {
+                    size_t sub_idx = res.RealLoop[i];
+                    res.RealLoop[i] = selected_indices[sub_idx];
+                }
             }
 
             pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
