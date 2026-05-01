@@ -1150,12 +1150,40 @@ Rcpp::List RcppPCops(
                 My = pc::embed::embed(
                     sg, Ei, taui, static_cast<size_t>(std::abs(style)));
             }
+            
+            pc::symdync::PatternCausalityRes res;
 
-            pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
-                Mx, My, lib_std, pred_std, ki,
-                static_cast<size_t>(std::abs(zero_tolerance)),
-                static_cast<size_t>(std::abs(h)),
-                dist_metric, relative, weighted, 1);
+            if (!use_subset)
+            {
+                // --- Full data: no slicing needed ---
+                res = pc::patcaus::patcaus(
+                    Mx, My, lib_std, pred_std, ki,
+                    static_cast<size_t>(std::abs(zero_tolerance)),
+                    static_cast<size_t>(std::abs(h)),
+                    dist_metric, relative, weighted, 1, false);
+            }
+            else
+            {
+                // --- Subset mode: slice Mx and My ---
+                std::vector<std::vector<double>> Mx_sub;
+                std::vector<std::vector<double>> My_sub;
+                Mx_sub.reserve(selected_indices.size());
+                My_sub.reserve(selected_indices.size());
+
+                for (size_t i = 0; i < selected_indices.size(); ++i)
+                {
+                    size_t idx = selected_indices[i];
+                    Mx_sub.push_back(Mx[idx]);
+                    My_sub.push_back(My[idx]);
+                }
+
+                // --- Run patcaus on subset ---
+                res = pc::patcaus::patcaus(
+                    Mx_sub, My_sub, lib_std, pred_std, ki,
+                    static_cast<size_t>(std::abs(zero_tolerance)),
+                    static_cast<size_t>(std::abs(h)),
+                    dist_metric, relative, weighted, 1, false);
+            }
 
             result[i][0] = Ei;
             result[i][1] = ki;
