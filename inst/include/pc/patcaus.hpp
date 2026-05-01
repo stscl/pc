@@ -149,15 +149,15 @@ namespace patcaus
         std::vector<std::vector<double>> SMy_sub;
         std::vector<std::vector<double>> PredSMy_sub;
 
-        Mx_sub.reserve(pred_indices.size());
-        My_sub.reserve(pred_indices.size());
+        SMx_sub.reserve(pred_indices.size());
+        SMy_sub.reserve(pred_indices.size());
         PredSMy_sub.reserve(pred_indices.size());
 
         for (size_t i = 0; i < pred_indices.size(); ++i)
         {
             size_t idx = pred_indices[i];
-            Mx_sub.push_back(Mx[idx]);
-            My_sub.push_back(My[idx]);
+            SMx_sub.push_back(SMx[idx]);
+            SMy_sub.push_back(SMy[idx]);
             PredSMy_sub.push_back(PredSMy[idx]);
         }
 
@@ -338,15 +338,15 @@ namespace patcaus
                 std::vector<std::vector<double>> SMy_sub;
                 std::vector<std::vector<double>> PredSMy_sub;
 
-                Mx_sub.reserve(pred_indices.size());
-                My_sub.reserve(pred_indices.size());
+                SMx_sub.reserve(pred_indices.size());
+                SMy_sub.reserve(pred_indices.size());
                 PredSMy_sub.reserve(pred_indices.size());
 
                 for (size_t i = 0; i < pred_indices.size(); ++i)
                 {
                     size_t idx = pred_indices[i];
-                    Mx_sub.push_back(Mx[idx]);
-                    My_sub.push_back(My[idx]);
+                    SMx_sub.push_back(SMx[idx]);
+                    SMy_sub.push_back(SMy[idx]);
                     PredSMy_sub.push_back(PredSMy[idx]);
                 }
 
