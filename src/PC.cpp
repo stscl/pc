@@ -262,7 +262,7 @@ Rcpp::List RcppPC(
         for (size_t i = 0; i < res.RealLoop.size(); ++i)
         {
             size_t sub_idx = res.RealLoop[i];
-            res.RealLoop[i] = selected_indices[sub_idx];
+            res.RealLoop[i] = pred_indices[sub_idx];
         }
     }
 
