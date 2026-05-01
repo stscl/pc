@@ -28,7 +28,7 @@ Rcpp::List RcppPC(
     Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
     Rcpp::Nullable<int> nrows = R_NilValue)
 {
-    // --- Input Conversion and Validation --------------------------------------
+    // --- Input Conversion and Validation ---
 
     std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
     std::vector<double> sg = Rcpp::as<std::vector<double>>(source);
@@ -93,7 +93,7 @@ Rcpp::List RcppPC(
         tau_std[1] = tau_vec[1];
     }
 
-    // --- Embedding Construction ------------------------------------------------
+    // --- Embedding Construction ---
     std::vector<std::vector<double>> Mx;
     std::vector<std::vector<double>> My;
 
@@ -159,7 +159,9 @@ Rcpp::List RcppPC(
         pred_std.end()
     );
 
-    // --- Perform Pattern Causality Analysis -------------------------
+    // ---- filter lib/pred (remove NaN in target/source) ----
+
+    // --- Perform Pattern Causality Analysis ---
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
         Mx, My, lib_std, pred_std, 
         static_cast<size_t>(std::abs(num_neighbors)),
@@ -168,7 +170,7 @@ Rcpp::List RcppPC(
         dist_metric, relative, weighted,
         static_cast<size_t>(std::abs(threads)), true);
 
-    // --- Create DataFrame for per-sample causality ----------------------------
+    // --- Create DataFrame for per-sample causality ---
 
     const size_t n_samples = res.NoCausality.size();
     Rcpp::LogicalVector real_loop(n_samples, false);
@@ -202,7 +204,7 @@ Rcpp::List RcppPC(
         Rcpp::Named("valid") = real_loop
     );
 
-    // --- Create summary DataFrame for causal strengths ------------------------
+    // --- Create summary DataFrame for causal strengths ---
 
     Rcpp::CharacterVector causal_type = Rcpp::CharacterVector::create("positive", "negative", "dark");
     Rcpp::NumericVector causal_strength = Rcpp::NumericVector::create(res.TotalPos, res.TotalNeg, res.TotalDark);
@@ -212,7 +214,7 @@ Rcpp::List RcppPC(
         Rcpp::Named("strength") = causal_strength
     );
 
-    // --- Return structured results --------------------------------------------
+    // --- Return structured results ---
 
     Rcpp::List out = Rcpp::List::create(
         Rcpp::Named("causality") = causality_df,
