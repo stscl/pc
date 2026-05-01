@@ -181,6 +181,19 @@ Rcpp::List RcppPC(
         }
     }
     pred_std.resize(write);
+    
+    // --- Prepare for data slicing ---
+    std::vector<size_t> selected_indices;
+    selected_indices.reserve(lib_std.size() + pred_std.size());
+    for (size_t i = 0; i < lib_std.size(); ++i)
+        selected_indices.push_back(lib_std[i]);
+    for (size_t i = 0; i < pred_std.size(); ++i)
+        selected_indices.push_back(pred_std[i]);
+    std::sort(selected_indices.begin(), selected_indices.end());
+    selected_indices.erase(
+        std::unique(selected_indices.begin(), selected_indices.end()),
+        selected_indices.end()
+    );
 
     // --- Perform Pattern Causality Analysis ---
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
