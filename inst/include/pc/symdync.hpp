@@ -415,9 +415,6 @@ namespace symdync
         // 3: Dark
         std::vector<size_t> PatternTypes;
 
-        // Indices of valid observations (after filtering)
-        std::vector<size_t> RealLoop;
-
         // Aggregated statistics (mean over valid entries)
         double TotalPos  = std::numeric_limits<double>::quiet_NaN();
         double TotalNeg  = std::numeric_limits<double>::quiet_NaN();
@@ -546,7 +543,6 @@ namespace symdync
             res.NegativeCausality.assign(n, 0.0);
             res.DarkCausality.assign(n, 0.0);
             res.PatternTypes.reserve(n);
-            res.RealLoop.reserve(n);
         }
 
         std::vector<std::vector<double>> heatmap(
@@ -575,9 +571,6 @@ namespace symdync
                 contains_zero(PY_real[t]) ||
                 contains_zero(PY_pred[t]))
                 continue;
-
-            if (save_detail)
-                res.RealLoop.push_back(t);
 
             /* --- causality existence --- */
             if (PY_pred[t] != PY_real[t])
