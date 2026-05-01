@@ -146,6 +146,20 @@ Rcpp::List RcppPC(
         );
     }
 
+    // ---- sort + unique lib ----
+    std::sort(lib_std.begin(), lib_std.end());
+    lib_std.erase(
+        std::unique(lib_std.begin(), lib_std.end()),
+        lib_std.end()
+    );
+
+    // ---- sort + unique pred ----
+    std::sort(pred_std.begin(), pred_std.end());
+    pred_std.erase(
+        std::unique(pred_std.begin(), pred_std.end()),
+        pred_std.end()
+    );
+
     // --- Perform Pattern Causality Analysis -------------------------
     pc::symdync::PatternCausalityRes res = pc::patcaus::patcaus(
         Mx, My, lib_std, pred_std, 
