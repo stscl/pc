@@ -599,19 +599,14 @@ Rcpp::DataFrame RcppPCboot(
 
         // --- Run patcaus on subset ---
         res = pc::patcaus::patcaus(
-            Mx_sub, My_sub, lib_std, pred_std, 
+            Mx_sub, My_sub, libsizes_std, lib_std, pred_std, 
             static_cast<size_t>(std::abs(num_neighbors)),
             static_cast<size_t>(std::abs(zero_tolerance)),
-            static_cast<size_t>(std::abs(h)),
-            dist_metric, relative, weighted,
-            static_cast<size_t>(std::abs(threads)), true);
-
-        // --- Recover original indices for RealLoop ---
-        for (size_t i = 0; i < res.RealLoop.size(); ++i)
-        {
-            size_t sub_idx = res.RealLoop[i];
-            res.RealLoop[i] = selected_indices[sub_idx];
-        }
+            static_cast<size_t>(std::abs(h)), dist_metric, 
+            static_cast<size_t>(std::abs(boot)), random_sample, 
+            static_cast<unsigned long long>(std::abs(seed)),
+            relative, weighted, static_cast<size_t>(std::abs(threads)),
+            static_cast<size_t>(std::abs(parallel_level)), verbose);
     }    
 
     // --- Result Processing -----------------------------------------------------
