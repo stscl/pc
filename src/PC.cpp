@@ -730,25 +730,33 @@ Rcpp::DataFrame RcppPCboot(
 Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
                               const std::string& maximize = "positive") {
 
-  if (Emat.ncol() != 6) {
+  if (Emat.ncol() != 6) 
+  {
     Rcpp::stop("Input matrix must have exactly six columns: E k tau pos neg dark.");
   }
   int n = Emat.nrow();
-  if (n == 0) {
+  if (n == 0) 
+  {
     Rcpp::stop("Input matrix must not be empty.");
   }
 
-  if (maximize != "positive" && maximize != "negative" && maximize != "dark") {
+  if (maximize != "positive" && maximize != "negative" && maximize != "dark") 
+  {
     Rcpp::stop("maximize must be one of positive negative or dark.");
   }
 
   // establish metric priority order
   std::vector<int> priority(3);
-  if (maximize == "positive") {
+  if (maximize == "positive") 
+  {
     priority = {3, 5, 4};  // pos dark neg
-  } else if (maximize == "negative") {
+  } 
+  else if (maximize == "negative") 
+  {
     priority = {4, 5, 3};  // neg dark pos
-  } else {
+  } 
+  else 
+  {
     priority = {5, 3, 4};  // dark pos neg
   }
 
@@ -759,7 +767,8 @@ Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
 
   // record of the best metrics for comparison
   std::vector<double> best_vals(3);
-  for (int j = 0; j < 3; ++j) {
+  for (int j = 0; j < 3; ++j) 
+  {
     best_vals[j] = get_metric(0, priority[j]);
   }
 
@@ -767,17 +776,20 @@ Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
   best_rows.push_back(0);
 
   // global scan
-  for (int i = 1; i < n; ++i) {
-
+  for (int i = 1; i < n; ++i) 
+  {
     bool better = false;
     bool equal_all = true;
 
-    for (int p = 0; p < 3; ++p) {
+    for (int p = 0; p < 3; ++p) 
+    {
       double a = get_metric(i, priority[p]);
       double b = best_vals[p];
 
-      if (!pc::numericutils::doubleNearlyEqual(a, b)) {
-        if (a > b) {
+      if (!pc::numericutils::doubleNearlyEqual(a, b)) 
+      {
+        if (a > b) 
+        {
           better = true;
         }
         equal_all = false;
@@ -785,20 +797,24 @@ Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
       }
     }
 
-    if (better) {
+    if (better) 
+    {
       best_rows.clear();
       best_rows.push_back(i);
-      for (int p = 0; p < 3; ++p) {
+      for (int p = 0; p < 3; ++p) 
+      {
         best_vals[p] = get_metric(i, priority[p]);
       }
     }
-    else if (equal_all) {
+    else if (equal_all) 
+    {
       best_rows.push_back(i);
     }
   }
 
   // if only one globally optimal row return directly
-  if (best_rows.size() == 1) {
+  if (best_rows.size() == 1) 
+  {
     int row = best_rows[0];
     return Rcpp::IntegerVector::create(
       static_cast<int>(Emat(row, 0)),
@@ -816,7 +832,8 @@ Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
   int bestTau = Emat(best_idx, 2);
   int bestK = Emat(best_idx, 1);
 
-  for (int idx : best_rows) {
+  for (int idx : best_rows) 
+  {
     int E = Emat(idx, 0);
     int tau = Emat(idx, 2);
     int k = Emat(idx, 1);
@@ -826,7 +843,8 @@ Rcpp::IntegerVector OptPCparm(const Rcpp::NumericMatrix& Emat,
       (E == bestE && tau < bestTau) ||
       (E == bestE && tau == bestTau && k < bestK);
 
-    if (better) {
+    if (better) 
+    {
       best_idx = idx;
       bestE = E;
       bestTau = tau;
