@@ -6,6 +6,15 @@
     data = data[, var_indices, drop = FALSE]
   }
 
+  if (detrend) {
+    coords = NULL
+    if (inherits(data, "sf")) {
+      coords = as.data.frame(sdsfun::sf_coordinates(data))
+    } else if (inherits(data, "SpatRaster")) {
+      coords = terra::rowColFromCell(data, seq_len(terra::ncell(data)))
+    }
+  }
+
 
   if (inherits(data, "sf")) {
     mat = as.matrix(sf::st_drop_geometry(data))
