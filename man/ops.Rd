@@ -44,6 +44,7 @@
   weighted = TRUE,
   threads = length(E),
   higher.parallel = TRUE,
+  detrend = FALSE,
   nb = NULL
 )
 
@@ -63,7 +64,8 @@
   relative = TRUE,
   weighted = TRUE,
   threads = length(E),
-  higher.parallel = TRUE
+  higher.parallel = TRUE,
+  detrend = FALSE
 )
 }
 \arguments{
@@ -100,6 +102,8 @@
 \item{higher.parallel}{(optional) Whether to use a higher level of parallelism.}
 
 \item{h}{(optional) Prediction horizon.}
+
+\item{detrend}{(optional) Whether to remove the linear trend.}
 
 \item{nb}{(optional) Neighbours list.}
 }
