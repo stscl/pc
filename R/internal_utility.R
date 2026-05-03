@@ -1,19 +1,21 @@
 .validate_var = \(data, target, source, detrend = FALSE) {
-  var_indices = c(abs(target[1]), abs(source[1]))
-  if (inherits(data, "SpatRaster")) {
-    data = data[[var_indices]]
-  } else {
-    data = data[, var_indices, drop = FALSE]
-  }
-
+  coords = NULL
   if (detrend) {
-    coords = NULL
     if (inherits(data, "sf")) {
       coords = as.data.frame(sdsfun::sf_coordinates(data))
     } else if (inherits(data, "SpatRaster")) {
       coords = terra::rowColFromCell(data, seq_len(terra::ncell(data)))
     }
   }
+  
+  var_indices = c(abs(target[1]), abs(source[1]))
+  if (inherits(data, "SpatRaster")) {
+    data = data[[var_indices]]
+  } else {
+    data = data[, var_indices, drop = FALSE]
+  }
+  
+  
 
 
   if (inherits(data, "sf")) {
