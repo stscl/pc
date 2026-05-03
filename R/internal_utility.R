@@ -20,17 +20,16 @@
     data = data[, var_indices, drop = FALSE]
   }
   names(data) = c("target", "source")
-  
-  
 
+  mat = as.matrix(data)
   if (!(typeof(mat) %in% c("integer", "double"))) {
     stop("Non-numeric values detected in input data. 
           Please remove columns such as dates, characters, or factors.", call. = FALSE)
   }
-
+  
   res = vector("list", 2)
-  res[[1]] = mat[, abs(target[1]), drop = TRUE]
-  res[[2]] = mat[, abs(source[1]), drop = TRUE]
+  res[[1]] = mat[, 1, drop = TRUE]
+  res[[2]] = mat[, 2, drop = TRUE]
   
   return(res)
 }
