@@ -26,10 +26,16 @@
     stop("Non-numeric values detected in input data. 
           Please remove columns such as dates, characters, or factors.", call. = FALSE)
   }
-  
+
   res = vector("list", 2)
-  res[[1]] = mat[, 1, drop = TRUE]
-  res[[2]] = mat[, 2, drop = TRUE]
+  if (is.null(coords)) {
+    res[[1]] = mat[, 1, drop = TRUE]
+    res[[2]] = mat[, 2, drop = TRUE]
+  } else {
+    data = as.data.frame(cbind(data, coords))
+    res[[1]] = sdsfun::rm_lineartrend("target~x+y", data = data)
+    res[[2]] = sdsfun::rm_lineartrend("source~x+y", data = data)
+  }
   
   return(res)
 }
