@@ -50,3 +50,10 @@ if (!requireNamespace("pak")) {
 }
 pak::pak("stscl/pc", dependencies = TRUE)
 ```
+
+## References
+
+Stavroglou, S.K., Pantelous, A.A., Stanley, H.E., Zuev, K.M., 2020. Unveiling causal interactions in complex systems. Proceedings of the National Academy of Sciences 117, 7599–7605. https://doi.org/10.1073/pnas.1918269117.
+
+
+
