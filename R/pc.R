@@ -77,8 +77,9 @@
 #' @param threads (optional) Number of threads used.
 #' @param higher.parallel (optional) Whether to use a higher level of parallelism.
 #' @param verbose (optional) Whether to show the progress bar.
-#' @param nb (optional) Neighbours list.
 #' @param h (optional) Prediction horizon.
+#' @param detrend (optional) Whether to remove the linear trend.
+#' @param nb (optional) Neighbours list.
 #'
 #' @return A list (when `libsizes` is `NULL`) or data.frame.
 #' If `libsizes` is `NULL`, a list with two components is returned:
