@@ -20,6 +20,7 @@ analysis.
 - Install from [CRAN](https://CRAN.R-project.org/package=pc) with:
 
 ``` r
+
 install.packages("pc", dependencies = TRUE)
 ```
 
@@ -27,6 +28,7 @@ install.packages("pc", dependencies = TRUE)
   [R-universe](https://stscl.r-universe.dev/pc) with:
 
 ``` r
+
 install.packages("pc",
                  repos = c("https://stscl.r-universe.dev",
                            "https://cloud.r-project.org"),
@@ -37,6 +39,7 @@ install.packages("pc",
   with:
 
 ``` r
+
 if (!requireNamespace("pak")) {
     install.packages("pak")
 }
