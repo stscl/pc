@@ -6,7 +6,7 @@ Authors@R:
            email = "lyu.geosocial@gmail.com", 
            role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0002-6003-3800"))
-Description: Infer causation from observational data through pattern causality analysis (PC), with original algorithm for time series data from Stavroglou et al. (2020) <doi:10.1073/pnas.1918269117>, as well as methodological extensions for spatial cross-sectional data introduced by Zhang & Wang (2025) <doi:10.1080/13658816.2025.2581207>, together with a systematic description proposed in Runge et al. (2023) <doi:10.1038/s43017-023-00431-y>.
+Description: Infer causation from observational data through pattern causality analysis (PC), with original algorithm for time series data from Stavroglou et al. (2020) <doi:10.1073/pnas.1918269117>, as well as methodological extensions for spatial cross-sectional data introduced by Zhang & Wang (2025) <doi:10.1080/13658816.2025.2581207>, together with a systematic description proposed in Lyu et al. (2026) <doi:10.1016/j.compenvurbsys.2026.102435>.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
