@@ -441,7 +441,7 @@ namespace symdync
      *
      *  7. Optional strength weighting:
      *
-     *       erf( ||pred_Y|| / (||Y|| + 1e-6) )
+     *       erf( ||pred_Y|| / (||X|| + 1e-6) )
      */
     inline PatternCausalityRes computePatternCausality(
         const std::vector<std::vector<double>>& SMx,
@@ -582,7 +582,7 @@ namespace symdync
                 strength = weighted
                     ? std::erf(
                         norm_ignore_nan(pred_SMy[t]) /
-                        (norm_ignore_nan(SMy[t]) + 1e-6))
+                        (norm_ignore_nan(SMx[t]) + 1e-6))
                     : 1.0;
             }
 
