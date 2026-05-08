@@ -8,6 +8,8 @@
 
 ### enhancements
 
+* Enable method dispatch compatibility in `pc()` and `ops()` generics via `...` (#43).
+
 * Improve handling of large-scale inputs (#33).
 
 # pc 0.1
