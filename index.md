@@ -40,7 +40,7 @@ install.packages("pc",
 
 ``` r
 
-if (!requireNamespace("pak")) {
+if (!requireNamespace("pak", quietly = TRUE)) {
     install.packages("pak")
 }
 pak::pak("stscl/pc", dependencies = TRUE)
@@ -70,3 +70,5 @@ Lyu, W., Lei, Y., Yi, W., Song, Y., Li, X., Dai, S., Qin, Y., Zhao, W.,
 2026. Causal discovery in urban data with temporal empirical dynamic
 modeling: The R package tEDM. Computers, Environment and Urban Systems
 127, 102435. <https://doi.org/10.1016/j.compenvurbsys.2026.102435>.
+
+ 
