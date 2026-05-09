@@ -156,7 +156,6 @@ double CppSingleFNN(const std::vector<std::vector<double>>& embedding,
 
 /*
  * Compute False Nearest Neighbor (FNN) ratios across multiple embedding dimensions
- * for spatial cross-sectional data.
  *
  * For a given embedding matrix (with each row representing a spatial unit and
  * each column an embedding dimension), this function evaluates the proportion
