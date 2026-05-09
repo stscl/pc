@@ -184,3 +184,9 @@ std::vector<double> fnn(const std::vector<std::vector<double>>& embedding,
 
   return results;
 }
+
+} // namespace fnn
+
+}
+
+#endif // PC_FNN_HPP
