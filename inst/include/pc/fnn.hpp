@@ -172,7 +172,7 @@ double CppSingleFNN(const std::vector<std::vector<double>>& embedding,
  * in parallel.
  *
  * Parameters:
- * - embedding: A vector of vectors where each row is a spatial unit’s embedding.
+ * - embedding: A vector of vectors where each row is a unit’s embedding.
  *              Must have at least 2 columns (dimensions).
  * - lib: A vector of indices indicating the library set (0-based).
  * - pred: A vector of indices indicating the prediction set (0-based).
