@@ -25,6 +25,50 @@ double singlefnn(const std::vector<std::vector<double>>& embedding,
 
     std::vector<int> false_flags(pred.size(), -1); // -1 means skip or invalid, 0 means not a false neighbor, 1 means false neighbor
 
+    // --------------------------------------------------------------------------
+    // Step 1: Compute pairwise distances between prediction and library indices
+    // --------------------------------------------------------------------------
+    auto compute_flag = [&](size_t p) {
+        size_t pidx = pred[p];
+
+        double min_dist = std::numeric_limits<double>::max();
+        int nn_idx = -1;
+
+        for (size_t j = 0; j < lib.size(); ++j) 
+        {
+            size_t lidx = lib[j];
+            if (pidx == lidx) continue;
+
+            // Compute distance using only the first E1 dimensions
+            std::vector<double> xi(embedding[pidx].begin(), embedding[pidx].begin() + E1);
+            std::vector<double> xj(embedding[lidx].begin(), embedding[lidx].begin() + E1);
+            double dist = pc::distance::distance(xi, xj, dist_metric, true); 
+
+            if (dist < min_dist) 
+            {
+                min_dist = dist;
+                nn_idx = static_cast<int>(lidx); 
+            }
+        }
+
+        // Skip if no neighbor found or minimum distance is zero
+        if (nn_idx == -1 || pc::numericutils::doubleNearlyEqual(min_dist,0.0)) return;
+
+        // Compare the E2-th dimension to check for false neighbors
+        double diff = std::abs(embedding[pidx][E2 - 1] - embedding[nn_idx][E2 - 1]);
+        double ratio = diff / min_dist;
+
+        // Determine if this is a false neighbor
+        if (ratio > Rtol || diff > Atol) 
+        {
+            false_flags[i] = 1;
+        } 
+        else 
+        {
+            false_flags[i] = 0;
+        }
+    }
+
     if (threads <= 1)
     {
 
