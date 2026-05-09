@@ -110,37 +110,36 @@ namespace fnn
     }
 
     /*
-    * Compute False Nearest Neighbor (FNN) ratios across multiple embedding dimensions
-    *
-    * For a given embedding matrix (with each row representing a spatial unit and
-    * each column an embedding dimension), this function evaluates the proportion
-    * of false nearest neighbors (FNN) as the embedding dimension increases.
-    *
-    * It iteratively calls `CppSingleFNN` for each embedding dimension pair (E1, E2),
-    * where E1 ranges from 1 to D - 1 (D = number of columns), and E2 = E1 + 1.
-    * The FNN ratio measures how often a nearest neighbor in dimension E1 becomes
-    * distant in dimension E2, suggesting that E1 is insufficient for reconstructing
-    * the system.
-    *
-    * If `parallel_level == 0`, the function executes in serial;
-    * otherwise, it uses multithreading to compute FNN ratios for each (E1, E2) pair
-    * in parallel.
-    *
-    * Parameters:
-    * - embedding: A vector of vectors where each row is a unit’s embedding.
-    *              Must have at least 2 columns (dimensions).
-    * - lib: A vector of indices indicating the library set (0-based).
-    * - pred: A vector of indices indicating the prediction set (0-based).
-    * - Rtol: A vector of relative distance thresholds (one per E1).
-    * - Atol: A vector of absolute distance thresholds (one per E1).
-    * - dist_metric: Distance metric ("euclidean", "manhattan", "maximum".)
-    * - threads: Number of threads to use for parallel computation.
-    * - parallel_level: 0 for serial loop over E1, >0 for parallel loop over E1.
-    *
-    * Returns:
-    * - A vector of FNN ratios corresponding to each E1 from 1 to D - 1.
-    *   If not computable for a given E1, NaN is returned at that position.
-    */
+     * Compute False Nearest Neighbor (FNN) ratios across multiple embedding dimensions
+     *
+     * For a given embedding matrix (with each row representing a sample unit and
+     * each column an embedding dimension), this function evaluates the proportion
+     * of false nearest neighbors (FNN) as the embedding dimension increases.
+     *
+     * It iteratively calls `singlefNN` for each embedding dimension pair (E1, E2),
+     * where E1 ranges from 1 to D - 1 (D = number of columns), and E2 = E1 + 1.
+     * The FNN ratio measures how often a nearest neighbor in dimension E1 becomes
+     * distant in dimension E2, suggesting that E1 is insufficient for reconstructing
+     * the system.
+     *
+     *
+     * Parameters:
+     * - embedding: A vector of vectors where each row is a unit’s embedding.
+     *              Must have at least 2 columns (dimensions).
+     * - lib: A vector of indices indicating the library set (0-based).
+     * - pred: A vector of indices indicating the prediction set (0-based).
+     * - Rtol: A vector of relative distance thresholds (one per E1).
+     * - Atol: A vector of absolute distance thresholds (one per E1).
+     * - dist_metric: Distance metric ("euclidean", "manhattan", "maximum".)
+     * - threads: Number of threads to use for parallel computation.
+     * - parallel_level: Parallelization strategy
+     *                        0 = unit-level parallelism
+     *                        1 = E-level parallelism
+     *
+     * Returns:
+     * - A vector of FNN ratios corresponding to each E1 from 1 to D - 1.
+     *   If not computable for a given E1, NaN is returned at that position.
+     */
     std::vector<double> fnn(const std::vector<std::vector<double>>& embedding,
                             const std::vector<size_t>& lib,
                             const std::vector<size_t>& pred,
