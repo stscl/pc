@@ -1,8 +1,8 @@
 #include <vector>
 #include <cmath>
 #include <limits>
-#include <algorithm>
 #include <numeric>
+#include <algorithm>
 #include "pc/numericutils.hpp"
 #include "pc/distance.hpp"
 #include <RcppThread.h>
