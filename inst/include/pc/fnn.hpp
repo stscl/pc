@@ -3,9 +3,8 @@
 #include <limits>
 #include <algorithm>
 #include <numeric>
-#include "NumericUtils.h"
-#include "CppStats.h"
-#include "CppDistances.h"
+#include "pc/numericutils.hpp"
+#include "pc/distance.hpp"
 #include <RcppThread.h>
 
 /*
