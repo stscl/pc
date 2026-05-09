@@ -17,59 +17,58 @@ double singlefnn(const std::vector<std::vector<double>>& embedding,
                  double Atol = 2.0,
                  size_t threads = 1) 
 {
-  if (embedding.empty() || embedding[0].size() < E2) 
-  {
-    return std::numeric_limits<double>::quiet_NaN();  // Invalid dimensions
-  }
+    if (embedding.empty() || embedding[0].size() < E2) 
+    {
+        return std::numeric_limits<double>::quiet_NaN();  // Invalid dimensions
+    }
+    size_t N = embedding.size();
 
-  size_t N = embedding.size();
+    std::vector<int> false_flags(pred.size(), -1); // -1 means skip or invalid, 0 means not a false neighbor, 1 means false neighbor
 
-  std::vector<int> false_flags(pred.size(), -1); // -1 means skip or invalid, 0 means not a false neighbor, 1 means false neighbor
+    if (threads <= 1)
+    {
 
-  if (threads <= 1)
-  {
+    }
+    else 
+    {
+        RcppThread::parallelFor(0, pred.size(), [&](size_t i) {
+        int pidx = pred[i];
+        if (checkOneDimVectorNotNanNum(embedding[pidx]) == 0) return;
 
-  }
-  else 
-  {
-    RcppThread::parallelFor(0, pred.size(), [&](size_t i) {
-      int pidx = pred[i];
-      if (checkOneDimVectorNotNanNum(embedding[pidx]) == 0) return;
+        double min_dist = std::numeric_limits<double>::max();
+        int nn_idx = -1;
 
-      double min_dist = std::numeric_limits<double>::max();
-      int nn_idx = -1;
+        for (size_t j = 0; j < lib.size(); ++j) {
+            int lidx = lib[j];
+            if (pidx == lidx || checkOneDimVectorNotNanNum(embedding[lidx]) == 0) continue;
 
-      for (size_t j = 0; j < lib.size(); ++j) {
-        int lidx = lib[j];
-        if (pidx == lidx || checkOneDimVectorNotNanNum(embedding[lidx]) == 0) continue;
+            // Compute distance using only the first E1 dimensions
+            std::vector<double> xi(embedding[pidx].begin(), embedding[pidx].begin() + E1);
+            std::vector<double> xj(embedding[lidx].begin(), embedding[lidx].begin() + E1);
+            double dist = CppDistance(xi, xj, L1norm, true);
 
-        // Compute distance using only the first E1 dimensions
-        std::vector<double> xi(embedding[pidx].begin(), embedding[pidx].begin() + E1);
-        std::vector<double> xj(embedding[lidx].begin(), embedding[lidx].begin() + E1);
-        double dist = CppDistance(xi, xj, L1norm, true);
-
-        if (dist < min_dist) {
-          min_dist = dist;
-          nn_idx = lidx;
+            if (dist < min_dist) {
+            min_dist = dist;
+            nn_idx = lidx;
+            }
         }
-      }
 
-      // Skip if no neighbor found or minimum distance is zero
-      if (nn_idx == -1 || doubleNearlyEqual(min_dist,0.0)) return;
+        // Skip if no neighbor found or minimum distance is zero
+        if (nn_idx == -1 || doubleNearlyEqual(min_dist,0.0)) return;
 
-      // Compare the E2-th dimension to check for false neighbors
-      double diff = std::abs(embedding[pidx][E2 - 1] - embedding[nn_idx][E2 - 1]);
-      double ratio = diff / min_dist;
+        // Compare the E2-th dimension to check for false neighbors
+        double diff = std::abs(embedding[pidx][E2 - 1] - embedding[nn_idx][E2 - 1]);
+        double ratio = diff / min_dist;
 
-      // Determine if this is a false neighbor
-      if (ratio > Rtol || diff > Atol) {
-        false_flags[i] = 1;
-      } else {
-        false_flags[i] = 0;
-      }
-    }, threads); // use specified number of threads
+        // Determine if this is a false neighbor
+        if (ratio > Rtol || diff > Atol) {
+            false_flags[i] = 1;
+        } else {
+            false_flags[i] = 0;
+        }
+        }, threads); // use specified number of threads
 
-  }
+    }
 
     
 
