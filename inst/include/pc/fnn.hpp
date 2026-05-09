@@ -137,9 +137,9 @@ std::vector<double> CppFNN(const std::vector<std::vector<double>>& embedding,
                            const std::vector<size_t>& pred,
                            const std::vector<double>& Rtol,
                            const std::vector<double>& Atol,
-                           bool L1norm = false,
-                           int threads = 8,
-                           int parallel_level = 0) {
+                           const std::string& dist_metric = "euclidean",
+                           size_t threads = 1,
+                           size_t parallel_level = 0) {
   // Configure threads
   size_t threads_sizet = static_cast<size_t>(std::abs(threads));
   threads_sizet = std::min(static_cast<size_t>(std::thread::hardware_concurrency()), threads_sizet);
