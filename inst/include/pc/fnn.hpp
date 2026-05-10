@@ -126,20 +126,20 @@ namespace fnn
         size_t false_count = 0, total = 0;
         for (int flag : false_flags) 
         {
-        if (flag >= 0) 
-        {
-            total++;
-            if (flag == 1) false_count++;
-        }
+            if (flag >= 0) 
+            {
+                total++;
+                if (flag == 1) false_count++;
+            }
         }
 
         if (total > 0) 
         {
-        return static_cast<double>(false_count) / static_cast<double>(total);
+            return static_cast<double>(false_count) / static_cast<double>(total);
         } 
         else 
         {
-        return std::numeric_limits<double>::quiet_NaN();
+            return std::numeric_limits<double>::quiet_NaN();
         }
     }
 
