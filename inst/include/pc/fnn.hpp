@@ -247,11 +247,10 @@ namespace fnn
         } 
         else 
         {
-            // Parallel computation
             RcppThread::parallelFor(1, max_E2, [&](size_t E1) {
                 size_t E2 = E1 + 1;
                 double fnn_ratio = singlefnn(embedding, lib, pred, E1, E2, dist_metric,
-                                            Rtol[E1 - 1], Atol[E1 - 1], 1);
+                                             Rtol[E1 - 1], Atol[E1 - 1], 1);
                 results[E1 - 1] = fnn_ratio;
             }, threads);
         }
