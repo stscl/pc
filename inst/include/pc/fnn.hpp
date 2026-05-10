@@ -90,15 +90,16 @@ namespace fnn
      *      Proportion of false nearest neighbors (double)
      *      Returns NaN if computation is not feasible
      ********************************************************************************/
-    double singlefnn(const std::vector<std::vector<double>>& embedding,
-                     const std::vector<size_t>& lib,
-                     const std::vector<size_t>& pred,
-                     size_t E1,
-                     size_t E2,
-                     const std::string& dist_metric = "euclidean",
-                     double Rtol = 10.0,
-                     double Atol = 2.0,
-                     size_t threads = 1) 
+    inline double singlefnn(
+        const std::vector<std::vector<double>>& embedding,
+        const std::vector<size_t>& lib,
+        const std::vector<size_t>& pred,
+        size_t E1,
+        size_t E2,
+        const std::string& dist_metric = "euclidean",
+        double Rtol = 10.0,
+        double Atol = 2.0,
+        size_t threads = 1) 
     {
         if (embedding.empty() || embedding[0].size() < E2) 
         {
