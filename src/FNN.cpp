@@ -199,33 +199,26 @@ Rcpp::List RcppFNN(
     bool use_subset = (selected_indices.size() < Mx.size());
 
     // --- Perform Pattern Causality Analysis ---
-    pc::symdync::PatternCausalityRes res;
+    std::vector<double> res;
 
     if (!use_subset)
     {
         // --- Full data: no slicing needed ---
-        res = pc::patcaus::patcaus(
-            Mx, My, lib_std, pred_std, 
-            static_cast<size_t>(std::abs(num_neighbors)),
-            static_cast<size_t>(std::abs(zero_tolerance)),
-            static_cast<size_t>(std::abs(h)),
-            dist_metric, relative, weighted,
-            static_cast<size_t>(std::abs(threads)), true);
+        res = pc::fnn::fnn(
+            Mx, lib_std, pred_std, rt_std, eps_std, dist_metric,
+            static_cast<size_t>(std::abs(threads)), 
+            static_cast<size_t>(std::abs(parallel_level)));
     }
     else
     {   
-        // --- Slice Mx and My ---
+        // --- Slice Mx  ---
         std::vector<std::vector<double>> Mx_sub;
-        std::vector<std::vector<double>> My_sub;
-
         Mx_sub.reserve(selected_indices.size());
-        My_sub.reserve(selected_indices.size());
 
         for (size_t i = 0; i < selected_indices.size(); ++i)
         {
             size_t idx = selected_indices[i];
             Mx_sub.push_back(Mx[idx]);
-            My_sub.push_back(My[idx]);
         }
 
         // --- Subset mode: build index map ---
@@ -250,13 +243,10 @@ Rcpp::List RcppFNN(
         }
 
         // --- Run patcaus on subset ---
-        res = pc::patcaus::patcaus(
-            Mx_sub, My_sub, lib_std, pred_std, 
-            static_cast<size_t>(std::abs(num_neighbors)),
-            static_cast<size_t>(std::abs(zero_tolerance)),
-            static_cast<size_t>(std::abs(h)),
-            dist_metric, relative, weighted,
-            static_cast<size_t>(std::abs(threads)), true);
+        res = pc::fnn::fnn(
+            Mx_sub, lib_std, pred_std, rt_std, eps_std, dist_metric,
+            static_cast<size_t>(std::abs(threads)), 
+            static_cast<size_t>(std::abs(parallel_level)));
     }
 
     // --- Create DataFrame for per-sample causality ---
