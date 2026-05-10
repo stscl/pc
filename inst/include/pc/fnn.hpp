@@ -15,16 +15,50 @@ namespace pc
 
 namespace fnn
 {  
-
+    /*********************************************************************************
+     *  Compute False Nearest Neighbor (FNN) ratio between two embedding dimensions
+     *
+     *  This function evaluates the proportion of false nearest neighbors when
+     *  increasing the embedding dimension from E1 to E2 (E2 = E1 + 1).
+     *
+     *  For each prediction point, the nearest neighbor is identified using
+     *  the first E1 dimensions. The neighbor relationship is then re-evaluated
+     *  in the higher dimension E2. A neighbor is classified as "false" if:
+     *
+     *      1. The relative distance increase exceeds Rtol, or
+     *      2. The absolute distance in the added dimension exceeds Atol
+     *
+     *  The FNN ratio quantifies the fraction of neighbors that become
+     *  distant when increasing dimensionality, indicating insufficient
+     *  embedding in lower dimensions.
+     *
+     *  Parallelization:
+     *      Computation over prediction indices can be parallelized using threads.
+     *
+     *  Parameters:
+     *      embedding   : Matrix-like structure (row = observation, col = dimension)
+     *      lib         : Indices of library points (0-based)
+     *      pred        : Indices of prediction points (0-based)
+     *      E1          : Lower embedding dimension
+     *      E2          : Higher embedding dimension (E2 = E1 + 1)
+     *      dist_metric : Distance metric ("euclidean", "manhattan", "maximum")
+     *      Rtol        : Relative distance threshold
+     *      Atol        : Absolute distance threshold
+     *      threads     : Number of threads for parallel computation
+     *
+     *  Returns:
+     *      Proportion of false nearest neighbors (double)
+     *      Returns NaN if computation is not feasible
+     ********************************************************************************/
     double singlefnn(const std::vector<std::vector<double>>& embedding,
-                    const std::vector<size_t>& lib,
-                    const std::vector<size_t>& pred,
-                    size_t E1,
-                    size_t E2,
-                    const std::string& dist_metric = "euclidean",
-                    double Rtol = 10.0,
-                    double Atol = 2.0,
-                    size_t threads = 1) 
+                     const std::vector<size_t>& lib,
+                     const std::vector<size_t>& pred,
+                     size_t E1,
+                     size_t E2,
+                     const std::string& dist_metric = "euclidean",
+                     double Rtol = 10.0,
+                     double Atol = 2.0,
+                     size_t threads = 1) 
     {
         if (embedding.empty() || embedding[0].size() < E2) 
         {
