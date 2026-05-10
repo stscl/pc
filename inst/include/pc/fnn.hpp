@@ -183,7 +183,7 @@ namespace fnn
         }
     }
 
-    /*
+    /************************************************************************************ 
      * Compute False Nearest Neighbor (FNN) ratios across multiple embedding dimensions
      *
      * For a given embedding matrix (with each row representing a sample unit and
@@ -213,7 +213,7 @@ namespace fnn
      * Returns:
      * - A vector of FNN ratios corresponding to each E1 from 1 to D - 1.
      *   If not computable for a given E1, NaN is returned at that position.
-     */
+     *************************************************************************************/
     std::vector<double> fnn(const std::vector<std::vector<double>>& embedding,
                             const std::vector<size_t>& lib,
                             const std::vector<size_t>& pred,
