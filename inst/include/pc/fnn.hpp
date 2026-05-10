@@ -115,7 +115,7 @@ namespace fnn
             size_t pidx = pred[p];
 
             double min_dist = std::numeric_limits<double>::max();
-            int nn_idx = -1;
+            size_t nn_idx = N; // invalid index placeholder
 
             for (size_t j = 0; j < lib.size(); ++j) 
             {
@@ -130,12 +130,12 @@ namespace fnn
                 if (dist < min_dist) 
                 {
                     min_dist = dist;
-                    nn_idx = static_cast<int>(lidx); 
+                    nn_idx = lidx; 
                 }
             }
 
             // Skip if no neighbor found or minimum distance is zero
-            if (nn_idx == -1 || pc::numericutils::doubleNearlyEqual(min_dist,0.0)) return;
+            if (nn_idx == N || pc::numericutils::doubleNearlyEqual(min_dist,0.0)) return;
 
             // Compare the E2-th dimension to check for false neighbors
             double diff = std::abs(embedding[pidx][E2 - 1] - embedding[nn_idx][E2 - 1]);
