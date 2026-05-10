@@ -207,8 +207,8 @@ namespace fnn
      * - dist_metric: Distance metric ("euclidean", "manhattan", "maximum".)
      * - threads: Number of threads to use for parallel computation.
      * - parallel_level: Parallelization strategy
-     *                        0 = unit-level parallelism
-     *                        1 = E-level parallelism
+     *                        0 = `prediction point`-level parallelism
+     *                        1 = `embedding dimension`-level parallelism
      *
      * Returns:
      * - A vector of FNN ratios corresponding to each E1 from 1 to D - 1.
