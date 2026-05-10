@@ -55,6 +55,14 @@ Rcpp::List RcppFNN(
         idx -= 1;
     }
 
+    // Construct embedding dimension E
+    std::vector<int> E_std = Rcpp::as<std::vector<int>>(E);
+    for (auto& singleE : E_std) 
+    {
+        if (singleE < 0) singleE = std::abs(singleE)
+    }
+    size_t max_E = static_cast<size_t>(*std::max_element(E_std.begin(), E_std.end()));
+
     // Convert Rcpp IntegerVector to std::vector<size_t>
     std::vector<size_t> E_vec = Rcpp::as<std::vector<size_t>>(E);
     std::vector<size_t> tau_vec = Rcpp::as<std::vector<size_t>>(tau);
