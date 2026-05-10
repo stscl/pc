@@ -1,3 +1,43 @@
+/************************************************************************
+ *  File: fnn.hpp
+ *
+ *  False Nearest Neighbor (FNN) computation
+ *  for embedding dimension selection in nonlinear systems.
+ *
+ *  This module provides efficient routines to evaluate the proportion
+ *  of false nearest neighbors as embedding dimension increases, a key
+ *  criterion for phase space reconstruction.
+ *
+ *  Core functionality:
+ *      - Evaluate FNN ratio between successive dimensions (E1 → E2)
+ *      - Compute FNN curve across all embedding dimensions
+ *
+ *  Method:
+ *      For each point, the nearest neighbor is identified in dimension E1.
+ *      The stability of this neighbor is then tested in dimension E2.
+ *      A neighbor is considered false if:
+ *
+ *          - Relative distance increase exceeds Rtol, or
+ *          - Absolute distance exceeds Atol
+ *
+ *  Parallelization:
+ *      - Supports parallel computation over prediction points
+ *      - Optional parallel evaluation across embedding dimensions
+ *
+ *  Distance metrics:
+ *      "euclidean"  : sqrt(sum((x - y)^2))
+ *      "maximum"    : max(|x - y|)
+ *      "manhattan"  : sum(|x - y|)
+ *
+ *  Notes:
+ *      - Input embedding must have at least 2 dimensions
+ *      - Library and prediction sets must be valid index subsets
+ *      - Rtol and Atol must match the number of evaluated dimensions
+ *
+ *  Author: Wenbo Lyu (Github: @SpatLyu)
+ *  License: GPL-3
+ ************************************************************************/
+
 #ifndef PC_FNN_HPP
 #define PC_FNN_HPP
 
