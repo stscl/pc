@@ -62,15 +62,15 @@ Rcpp::List RcppFNN(
         if (singleE < 0) singleE = std::abs(singleE)
     }
     size_t max_E = static_cast<size_t>(*std::max_element(E_std.begin(), E_std.end()));
-    max_E = std::min(2, max_E);
+    max_E = std::max(2, max_E);
 
-    // Convert Rcpp IntegerVector to std::vector<size_t>
-    std::vector<size_t> E_vec = Rcpp::as<std::vector<size_t>>(E);
-    std::vector<size_t> tau_vec = Rcpp::as<std::vector<size_t>>(tau);
+    // Convert rt and eps
+    std::vector<double> rt_vec = Rcpp::as<std::vector<double>>(rt);
+    std::vector<double> eps_vec = Rcpp::as<std::vector<double>>(eps);
 
-    // Expand E and tau
-    std::vector<size_t> E_std(2);
-    std::vector<size_t> tau_std(2);
+    // Expand rt and eps
+    std::vector<double> rt_std(max_E);
+    std::vector<double> eps_std(max_E);
 
     // ---- E ----
     if (E_vec.size() == 1) 
