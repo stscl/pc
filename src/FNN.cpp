@@ -164,7 +164,7 @@ Rcpp::List RcppFNN(
     for (size_t i = 0; i < lib_std.size(); ++i)
     {
         size_t idx = lib_std[i];
-        if (!(std::isnan(tg[idx]) || std::isnan(sg[idx])))
+        if (!std::isnan(tg[idx]))
         {
             lib_std[write++] = idx;
         }
@@ -175,14 +175,12 @@ Rcpp::List RcppFNN(
     for (size_t i = 0; i < pred_std.size(); ++i)
     {
         size_t idx = pred_std[i];
-        if (!(std::isnan(tg[idx]) || std::isnan(sg[idx])))
+        if (!std::isnan(tg[idx]))
         {
             pred_std[write++] = idx;
         }
     }
     pred_std.resize(write);
-    // Copy prediction indices for mapping back to original dataset
-    std::vector<size_t> pred_indices = pred_std;
     
     // --- Prepare for data slicing ---
     std::vector<size_t> selected_indices;
