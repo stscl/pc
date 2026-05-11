@@ -3,7 +3,7 @@
             threads = length(libsizes), higher.parallel = TRUE, ...) {
   dist.metric = match.arg(dist.metric)
   tv = .validate_var(data, target)[[1]]
-  if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
+  if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
   if (is.null(libsizes)) {
@@ -21,7 +21,7 @@
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
   dist.metric = match.arg(dist.metric)
   tv = .validate_var(data, target)[[1]]
-  if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
+  if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
   if (is.null(libsizes)) {
@@ -39,7 +39,7 @@
   dist.metric = match.arg(dist.metric)
   dlist = .validate_var(data, target, source, detrend)
   tv = .validate_var(data, target)[[1]]
-  if (is.null(lib)) lib = which(!(is.na(tv) | is.na(sv)))
+  if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
   if (is.null(libsizes)) {
