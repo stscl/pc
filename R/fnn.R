@@ -6,13 +6,8 @@
   if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
-  if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance,
-                  dist.metric, relative, weighted, threads, h, NULL, NULL))
-  } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
-                      random, seed, relative, weighted, threads, higher.parallel, verbose, h, NULL, NULL))
-  }
+  return(RcppFNN(tv, rt, eps, lib, pred, E, tau, style, dist.metric,
+                 threads, higher.parallel, NULL, NULL))
 }
 
 .fnn_lattice = \(data, target, E = 3:10, tau = 1, style = 1, lib = NULL, pred = NULL, 
@@ -24,13 +19,8 @@
   if (is.null(lib)) lib = which(!is.na(tv))
   if (is.null(pred)) pred = lib
 
-  if (is.null(libsizes)) {
-    return(RcppPC(tv, sv, lib, pred, E, tau, style, k, zero.tolerance,
-                  dist.metric, relative, weighted, threads, 0, nb, NULL))
-  } else {
-    return(RcppPCboot(tv, sv, libsizes, lib, pred, E, tau, style, k, zero.tolerance, dist.metric, boot,
-                      random, seed, relative, weighted, threads, higher.parallel, verbose, 0, nb, NULL))
-  }
+  return(RcppFNN(tv, rt, eps, lib, pred, E, tau, style, dist.metric,
+                 threads, higher.parallel, nb, NULL))
 }
 
 .fnn_grid = \(data, target, E = 3:10, tau = 1, style = 1, lib = NULL, pred = NULL, 
