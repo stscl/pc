@@ -45,8 +45,8 @@
 #' @param lib (optional) Libraries indices.
 #' @param pred (optional) Predictions indices.
 #' @param dist.metric (optional) Distance measure to be used.
-#' @param rt (optional) Neighborhood diameter.
-#' @param eps (optional) Escape factor.
+#' @param rt (optional) Relative distance threshold.
+#' @param eps (optional) Absolute distance threshold.
 #' @param threads (optional) Number of threads used.
 #' @param higher.parallel (optional) Whether to use a higher level of parallelism.
 #' @param detrend (optional) Whether to remove the linear trend.
