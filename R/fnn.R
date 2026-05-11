@@ -62,7 +62,7 @@
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-#' pc::fnn(columbus, 1, 3, E = 3:5, threads = 1)
+#' pc::fnn(columbus, 1, E = 3:5, threads = 1)
 #'
 methods::setMethod("fnn", "data.frame", .fnn_ts)
 
