@@ -203,13 +203,15 @@ namespace fnn
                 double dist = dists[i].first;
                 size_t idx = dists[i].second;
 
+                double diff = std::abs(embedding[pidx][E2 - 1] - embedding[idx][E2 - 1]);
+
                 if (pc::numericutils::doubleNearlyEqual(dist, 0.0))
                 {
                     valid_k++;
+                    if (diff > Atol) false_k++;
                     continue;
                 }
 
-                double diff = std::abs(embedding[pidx][E2 - 1] - embedding[idx][E2 - 1]);
                 double ratio = diff / dist;
 
                 if (ratio > Rtol || diff > Atol)
