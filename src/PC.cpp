@@ -430,23 +430,23 @@ Rcpp::DataFrame RcppPCboot(
         // Convert Rcpp::List to std::vector<std::vector<size_t>>
         std::vector<std::vector<size_t>> nb_std = pc::convert::nb2std(nb.get());
         Mx = pc::embed::embed(
-            tg, nb_std, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+            sg, nb_std, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
         My = pc::embed::embed(
-            sg, nb_std, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+            tg, nb_std, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
     } 
     else if (nrows.isNotNull())
     {   
         size_t n_rows = static_cast<size_t>(std::abs(Rcpp::as<int>(nrows)));
 
-        std::vector<std::vector<double>> tm = 
-            pc::embed::gridVec2Mat(tg, n_rows);
-        Mx = pc::embed::embed(
-            tm, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
-
         std::vector<std::vector<double>> sm = 
             pc::embed::gridVec2Mat(sg, n_rows);
+        Mx = pc::embed::embed(
+            sm, E_std[0], tau_std[0], static_cast<size_t>(std::abs(style)));
+
+        std::vector<std::vector<double>> tm = 
+            pc::embed::gridVec2Mat(tg, n_rows);
         My = pc::embed::embed(
-            sm, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
+            tm, E_std[1], tau_std[1], static_cast<size_t>(std::abs(style)));
     }
     else  
     {
