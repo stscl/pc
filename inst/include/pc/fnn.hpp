@@ -162,6 +162,9 @@ namespace fnn
             //     false_flags[p] = 0;
             // }
 
+            // --------------------------------------------------
+            // Collect distances to all library points (E1 space)
+            // --------------------------------------------------
             std::vector<std::pair<double, size_t>> dists;
             dists.reserve(lib.size());
 
@@ -172,11 +175,59 @@ namespace fnn
 
                 std::vector<double> xi(embedding[pidx].begin(), embedding[pidx].begin() + E1);
                 std::vector<double> xj(embedding[lidx].begin(), embedding[lidx].begin() + E1);
+
                 double dist = pc::distance::distance(xi, xj, dist_metric, true);
                 if (!std::isnan(dist)) dists.emplace_back(dist, lidx);
             }
 
-            
+            if (dists.empty()) return;
+
+            // --------------------------------------------------
+            // Select k nearest neighbors (partial sort)
+            // --------------------------------------------------
+            size_t k_use = std::min(k, dists.size());
+
+            std::nth_element(
+                dists.begin(),
+                dists.begin() + k_use,
+                dists.end(),
+                [](const auto& a, const auto& b) { return a.first < b.first; }
+            );
+
+            // --------------------------------------------------
+            // Evaluate false neighbor condition over k neighbors
+            // --------------------------------------------------
+            size_t false_k = 0;
+            size_t valid_k = 0;
+
+            for (size_t i = 0; i < k_use; ++i)
+            {
+                double dist = dists[i].first;
+                size_t idx = dists[i].second;
+
+                if (pc::numericutils::doubleNearlyEqual(dist, 0.0))
+                {
+                    valid_k++;
+                    continue;
+                }
+
+                double diff = std::abs(embedding[pidx][E2 - 1] - embedding[idx][E2 - 1]);
+                double ratio = diff / dist;
+
+                if (ratio > Rtol || diff > Atol)
+                    false_k++;
+
+                valid_k++;
+            }
+
+            // --------------------------------------------------
+            // Majority rule at point level
+            // --------------------------------------------------
+            if (valid_k > 0)
+            {
+                double frac = static_cast<double>(false_k) / valid_k;
+                false_flags[p] = (frac > 0.5) ? 1 : 0;
+            }
         };
 
         if (threads <= 1)
