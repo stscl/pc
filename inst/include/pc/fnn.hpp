@@ -56,7 +56,7 @@ namespace pc
 
 namespace fnn
 {  
-    /*********************************************************************************
+    /***************************************************************************************
      *  Compute False Nearest Neighbor (FNN) ratio between two embedding dimensions
      *
      *  This function evaluates the proportion of false nearest neighbors when
@@ -87,7 +87,7 @@ namespace fnn
      *      lib         : Indices of library points (0-based)
      *      pred        : Indices of prediction points (0-based)
      *      E1          : Lower embedding dimension
-     *      E2          : Higher embedding dimension (E2 = E1 + 1)
+     *      E2          : Higher embedding dimension (E2 is suggested to be E1 + 1)
      *      k           : Number of nearest neighbors used for evaluation
      *      dist_metric : Distance metric ("euclidean", "manhattan", "maximum")
      *      Rtol        : Relative distance threshold
@@ -97,7 +97,7 @@ namespace fnn
      *  Returns:
      *      Proportion of false nearest neighbors (double)
      *      Returns NaN if computation is not feasible
-     ********************************************************************************/
+     ***************************************************************************************/
     inline double singlefnn(
         const std::vector<std::vector<double>>& embedding,
         const std::vector<size_t>& lib,
