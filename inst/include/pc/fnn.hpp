@@ -62,16 +62,22 @@ namespace fnn
      *  This function evaluates the proportion of false nearest neighbors when
      *  increasing the embedding dimension from E1 to E2 (E2 = E1 + 1).
      *
-     *  For each prediction point, the nearest neighbor is identified using
-     *  the first E1 dimensions. The neighbor relationship is then re-evaluated
+     *  For each prediction point, the k nearest neighbors are identified using
+     *  the first E1 dimensions. The neighbor relationships are then re-evaluated
      *  in the higher dimension E2. A neighbor is classified as "false" if:
      *
      *      1. The relative distance increase exceeds Rtol, or
      *      2. The absolute distance in the added dimension exceeds Atol
      *
-     *  The FNN ratio quantifies the fraction of neighbors that become
-     *  distant when increasing dimensionality, indicating insufficient
-     *  embedding in lower dimensions.
+     *  For each point, the fraction of false neighbors within its k-nearest
+     *  neighborhood is computed, and a majority rule is applied to determine
+     *  whether the point exhibits false nearest neighbors.
+     *
+     *  The final FNN ratio is defined as the proportion of points classified
+     *  as having false nearest neighbors, indicating insufficient embedding
+     *  in lower dimensions.
+     *
+     *  Setting k = 1 reduces the method to the standard single nearest neighbor variant.
      *
      *  Parallelization:
      *      Computation over prediction indices can be parallelized using threads.
@@ -82,6 +88,7 @@ namespace fnn
      *      pred        : Indices of prediction points (0-based)
      *      E1          : Lower embedding dimension
      *      E2          : Higher embedding dimension (E2 = E1 + 1)
+     *      k           : Number of nearest neighbors used for evaluation
      *      dist_metric : Distance metric ("euclidean", "manhattan", "maximum")
      *      Rtol        : Relative distance threshold
      *      Atol        : Absolute distance threshold
@@ -97,6 +104,7 @@ namespace fnn
         const std::vector<size_t>& pred,
         size_t E1,
         size_t E2,
+        size_t k = 3,
         const std::string& dist_metric = "euclidean",
         double Rtol = 10.0,
         double Atol = 2.0,
