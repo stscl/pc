@@ -5,7 +5,7 @@
 \alias{fnn,data.frame-method}
 \alias{fnn,sf-method}
 \alias{fnn,SpatRaster-method}
-\title{False Nearest Neighbours}
+\title{False Nearest Neighbors}
 \usage{
 \S4method{fnn}{data.frame}(
   data,
@@ -93,7 +93,7 @@
 A vector.
 }
 \description{
-False Nearest Neighbours
+False Nearest Neighbors
 }
 \examples{
 columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
