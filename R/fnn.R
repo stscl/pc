@@ -1,4 +1,4 @@
-.fnn_ts = \(data, target, E = 2:10, tau = 1, style = 1, lib = NULL, pred = NULL,
+.fnn_ts = \(data, target, E = 2:10, k = 3, tau = 1, style = 1, lib = NULL, pred = NULL,
             dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = 2,
             threads = length(E), higher.parallel = TRUE, ...) {
   dist.metric = match.arg(dist.metric)
@@ -10,7 +10,7 @@
                  threads, higher.parallel, NULL, NULL))
 }
 
-.fnn_lattice = \(data, target, E = 3:10, tau = 1, style = 1, lib = NULL, pred = NULL, 
+.fnn_lattice = \(data, target, E = 3:10, k = 3, tau = 1, style = 1, lib = NULL, pred = NULL, 
                  dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = 2,
                  threads = length(E), higher.parallel = TRUE, detrend = FALSE, nb = NULL, ...) {
   if (is.null(nb)) nb = sdsfun::spdep_nb(data)
@@ -23,7 +23,7 @@
                  threads, higher.parallel, nb, NULL))
 }
 
-.fnn_grid = \(data, target, E = 3:10, tau = 1, style = 1, lib = NULL, pred = NULL, 
+.fnn_grid = \(data, target, E = 3:10, k = 3, tau = 1, style = 1, lib = NULL, pred = NULL, 
               dist.metric = c("euclidean", "manhattan", "maximum"), rt = 10, eps = 2, 
               threads = length(E), higher.parallel = TRUE, detrend = FALSE, ...) {
   dist.metric = match.arg(dist.metric)
@@ -40,6 +40,7 @@
 #' @param data Observation data.
 #' @param target Integer of column indice for the target variable.
 #' @param E (optional) Embedding dimensions.
+#' @param k (optional) Number of nearest neighbors used for evaluation.
 #' @param tau (optional) Step of lag.
 #' @param style (optional) Embedding style (`0` includes current state, `1` excludes it).
 #' @param lib (optional) Libraries indices.
