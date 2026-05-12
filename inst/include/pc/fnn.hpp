@@ -77,8 +77,6 @@ namespace fnn
      *  as having false nearest neighbors, indicating insufficient embedding
      *  in lower dimensions.
      *
-     *  Setting k = 1 reduces the method to the standard single nearest neighbor variant.
-     *
      *  Parallelization:
      *      Computation over prediction indices can be parallelized using threads.
      *
