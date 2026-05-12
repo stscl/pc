@@ -86,8 +86,8 @@ namespace fnn
      *      pred        : Indices of prediction points (0-based)
      *      E1          : Lower embedding dimension
      *      E2          : Higher embedding dimension (E2 is suggested to be E1 + 1)
-     *      k           : Number of nearest neighbors used for evaluation
      *      dist_metric : Distance metric ("euclidean", "manhattan", "maximum")
+     *      k           : Number of nearest neighbors used for evaluation
      *      Rtol        : Relative distance threshold
      *      Atol        : Absolute distance threshold
      *      threads     : Number of threads for parallel computation
@@ -102,8 +102,8 @@ namespace fnn
         const std::vector<size_t>& pred,
         size_t E1,
         size_t E2,
-        size_t k = 3,
         const std::string& dist_metric = "euclidean",
+        size_t k = 3,
         double Rtol = 10.0,
         double Atol = 2.0,
         size_t threads = 1) 
@@ -298,6 +298,7 @@ namespace fnn
         const std::vector<double>& Rtol,
         const std::vector<double>& Atol,
         const std::string& dist_metric = "euclidean",
+        size_t k = 3,
         size_t threads = 1,
         size_t parallel_level = 0) 
     {
@@ -319,7 +320,7 @@ namespace fnn
             {
                 size_t E2 = E1 + 1;
                 double fnn_ratio = singlefnn(embedding, lib, pred, E1, E2, dist_metric,
-                                            Rtol[E1 - 1], Atol[E1 - 1], threads);
+                                             k, Rtol[E1 - 1], Atol[E1 - 1], threads);
                 results[E1 - 1] = fnn_ratio;
             }
         } 
@@ -328,7 +329,7 @@ namespace fnn
             RcppThread::parallelFor(1, max_E2, [&](size_t E1) {
                 size_t E2 = E1 + 1;
                 double fnn_ratio = singlefnn(embedding, lib, pred, E1, E2, dist_metric,
-                                             Rtol[E1 - 1], Atol[E1 - 1], 1);
+                                             k, Rtol[E1 - 1], Atol[E1 - 1], 1);
                 results[E1 - 1] = fnn_ratio;
             }, threads);
         }
