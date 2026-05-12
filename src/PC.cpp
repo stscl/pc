@@ -1155,24 +1155,24 @@ Rcpp::List RcppPCops(
             if (nb.isNotNull()) 
             {
                 Mx = pc::embed::embed(
-                    tg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
-                My = pc::embed::embed(
                     sg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
+                My = pc::embed::embed(
+                    tg, nb_std, Ei, taui, static_cast<size_t>(std::abs(style)));
             } 
             else if (nrows.isNotNull())
             {   
                 Mx = pc::embed::embed(
-                    tm, Ei, taui, static_cast<size_t>(std::abs(style)));
+                    sm, Ei, taui, static_cast<size_t>(std::abs(style)));
 
                 My = pc::embed::embed(
-                    sm, Ei, taui, static_cast<size_t>(std::abs(style)));
+                    tm, Ei, taui, static_cast<size_t>(std::abs(style)));
             }
             else  
             {
                 Mx = pc::embed::embed(
-                    tg, Ei, taui, static_cast<size_t>(std::abs(style)));
-                My = pc::embed::embed(
                     sg, Ei, taui, static_cast<size_t>(std::abs(style)));
+                My = pc::embed::embed(
+                    tg, Ei, taui, static_cast<size_t>(std::abs(style)));
             }
             
             pc::symdync::PatternCausalityRes res;
