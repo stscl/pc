@@ -21,7 +21,8 @@ print.pc_ops = \(x,...) {
 #' @noRd
 plot.pc_boot = \(x, family = "serif",
                  xbreaks = NULL, xlimits = NULL,
-                 ybreaks = NULL, ylimits = NULL, ...){
+                 ybreaks = seq(0, 1, by = 0.1), 
+                 ylimits = NULL, ...){
   causdf = x$causality
   if (ncol(causdf) == 3) names(causdf) = c("libsizes", "type", "q50")
   if(is.null(xbreaks)) xbreaks = causdf$libsizes
