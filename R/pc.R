@@ -83,7 +83,7 @@
 #'
 #' @examples
 #' columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-#' pc::pc(columbus, 1, 3, E = 3, k = 9, threads = 1)
+#' pc::pc(columbus, 1, 3, E = 3, k = 5, threads = 1)
 #'
 methods::setMethod("pc", "data.frame", .pc_ts)
 
