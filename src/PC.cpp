@@ -1249,7 +1249,7 @@ Rcpp::List RcppPCops(
 
     Rcpp::List out = Rcpp::List::create(
         Rcpp::Named("param") = pvec,
-        Rcpp::Named("xmap") = pdf
+        Rcpp::Named("causality") = pdf
     );
     out.attr("class") = Rcpp::CharacterVector::create("pc_ops");
 
