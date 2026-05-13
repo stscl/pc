@@ -2,6 +2,8 @@
 
 ### new
 
+* Extend `pc` generic with visualization capabilities (#55).
+
 * Provide `fnn()` generic for *false nearest neighbors* method (#49).
 
 * Add Loess Plateau precipitation–soil moisture–NDVI case dataset (#41).
