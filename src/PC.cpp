@@ -627,6 +627,8 @@ Rcpp::DataFrame RcppPCboot(
 
     bool has_bootstrap = (n_boot > 1);
     const std::string types[3] = {"positive", "negative", "dark"};
+    
+    Rcpp::DataFrame causality_out;
 
     if (!has_bootstrap) 
     {
@@ -646,7 +648,7 @@ Rcpp::DataFrame RcppPCboot(
             }
         }
 
-        return Rcpp::DataFrame::create(
+        causality_out = Rcpp::DataFrame::create(
             Rcpp::Named("libsizes") = df_libsizes,
             Rcpp::Named("type") = df_type,
             Rcpp::Named("causality") = df_causality
@@ -686,7 +688,7 @@ Rcpp::DataFrame RcppPCboot(
             }
         }
 
-        return Rcpp::DataFrame::create(
+        causality_out = Rcpp::DataFrame::create(
             Rcpp::Named("libsizes") = df_libsizes,
             Rcpp::Named("type") = df_type,
             Rcpp::Named("mean") = df_causality,
@@ -695,6 +697,16 @@ Rcpp::DataFrame RcppPCboot(
             Rcpp::Named("q95") = df_q95
         );
     }
+
+    // --- Return structured results --------------------------------------------
+
+    Rcpp::List out = Rcpp::List::create(
+        Rcpp::Named("param") = pvec,
+        Rcpp::Named("xmap") = pdf
+    );
+    out.attr("class") = Rcpp::CharacterVector::create("pc_boot");
+
+    return out;
 }
 
 /**
