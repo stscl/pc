@@ -331,7 +331,7 @@ Rcpp::List RcppPC(
 
 // Wrapper function to perform bootstrapped pattern causality analysis
 // [[Rcpp::export(rng = false)]]
-Rcpp::DataFrame RcppPCboot(
+Rcpp::List RcppPCboot(
     const Rcpp::NumericVector& target,
     const Rcpp::NumericVector& source,
     const Rcpp::IntegerVector& libsizes,
