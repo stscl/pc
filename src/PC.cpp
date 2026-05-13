@@ -701,8 +701,7 @@ Rcpp::DataFrame RcppPCboot(
     // --- Return structured results --------------------------------------------
 
     Rcpp::List out = Rcpp::List::create(
-        Rcpp::Named("param") = pvec,
-        Rcpp::Named("xmap") = pdf
+        Rcpp::Named("causality") = causality_out
     );
     out.attr("class") = Rcpp::CharacterVector::create("pc_boot");
 
