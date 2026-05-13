@@ -133,11 +133,17 @@
 \item{nb}{(optional) Neighbours list.}
 }
 \value{
-A list (when \code{libsizes} is \code{NULL}) or data.frame.
-If \code{libsizes} is \code{NULL}, a list with two components is returned:
+A list.
 \describe{
-\item{causality}{A data.frame containing per-sample causality results.}
-\item{summary}{A data.frame summarizing overall causality metrics.}
+\item{causality}{
+A data.frame of causality results. When \code{libsizes} is \code{NULL}, it contains
+per-sample causality estimates; otherwise, it contains causality results
+evaluated across different library sizes.
+}
+\item{summary}{
+A data.frame summarizing overall causality metrics. Only returned when
+\code{libsizes} is \code{NULL}.
+}
 }
 }
 \description{
