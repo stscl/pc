@@ -457,15 +457,15 @@ namespace symdync
         if (n == 0) return res;
         
         /* ------------------------------------------------------------
-        *  1. Generate symbolic pattern
-        * ------------------------------------------------------------ */
+         *  1. Generate symbolic pattern
+         * ------------------------------------------------------------ */
         std::vector<std::vector<uint8_t>> PX = genPatternSpace(SMx, true);
         std::vector<std::vector<uint8_t>> PY_real = genPatternSpace(SMy, true);
         std::vector<std::vector<uint8_t>> PY_pred = genPatternSpace(pred_SMy, true);
 
         /* ------------------------------------------------------------
-        *  2. Collect and filter pattern space
-        * ------------------------------------------------------------ */
+         *  2. Collect and filter pattern space
+         * ------------------------------------------------------------ */
         std::vector<std::vector<uint8_t>> all_patterns;
         all_patterns.reserve(n * 3);
 
@@ -491,8 +491,8 @@ namespace symdync
         );
 
         /* ------------------------------------------------------------
-        *  3. Symmetric closure
-        * ------------------------------------------------------------ */
+         *  3. Symmetric closure
+         * ------------------------------------------------------------ */
         size_t original_size = all_patterns.size();
 
         for (size_t i = 0; i < original_size; ++i)
