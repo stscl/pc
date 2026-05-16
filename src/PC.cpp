@@ -550,7 +550,7 @@ Rcpp::List RcppPCboot(
     {
         // --- Full data: no slicing needed ---
         res = pc::patcaus::patcaus(
-            Mx, My, libsizes_std, lib_std, pred_std, 
+            Mx, My, valid_libsizes, lib_std, pred_std, 
             static_cast<size_t>(std::abs(num_neighbors)),
             static_cast<size_t>(std::abs(zero_tolerance)),
             static_cast<size_t>(std::abs(h)), dist_metric, 
@@ -598,7 +598,7 @@ Rcpp::List RcppPCboot(
 
         // --- Run patcaus on subset ---
         res = pc::patcaus::patcaus(
-            Mx_sub, My_sub, libsizes_std, lib_std, pred_std, 
+            Mx_sub, My_sub, valid_libsizes, lib_std, pred_std, 
             static_cast<size_t>(std::abs(num_neighbors)),
             static_cast<size_t>(std::abs(zero_tolerance)),
             static_cast<size_t>(std::abs(h)), dist_metric, 
