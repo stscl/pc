@@ -888,8 +888,7 @@ Rcpp::List RcppPCops(
     Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
     Rcpp::Nullable<int> nrows = R_NilValue)
 {
-    // --- Input Conversion and Validation --------------------------------------
-
+    // Input Conversion and Validation --------------------------------------
     std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
     std::vector<double> sg = Rcpp::as<std::vector<double>>(source);
     const size_t n_obs = tg.size();
