@@ -19,7 +19,7 @@
   lib = NULL,
   pred = NULL,
   boot = 99,
-  random = TRUE,
+  replace = TRUE,
   seed = 42L,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
@@ -44,7 +44,7 @@
   lib = NULL,
   pred = NULL,
   boot = 99,
-  random = TRUE,
+  replace = TRUE,
   seed = 42L,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
@@ -70,7 +70,7 @@
   lib = NULL,
   pred = NULL,
   boot = 99,
-  random = TRUE,
+  replace = TRUE,
   seed = 42L,
   dist.metric = c("euclidean", "manhattan", "maximum"),
   zero.tolerance = max(k),
@@ -106,7 +106,7 @@
 
 \item{boot}{(optional) Number of bootstraps to perform.}
 
-\item{random}{(optional) Whether to use random sampling.}
+\item{replace}{(optional) Should sampling be with replacement?}
 
 \item{seed}{(optional) Random seed.}
 
