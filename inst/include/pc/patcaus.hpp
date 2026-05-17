@@ -305,13 +305,18 @@ namespace patcaus
 
         auto process_boot = [&](size_t b) 
         {
-            std::vector<size_t> sampled_lib, sampled_pred;
+            std::vector<size_t> sampled_lib;
+            // std::vector<size_t> sampled_pred;
 
             if (replace_sampling) 
-            {
-                std::vector<size_t> shuffled_lib = lib_indices;
-                std::shuffle(shuffled_lib.begin(), shuffled_lib.end(), rng_pool[b]);
-                sampled_lib.assign(shuffled_lib.begin(), shuffled_lib.begin() + L);
+            {   
+                sampled_lib.resize(L);
+                std::uniform_int_distribution<size_t> dist(0, lib_indices.size() - 1);
+
+                for (size_t i = 0; i < L; ++i)
+                {
+                    sampled_lib[i] = lib_indices[dist(rng_pool[b])];
+                }
                 // sampled_pred = sampled_lib;
             } else {
                 std::vector<size_t> shuffled_lib = lib_indices;
