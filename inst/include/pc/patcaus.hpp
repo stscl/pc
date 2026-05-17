@@ -224,7 +224,7 @@ namespace patcaus
         const size_t& h = 0,
         const std::string& dist_metric = "euclidean",
         size_t boot = 99,
-        bool replace_sample = true,
+        bool replace_sampling = true,
         unsigned long long seed = 42,
         bool relative = true,
         bool weighted = true,
@@ -307,14 +307,16 @@ namespace patcaus
         {
             std::vector<size_t> sampled_lib, sampled_pred;
 
-            if (random_sample) 
+            if (replace_sampling) 
             {
                 std::vector<size_t> shuffled_lib = lib_indices;
                 std::shuffle(shuffled_lib.begin(), shuffled_lib.end(), rng_pool[b]);
                 sampled_lib.assign(shuffled_lib.begin(), shuffled_lib.begin() + L);
                 // sampled_pred = sampled_lib;
             } else {
-                sampled_lib.assign(lib_indices.begin(), lib_indices.begin() + L);
+                std::vector<size_t> shuffled_lib = lib_indices;
+                std::shuffle(shuffled_lib.begin(), shuffled_lib.end(), rng_pool[b]);
+                sampled_lib.assign(shuffled_lib.begin(), shuffled_lib.begin() + L);
                 // sampled_pred = sampled_lib;
             }
 
