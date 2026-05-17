@@ -60,7 +60,7 @@
 #' @param libsizes (optional) Number of observations used.
 #' @param k (optional) Number of nearest neighbors used for projection.
 #' @param boot (optional) Number of bootstraps to perform.
-#' @param random (optional) Whether to use random sampling.
+#' @param replace (optional) Should sampling be with replacement?
 #' @param seed (optional) Random seed.
 #' @param zero.tolerance (optional) Maximum number of zeros tolerated in signature space.
 #' @param relative (optional) Whether to calculate relative changes in embedding.
