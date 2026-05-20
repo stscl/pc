@@ -150,8 +150,15 @@ A data.frame summarizing overall causality metrics. Only returned when
 Pattern Causality
 }
 \examples{
-columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::pc(columbus, 1, 3, E = 3, k = 5, threads = 1)
+crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
+p1 = pc::pc(crash, 1, 2, E = 8, k = 8, threads = 1)
+print(p1)
+plot(p1)
+
+# convergence diagnostics
+p2 = pc::pc(crash, 1, 2, libsizes = seq(10,172,20), E = 8, k = 8, threads = 2)
+print(p2)
+plot(p2)
 
 }
 \references{

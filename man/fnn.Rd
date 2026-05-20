@@ -101,8 +101,8 @@ A vector.
 False Nearest Neighbors
 }
 \examples{
-columbus = sf::read_sf(system.file("case/columbus.gpkg", package="spEDM"))
-pc::fnn(columbus, 1, threads = 1)
+crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
+pc::fnn(crash, 1, threads = 1)
 
 }
 \references{
