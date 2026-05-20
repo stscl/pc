@@ -28,7 +28,7 @@ plot.pc_single = \(x, family = "serif", ...){
     ggplot2::scale_y_continuous(
       limits = c(0, max(causdf$strength) * 1.1),
       expand = ggplot2::expansion(mult = c(0, 0.1)),
-      name = "Causal Strength") +
+      name = "Strength") +
     ggplot2::scale_fill_manual(values = c("dark" = "#6A0DAD", 
                                           "negative" = "#FF4136", 
                                           "positive" = "#0074D9")) +
@@ -59,9 +59,9 @@ plot.pc_boot = \(x, family = "serif",
                                            "negative" = "#FF4136", 
                                            "positive" = "#0074D9")) +
     ggplot2::scale_x_continuous(breaks = xbreaks, limits = xlimits,
-                                expand = c(0, 0), name = "Library Size") +
+                                expand = c(0, 0), name = "Library") +
     ggplot2::scale_y_continuous(breaks = ybreaks, limits = ylimits,
-                                expand = c(0, 0), name = "Causal Strength") +
+                                expand = c(0, 0), name = "Strength") +
     ggplot2::theme_bw(base_family = family) +
     ggplot2::theme(
       legend.position = "inside",
