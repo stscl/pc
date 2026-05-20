@@ -159,10 +159,10 @@ namespace distance
     }
 
     /***********************************************************
-    * Vector - Scalar
-    * Scalar is internally expanded to vector length
-    * Result is a single double distance value
-    ***********************************************************/
+     * Vector - Scalar
+     * Scalar is internally expanded to vector length
+     * Result is a single double distance value
+     ***********************************************************/
     inline double distance(
         const std::vector<double>& vec,
         const double scalar,
