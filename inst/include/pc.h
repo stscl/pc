@@ -41,6 +41,7 @@
 #include "pc/combn.hpp"
 #include "pc/numericutils.hpp"
 #include "pc/distance.hpp"
+#include "pc/neighbor.hpp"
 #include "pc/symdync.hpp"
 #include "pc/projection.hpp"
 #include "pc/patcaus.hpp"
