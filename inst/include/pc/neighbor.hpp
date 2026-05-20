@@ -55,8 +55,8 @@
  *  License: GPL-3
  ********************************************************************/
 
-#ifndef INFOXTR_NEIGHBOR_HPP
-#define INFOXTR_NEIGHBOR_HPP
+#ifndef PC_NEIGHBOR_HPP
+#define PC_NEIGHBOR_HPP
 
 #include <vector>
 #include <cmath>
@@ -68,10 +68,10 @@
 #include <algorithm>
 #include <stdexcept>
 #include <unordered_set>
-#include "infoxtr/numericutils.hpp"
-#include "infoxtr/distance.hpp"
+#include "pc/numericutils.hpp"
+#include "pc/distance.hpp"
 
-namespace infoxtr
+namespace pc
 {
 
 namespace neighbor
@@ -518,4 +518,4 @@ namespace neighbor
 
 }
 
-#endif // INFOXTR_NEIGHBOR_HPP
+#endif // PC_NEIGHBOR_HPP
