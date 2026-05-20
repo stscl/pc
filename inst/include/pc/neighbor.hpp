@@ -92,7 +92,7 @@ namespace neighbor
     inline std::vector<std::vector<size_t>> NN4Mat(
         const std::vector<std::vector<double>>& mat,
         size_t k,
-        const std::string method& = "euclidean",
+        const std::string& method = "euclidean",
         bool include_self = false,
         bool byrow = true)
     {
@@ -223,7 +223,7 @@ namespace neighbor
         const std::vector<size_t>& lib,
         const std::vector<size_t>& pred,
         size_t k,
-        const std::string method& = "euclidean",
+        const std::string& method = "euclidean",
         bool include_self = false,
         bool byrow = true)
     {
