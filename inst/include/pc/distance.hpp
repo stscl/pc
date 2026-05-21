@@ -383,7 +383,7 @@ namespace distance
      ***************************************************************************/
     inline std::vector<std::vector<double>> distance(
         const std::vector<std::vector<double>>& mat,
-        std::string method = "euclidean",
+        const std::string& method = "euclidean",
         bool na_rm = true,
         bool byrow = true)
     {
