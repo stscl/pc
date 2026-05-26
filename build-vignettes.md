@@ -1,9 +1,5 @@
 # NA
 
-Due to the time-consuming computations involved in the vignettes of the
-*pc* package, it is necessary to pre-build the vignettes prior to
-package submission.
-
 ``` r
 
 .prebuild_vignettes = \(name){
