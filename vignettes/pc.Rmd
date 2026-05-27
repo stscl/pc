@@ -1,5 +1,9 @@
 ---
-title: "pc"
+title: "Pattern Causality Analysis"
+author: "Wenbo Lyu"
+date: |
+  | Last update: 2026-04-10
+  | Last run: `r Sys.Date()`
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{pc}
