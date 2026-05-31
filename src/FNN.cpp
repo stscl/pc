@@ -261,10 +261,10 @@ Rcpp::NumericVector RcppFNN(
     result.names() = resnames;
 
     // Terminal-friendly hint (one-time, non-intrusive)
-    Rcpp::Rcout << "[fnn] Max embedding dimension E is auto-computed; input values < 2 are forced to 2.\n"
-                << "[fnn] Input E values exceeding max embeddable dimension were truncated.\n"
-                << "[fnn] Results are returned for embedding dimensions 1 through E.\n"
-                << "[fnn] Output 'E:i' (where i = 1 to E-1) corresponds to the comparison between dimension i and i+1.\n";
+    Rcpp::Rcout << "[fnn] Input E values exceeding max embeddable dimension were truncated.\n"
+                << "[fnn] Max embedding dimension E_max is auto-computed; E_max < 2 are forced to 2.\n"
+                << "[fnn] Results are returned for embedding dimensions 1 through E_max.\n"
+                << "[fnn] Output 'E:i' (where i = 1 to E_max-1) corresponds to the comparison between dimension i and i+1.\n";
 
     return result;
 }
