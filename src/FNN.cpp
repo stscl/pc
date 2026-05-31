@@ -261,9 +261,10 @@ Rcpp::NumericVector RcppFNN(
     result.names() = resnames;
 
     // Terminal-friendly hint (one-time, non-intrusive)
-    Rcpp::Rcout << "[fnn] Output 'E:i' corresponds to the i-th valid embedding dimension.\n"
+    Rcpp::Rcout << "[fnn] Max embedding dimension E is auto-computed; input values < 2 are forced to 2.\n"
                 << "[fnn] Input E values exceeding max embeddable dimension were truncated.\n"
-                << "[fnn] Please map output indices to original E inputs before interpretation.\n";
+                << "[fnn] Results are returned for embedding dimensions 1 through E.\n"
+                << "[fnn] Output 'E:i' (where i = 1 to E-1) corresponds to the comparison between dimension i and i+1.\n";
 
     return result;
 }
