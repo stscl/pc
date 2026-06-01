@@ -1,5 +1,9 @@
 # pc 0.3
 
+### enhancements
+
+* Clarify output indexing and boundary handling in `fnn` generic (#69).
+
 # pc 0.2
 
 ### new
