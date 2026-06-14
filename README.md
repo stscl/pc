@@ -42,7 +42,7 @@ install.packages("pc",
 - Install from source code on [GitHub](https://github.com/stscl/pc) with:
 
 ``` r
-if (!requireNamespace("pak")) {
+if (!requireNamespace("pak", quietly = TRUE)) {
     install.packages("pak")
 }
 pak::pak("stscl/pc", dependencies = TRUE)
