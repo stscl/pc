@@ -71,6 +71,12 @@ Lyu, W., Lei, Y., Yi, W., Song, Y., Li, X., Dai, S., Qin, Y., Zhao, W.,
 modeling: The R package tEDM. Computers, Environment and Urban Systems
 127, 102435. <https://doi.org/10.1016/j.compenvurbsys.2026.102435>.
 
+Lyu, W., Dai, S., Song, Y., Zhao, W., Yi, W., Xiao, Y., Jia, N., 2026.
+Measuring causal strengths from spatial cross-sectional data with
+geographical cross mapping cardinality. International Journal of
+Geographical Information Science 1–23.
+<https://doi.org/10.1080/13658816.2026.2687121>.
+
  
 
 # Package index
