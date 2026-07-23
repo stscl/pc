@@ -60,6 +60,8 @@ Zhang, Z., Wang, J., 2025. A model to identify causality for geographic patterns
 
 Lyu, W., Lei, Y., Yi, W., Song, Y., Li, X., Dai, S., Qin, Y., Zhao, W., 2026. Causal discovery in urban data with temporal empirical dynamic modeling: The R package tEDM. Computers, Environment and Urban Systems 127, 102435. [https://doi.org/10.1016/j.compenvurbsys.2026.102435][5].
 
+Lyu, W., Dai, S., Song, Y., Zhao, W., Yi, W., Xiao, Y., Jia, N., 2026. Measuring causal strengths from spatial cross-sectional data with geographical cross mapping cardinality. International Journal of Geographical Information Science 1–23. [https://doi.org/10.1080/13658816.2026.2687121][6].
+
 &nbsp;
 
 [1]: https://doi.org/10.1126/science.1227079
@@ -67,3 +69,4 @@ Lyu, W., Lei, Y., Yi, W., Song, Y., Li, X., Dai, S., Qin, Y., Zhao, W., 2026. Ca
 [3]: https://doi.org/10.1073/pnas.1918269117
 [4]: https://doi.org/10.1080/13658816.2025.2581207
 [5]: https://doi.org/10.1016/j.compenvurbsys.2026.102435
+[6]: https://doi.org/10.1080/13658816.2026.2687121
