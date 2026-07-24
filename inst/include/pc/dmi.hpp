@@ -48,8 +48,8 @@ namespace dmi
      *
      * Parameters:
      *   vec        - Input numeric vector representing the ordered series
-     *   pred       - Indices defining the sample positions (from past to present)
      *   tau        - Vector of lag steps (non-negative integers)
+     *   pred       - Indices defining the sample positions (from past to present)
      *   k          - Number of nearest neighbors for KSG estimator (default: 3)
      *   alg        - Algorithm variant for KSG estimator (default: 0)
      *   base       - Logarithm base for mutual information (default: 2.0)
@@ -63,8 +63,8 @@ namespace dmi
      */
     inline std::vector<double> dmi(
         const std::vector<double>& vec,
-        const std::vector<size_t>& pred,
         const std::vector<size_t>& tau,
+        const std::vector<size_t>& pred,
         size_t k = 3,
         size_t alg = 0,
         double base = 2.0,

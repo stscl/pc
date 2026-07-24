@@ -160,28 +160,18 @@ Rcpp::NumericVector RcppFNN(
         pred_std.end()
     );
 
-    // ---- filter lib/pred (remove NaN in target/source) ----
-    size_t write = 0;
-    for (size_t i = 0; i < lib_std.size(); ++i)
-    {
-        size_t idx = lib_std[i];
-        if (!std::isnan(tg[idx]))
-        {
-            lib_std[write++] = idx;
-        }
-    }
-    lib_std.resize(write);
+    // ---- filter lib/pred (remove NaN in target) ----
+    lib_std.erase(
+        std::remove_if(lib_std.begin(), lib_std.end(),
+            [&](size_t idx){ return std::isnan(tg[idx]); }),
+        lib_std.end()
+    );
 
-    write = 0;
-    for (size_t i = 0; i < pred_std.size(); ++i)
-    {
-        size_t idx = pred_std[i];
-        if (!std::isnan(tg[idx]))
-        {
-            pred_std[write++] = idx;
-        }
-    }
-    pred_std.resize(write);
+    pred_std.erase(
+        std::remove_if(pred_std.begin(), pred_std.end(),
+            [&](size_t idx){ return std::isnan(tg[idx]); }),
+        pred_std.end()
+    );
     
     // --- Prepare for data slicing ---
     std::vector<size_t> selected_indices;
@@ -199,7 +189,7 @@ Rcpp::NumericVector RcppFNN(
     // --- Check if full set is used ---
     bool use_subset = (selected_indices.size() < Mx.size());
 
-    // --- Perform Pattern Causality Analysis ---
+    // --- Perform FNN Analysis ---
     std::vector<double> res;
 
     if (!use_subset)
@@ -244,7 +234,7 @@ Rcpp::NumericVector RcppFNN(
             pred_std[i] = index_map[pred_std[i]];
         }
 
-        // --- Run patcaus on subset ---
+        // --- Run fnn on subset ---
         res = pc::fnn::fnn(
             Mx_sub, lib_std, pred_std, rt_std, eps_std, dist_metric,
             static_cast<size_t>(std::abs(k)), 

@@ -1,0 +1,83 @@
+#include <vector>
+#include <cmath>
+#include <limits>
+#include <string>
+#include <utility>
+#include <numeric>
+#include <algorithm>
+#include "pc.h"
+
+// Wrapper function to perform delayed mutual information analysis
+// [[Rcpp::export(rng = false)]]
+Rcpp::NumericVector RcppDMI(
+    const Rcpp::NumericVector& target,
+    const Rcpp::NumericVector& tau,
+    const Rcpp::IntegerVector& pred,
+    int k = 3,
+    int alg = 0,
+    double base = 2.0,
+    bool normalize = false,
+    int threads = 1)
+{
+    // --- Input Conversion and Validation ---
+    std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
+    const size_t n_obs = tg.size();
+
+    // Convert prediction indices (R 1-based → C++ 0-based)
+    std::vector<size_t> pred_std = Rcpp::as<std::vector<size_t>>(pred);
+    for (auto& idx : pred_std) 
+    {
+        if (idx < 1 || idx > n_obs) 
+        {
+            Rcpp::stop("pred index %d out of bounds [1, %d]",
+                       static_cast<int>(idx),
+                       static_cast<int>(n_obs));
+        }
+        idx -= 1;
+    }
+
+    // Construct time delay step tau
+    std::vector<size_t> tau_std = Rcpp::as<std::vector<size_t>>(tau);
+    if (tau_std.empty()) {
+        Rcpp::stop("tau vector cannot be empty.");
+    }
+    size_t max_tau = static_cast<size_t>(*std::max_element(tau_std.begin(), tau_std.end()));
+
+    // ---- sort predict indices ----
+    pred_std.erase(
+        std::remove_if(pred_std.begin(), pred_std.end(), 
+            [&](size_t idx){ return idx < max_tau; }),
+        pred_std.end()
+    );
+
+    std::sort(pred_std.begin(), pred_std.end());
+    pred_std.erase(
+        std::unique(pred_std.begin(), pred_std.end()),
+        pred_std.end()
+    );
+
+    // ---- filter pred (remove NaN in target) ----
+    pred_std.erase(
+        std::remove_if(pred_std.begin(), pred_std.end(),
+            [&](size_t idx){ return std::isnan(tg[idx]); }),
+        pred_std.end()
+    );
+
+    // --- Perform Delay Mutual Information Analysis ---
+    std::vector<double> res = pc::dmi::dmi(
+            tg, tau_std, pred_std, 
+            static_cast<size_t>(std::abs(k)), 
+            static_cast<size_t>(std::abs(alg)), 
+            base, normalize,
+            static_cast<size_t>(std::abs(threads)));
+
+    // Convert the result back to Rcpp::NumericVector and set names as "tau:1", "tau:2", ..., "tau:n"
+    Rcpp::NumericVector result = Rcpp::wrap(res);
+    Rcpp::CharacterVector resnames(result.size());
+    for (int i = 0; i < result.size(); ++i) {
+        resnames[i] = "tau:" + std::to_string(tau_std[i]);
+    }
+    result.names() = resnames;
+
+    return result;
+}
