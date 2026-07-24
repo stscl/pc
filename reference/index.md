@@ -2,8 +2,10 @@
 
 ## Pattern Causality Analysis
 
-### embedding dimension choice
+### Phase Space Reconstruction
 
+- [`dmi(`*`<data.frame>`*`)`](https://stscl.github.io/pc/reference/dmi.md)
+  : Delayed Mutual Information
 - [`fnn(`*`<data.frame>`*`)`](https://stscl.github.io/pc/reference/fnn.md)
   [`fnn(`*`<sf>`*`)`](https://stscl.github.io/pc/reference/fnn.md)
   [`fnn(`*`<SpatRaster>`*`)`](https://stscl.github.io/pc/reference/fnn.md)

@@ -2,6 +2,11 @@
 
 ## pc 0.3
 
+### new
+
+- Provide `dmi` generic for *delayed mutual information* method
+  ([\#77](https://github.com/stscl/pc/issues/77)).
+
 #### enhancements
 
 - Clarify output indexing and boundary handling in `fnn` generic
