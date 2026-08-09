@@ -106,31 +106,23 @@ namespace dmi
             m + 1, std::vector<double>(n, std::numeric_limits<double>::quiet_NaN())
         );
 
-        // Fill the matrix
-        for (size_t col = 0; col < n; ++col) 
+        // Fill row 0 first
+        for (size_t col = 0; col < n; ++col)
         {
             size_t idx = pred[col];
-
-            // Row 0: current value
             if (idx < vec.size()) 
             {
                 mat[0][col] = vec[idx];
             }
+        }
 
-            // Lagged rows
-            for (size_t i = 0; i < m; ++i) 
-            {
-                size_t lag = tau[i];
-
-                // Check if lag is valid
-                if (idx >= lag && (idx - lag) < vec.size()) 
-                {
+        // Fill lagged rows
+        for (size_t i = 0; i < m; ++i) {
+            size_t lag = tau[i];
+            for (size_t col = 0; col < n; ++col) {
+                size_t idx = pred[col];
+                if (idx >= lag && (idx - lag) < vec.size()) {
                     mat[i + 1][col] = vec[idx - lag];
-                } 
-                else 
-                {
-                    // leave as NaN
-                    mat[i + 1][col] = std::numeric_limits<double>::quiet_NaN();
                 }
             }
         }
