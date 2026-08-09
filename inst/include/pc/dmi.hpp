@@ -84,136 +84,61 @@ namespace dmi
         bool normalize = false,
         size_t threads = 1
     ) {
-      const size_t n_obs = SMy.size();
-      const size_t n_sig_dim = SMy[0].size(); // E−1
+        // Result vector, initialized with NaN
+        std::vector<double> result(tau.size(),
+            std::numeric_limits<double>::quiet_NaN());
 
-      // Infer embedding dimension E
-      const size_t E = n_sig_dim + 1;
+        const size_t n = pred.size();
+        const size_t m = tau.size();
 
-      // Set defaults if sentinel values are used
-      if (num_neighbors == 0) {
-        num_neighbors = E + 1; // E+1 neighbors
-      }
-      if (zero_tolerance == 0) {
-        zero_tolerance = E - 1; // default: E−1
-      }
-
-      // Output containers: same size as SMy
-      std::vector<std::vector<double>> pred_signatures(
-          n_obs, std::vector<double>(n_sig_dim, std::numeric_limits<double>::quiet_NaN()));
-
-      if (SMy.empty() || Dx.empty() || lib_indices.empty() || pred_indices.empty()) {
-        return pred_signatures;
-      }
-
-      // Define per-prediction computation (single index)
-      auto predict_fn = [&](size_t pi) {
-        size_t p = pred_indices[pi];
-        if (p + h >= n_obs) return;
-
-        std::vector<double> distances;
-        std::vector<size_t> valid_libs;
-        distances.reserve(lib_indices.size());
-        valid_libs.reserve(lib_indices.size());
-
-        for (size_t lib_idx : lib_indices) {
-          double d = Dx[p][lib_idx];
-          if (!std::isnan(d)) {
-            distances.push_back(d);
-            valid_libs.push_back(lib_idx);
-          }
-        }
-        if (distances.empty()) return;
-
-        size_t k = std::min(num_neighbors, distances.size());
-        std::vector<size_t> neighbor_indices(distances.size());
-        std::iota(neighbor_indices.begin(), neighbor_indices.end(), 0);
-        std::partial_sort(
-          neighbor_indices.begin(),
-          neighbor_indices.begin() + k,
-          neighbor_indices.end(),
-          [&](size_t a, size_t b) {
-            if (!pc::numericutils::doubleNearlyEqual(distances[a], distances[b])) {
-              return distances[a] < distances[b];
-            } else {
-              return a < b;
-            }
-          });
-
-        double total_dist = 0.0;
-        for (size_t i = 0; i < k; ++i) total_dist += distances[neighbor_indices[i]];
-        std::vector<double> weights(k);
-        if (pc::numericutils::doubleNearlyEqual(total_dist,0.0)) {
-          std::fill(weights.begin(), weights.end(), 1.0);
-        } else {
-          for (size_t i = 0; i < k; ++i) {
-            weights[i] = std::exp(-distances[neighbor_indices[i]] / total_dist);
-            // // Enforce minimum weight to avoid underflow to zero
-            // double w = std::exp(-distances[neighbor_indices[i]] / total_dist);
-            // weights[i] = std::max(w, 1e-6);
-          }
+        if (vec.empty() || pred.empty() || tau.empty()) {
+            return result;
         }
 
-        if (h == 0) { // no projection horizon
-          double total_weight = std::accumulate(weights.begin(), weights.end(), 0.0);
+        // Matrix: rows = pred.size(), cols = tau.size() + 1
+        // Column 0: original values
+        // Column i: lagged values with lag = tau[i-1]
+        std::vector<std::vector<double>> mat(
+            n, std::vector<double>(m + 1, std::numeric_limits<double>::quiet_NaN())
+        );
 
-          for (size_t dim = 0; dim < n_sig_dim; ++dim) {
-            size_t zero_count = 0;
-            double weighted_sum = 0.0;
-            bool has_valid = false;
+        // Fill the matrix
+        for (size_t r = 0; r < n; ++r) {
+            size_t idx = pred[r];
 
-            for (size_t i = 0; i < k; ++i) {
-              size_t lib_row = valid_libs[neighbor_indices[i]];
-              double val = SMy[lib_row][dim]; 
-              if (std::isnan(val)) continue;
-              if (pc::numericutils::doubleNearlyEqual(val,0.0)) zero_count++;
-              weighted_sum += val * weights[i];
-              has_valid = true;
+            // Column 0: current value
+            if (idx < vec.size()) {
+                mat[r][0] = vec[idx];
             }
 
-            if (zero_count > zero_tolerance) {
-              pred_signatures[p][dim] = 0.0;
-            } else if (has_valid && total_weight > 0.0) {
-              pred_signatures[p][dim] = weighted_sum / total_weight;
-            }
-          }
-        } else {
-          for (size_t dim = 0; dim < n_sig_dim; ++dim) {
-            size_t zero_count = 0;
-            double weighted_sum = 0.0;
-            double used_weight = 0.0;
-            bool has_valid = false;
+            // Lagged columns
+            for (size_t i = 0; i < m; ++i) {
+                size_t lag = tau[i];
 
-            for (size_t i = 0; i < k; ++i) {
-              size_t lib_row = valid_libs[neighbor_indices[i]];
-              size_t target_row = lib_row + h;
-              if (target_row >= n_obs) continue;
-              double val = SMy[target_row][dim];
-              if (std::isnan(val)) continue;
-              if (pc::numericutils::doubleNearlyEqual(val,0.0)) zero_count++;
-              weighted_sum += val * weights[i];
-              used_weight += weights[i];
-              has_valid = true;
+                // Check if lag is valid
+                if (idx >= lag && (idx - lag) < vec.size()) {
+                    mat[r][i + 1] = vec[idx - lag];
+                } else {
+                    // leave as NaN
+                    mat[r][i + 1] = std::numeric_limits<double>::quiet_NaN();
+                }
             }
-
-            if (zero_count > zero_tolerance) {
-              pred_signatures[p + h][dim] = 0.0;
-            } else if (has_valid && used_weight > 0.0) {
-              pred_signatures[p + h][dim] = weighted_sum / used_weight;
-            }
-          }
         }
-      };
 
-      // Parallel or serial execution
-      if (threads <= 1) {
-        for (size_t pi = 0; pi < pred_indices.size(); ++pi) predict_fn(pi);
-      } else {
-        RcppThread::parallelFor(0, pred_indices.size(), predict_fn, threads);
-      }
+        // Compute MI for each lag
+        for (size_t i = 1; i <= m; ++i) {
+            result[i - 1] = pc::ksginfo::mi(
+                mat,
+                0,      // reference column (current)
+                i,      // lagged column
+                k,
+                alg,
+                base,
+                normalize
+            );
+        }
 
-      return pred_signatures;
-    }
+        return result;
 
 } // namespace dmi
 
