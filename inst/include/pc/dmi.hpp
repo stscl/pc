@@ -1,17 +1,14 @@
-/**********************************************************************
+/*************************************************************************
  *  File: dmi.hpp
  *
- *  Delayed mutual information (DMI)
- *  using k-nearest neighbor estimators.
+ *  Delayed mutual information (DMI) using k-nearest neighbor estimators.
  *
- *  Description:
+ *  This header computes mutual information between a reference series
+ *  and its lagged versions across multiple delay steps.
  *
- *      Computes mutual information between a reference series
- *      and its lagged versions across multiple delay steps.
+ *  The dmi function constructs a matrix:
  *
- *      The function constructs a matrix:
- *
- *          mat[var][obs]
+ *      mat[var][obs]
  *
  *      where:
  *          var = 0        -> reference values (indexed by pred)
@@ -52,7 +49,7 @@
  *
  *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
- **********************************************************************/
+ *************************************************************************/
 
 #ifndef PC_DMI_HPP
 #define PC_DMI_HPP
