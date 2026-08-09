@@ -33,7 +33,7 @@
 #include <algorithm>
 #include <numeric>
 #include <limits>
-#include "pc/numericutils.hpp"
+#include "pc/ksginfo.hpp"
 #include <RcppThread.h>
 
 namespace pc
@@ -78,6 +78,10 @@ namespace dmi
         const std::vector<double>& vec,
         const std::vector<size_t>& pred,
         const std::vector<size_t>& tau,
+        size_t k = 3,
+        size_t alg = 0,
+        double base = 2.0,
+        bool normalize = false,
         size_t threads = 1
     ) {
       const size_t n_obs = SMy.size();
