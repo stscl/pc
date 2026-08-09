@@ -108,20 +108,19 @@ namespace dmi
 
         // Fill row 0 first
         for (size_t col = 0; col < n; ++col)
-        {
-            size_t idx = pred[col];
-            if (idx < vec.size()) 
-            {
-                mat[0][col] = vec[idx];
-            }
+        {   
+            mat[0][col] = pred[col];
         }
 
         // Fill lagged rows
-        for (size_t i = 0; i < m; ++i) {
+        for (size_t i = 0; i < m; ++i) 
+        {
             size_t lag = tau[i];
-            for (size_t col = 0; col < n; ++col) {
+            for (size_t col = 0; col < n; ++col) 
+            {
                 size_t idx = pred[col];
-                if (idx >= lag && (idx - lag) < vec.size()) {
+                if (idx >= lag && (idx - lag) < vec.size()) 
+                {
                     mat[i + 1][col] = vec[idx - lag];
                 }
             }
