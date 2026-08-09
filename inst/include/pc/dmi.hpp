@@ -107,14 +107,14 @@ namespace dmi
         );
 
         // Fill the matrix
-        for (size_t r = 0; r < n; ++r) 
+        for (size_t col = 0; col < n; ++col) 
         {
-            size_t idx = pred[r];
+            size_t idx = pred[col];
 
             // Column 0: current value
             if (idx < vec.size()) 
             {
-                mat[r][0] = vec[idx];
+                mat[0][col] = vec[idx];
             }
 
             // Lagged columns
@@ -125,11 +125,11 @@ namespace dmi
                 // Check if lag is valid
                 if (idx >= lag && (idx - lag) < vec.size()) 
                 {
-                    mat[r][i + 1] = vec[idx - lag];
+                    mat[i + 1][col] = vec[idx - lag];
                 } else 
                 {
                     // leave as NaN
-                    mat[r][i + 1] = std::numeric_limits<double>::quiet_NaN();
+                    mat[i + 1][col] = std::numeric_limits<double>::quiet_NaN();
                 }
             }
         }
