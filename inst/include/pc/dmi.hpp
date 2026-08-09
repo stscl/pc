@@ -111,13 +111,13 @@ namespace dmi
         {
             size_t idx = pred[col];
 
-            // Column 0: current value
+            // Row 0: current value
             if (idx < vec.size()) 
             {
                 mat[0][col] = vec[idx];
             }
 
-            // Lagged columns
+            // Lagged rows
             for (size_t i = 0; i < m; ++i) 
             {
                 size_t lag = tau[i];
@@ -126,7 +126,8 @@ namespace dmi
                 if (idx >= lag && (idx - lag) < vec.size()) 
                 {
                     mat[i + 1][col] = vec[idx - lag];
-                } else 
+                } 
+                else 
                 {
                     // leave as NaN
                     mat[i + 1][col] = std::numeric_limits<double>::quiet_NaN();
