@@ -120,8 +120,8 @@ namespace dmi
             {
                 result[i - 1] = pc::ksginfo::mi(
                     mat,
-                    0,      // reference column (current)
-                    i,      // lagged column
+                    {0},      // reference column (current)
+                    {i},      // lagged column
                     k,
                     alg,
                     base,
@@ -134,8 +134,8 @@ namespace dmi
             RcppThread::parallelFor(1, m+1, [&](size_t i) {
                 result[i - 1] = pc::ksginfo::mi(
                     mat,
-                    0,      // reference column (current)
-                    i,      // lagged column
+                    {0},      // reference column (current)
+                    {i},      // lagged column
                     k,
                     alg,
                     base,
