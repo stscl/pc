@@ -82,8 +82,8 @@ namespace dmi
         size_t alg = 0,
         double base = 2.0,
         bool normalize = false,
-        size_t threads = 1
-    ) {
+        size_t threads = 1) 
+    {
         // Result vector, initialized with NaN
         std::vector<double> result(tau.size(),
             std::numeric_limits<double>::quiet_NaN());
@@ -91,9 +91,13 @@ namespace dmi
         const size_t n = pred.size();
         const size_t m = tau.size();
 
-        if (vec.empty() || pred.empty() || tau.empty()) {
+        if (vec.empty() || pred.empty() || tau.empty()) 
+        {
             return result;
         }
+
+        // Configure threads
+        threads = std::min(static_cast<size_t>(std::thread::hardware_concurrency()), threads);
 
         // Matrix: rows = pred.size(), cols = tau.size() + 1
         // Column 0: original values
@@ -103,44 +107,67 @@ namespace dmi
         );
 
         // Fill the matrix
-        for (size_t r = 0; r < n; ++r) {
+        for (size_t r = 0; r < n; ++r) 
+        {
             size_t idx = pred[r];
 
             // Column 0: current value
-            if (idx < vec.size()) {
+            if (idx < vec.size()) 
+            {
                 mat[r][0] = vec[idx];
             }
 
             // Lagged columns
-            for (size_t i = 0; i < m; ++i) {
+            for (size_t i = 0; i < m; ++i) 
+            {
                 size_t lag = tau[i];
 
                 // Check if lag is valid
-                if (idx >= lag && (idx - lag) < vec.size()) {
+                if (idx >= lag && (idx - lag) < vec.size()) 
+                {
                     mat[r][i + 1] = vec[idx - lag];
-                } else {
+                } else 
+                {
                     // leave as NaN
                     mat[r][i + 1] = std::numeric_limits<double>::quiet_NaN();
                 }
             }
         }
 
-        // Compute MI for each lag
-        for (size_t i = 1; i <= m; ++i) {
-            result[i - 1] = pc::ksginfo::mi(
-                mat,
-                0,      // reference column (current)
-                i,      // lagged column
-                k,
-                alg,
-                base,
-                normalize
-            );
+        if (threads <= 1)
+        {
+            // Compute MI for each lag
+            for (size_t i = 1; i <= m; ++i) 
+            {
+                result[i - 1] = pc::ksginfo::mi(
+                    mat,
+                    0,      // reference column (current)
+                    i,      // lagged column
+                    k,
+                    alg,
+                    base,
+                    normalize
+                );
+            }
+        } 
+        else 
+        {
+            RcppThread::parallelFor(1, m, [&](size_t i) {
+                result[i - 1] = pc::ksginfo::mi(
+                    mat,
+                    0,      // reference column (current)
+                    i,      // lagged column
+                    k,
+                    alg,
+                    base,
+                    normalize
+                );
+            }, threads);
         }
 
         return result;
 
-} // namespace dmi
+    } // namespace dmi
 
 }
 
