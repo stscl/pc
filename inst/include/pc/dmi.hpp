@@ -167,8 +167,9 @@ namespace dmi
         }
 
         return result;
+    }
 
-    } // namespace dmi
+} // namespace dmi
 
 }
 
