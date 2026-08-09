@@ -1,33 +1,58 @@
-/**************************************************************************
- * File: projection.hpp
+/**********************************************************************
+ *  File: dmi.hpp
  *
- *   Provides a function for computing delayed mutual information (DMI)
- *   between a reference variable and its lagged versions using a
- *   k-nearest neighbors (KSG) estimator.
+ *  Delayed mutual information (DMI)
+ *  using k-nearest neighbor estimators.
  *
- *   The function is designed for efficient evaluation across multiple
- *   lag values and supports optional parallel computation.
+ *  Description:
  *
- * Features:
- *   - Supports arbitrary lag vectors
- *   - Handles missing lagged values via NaN padding
- *   - Uses KSG-based mutual information estimation
- *   - Optional multi-threading via RcppThread
+ *      Computes mutual information between a reference series
+ *      and its lagged versions across multiple delay steps.
  *
- * Dependencies:
- *   - <vector>
- *   - <limits>
- *   - <thread>
- *   - RcppThread (for parallel execution)
- *   - pc::ksginfo::mi (external MI estimator)
+ *      The function constructs a matrix:
  *
- * Usage:
- *   Include this header and call dmi(...) with an input series,
- *   index vector, and lag specification.
+ *          mat[var][obs]
  *
- * Author: Wenbo Lyu (Github: @SpatLyu)
- * License: GPL-3
- *************************************************************************/
+ *      where:
+ *          var = 0        -> reference values (indexed by pred)
+ *          var = i >= 1   -> lagged values with lag tau[i - 1]
+ *
+ *      Missing lagged observations are filled with NaN.
+ *
+ *  Data layout:
+ *      Series = std::vector<double>
+ *      Index  = std::vector<size_t>
+ *      Matrix = std::vector<std::vector<double>> // mat[var][obs]
+ *
+ *  Computation:
+ *
+ *      For each lag tau[i], mutual information is computed as:
+ *
+ *          MI( mat[0], mat[i] )
+ *
+ *      using pc::ksginfo::mi.
+ *
+ *  Estimator variants (alg parameter):
+ *
+ *      alg = 0
+ *            Kraskov–Stögbauer–Grassberger estimator I (KSG1)
+ *
+ *      alg = 1
+ *            Kraskov–Stögbauer–Grassberger estimator II (KSG2)
+ *
+ *  Parallelization:
+ *
+ *      Independent lag computations can be parallelized
+ *      using RcppThread::parallelFor.
+ *
+ *  Dependencies:
+ *
+ *      pc::ksginfo::mi
+ *      RcppThread
+ *
+ *  Author: Wenbo Lyu (Github: @SpatLyu)
+ *  License: GPL-3
+ **********************************************************************/
 
 #ifndef PC_DMI_HPP
 #define PC_DMI_HPP
