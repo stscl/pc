@@ -46,6 +46,7 @@
 #include "pc/symdync.hpp"
 #include "pc/projection.hpp"
 #include "pc/patcaus.hpp"
+#include "pc/dmi.hpp"
 #include "pc/fnn.hpp"
 
 // ============================================================
