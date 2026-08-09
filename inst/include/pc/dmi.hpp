@@ -6,47 +6,6 @@
  *  This header computes mutual information between a reference series
  *  and its lagged versions across multiple delay steps.
  *
- *  The dmi function constructs a matrix:
- *
- *      mat[var][obs]
- *
- *      where:
- *          var = 0        -> reference values (indexed by pred)
- *          var = i >= 1   -> lagged values with lag tau[i - 1]
- *
- *      Missing lagged observations are filled with NaN.
- *
- *  Data layout:
- *      Series = std::vector<double>
- *      Index  = std::vector<size_t>
- *      Matrix = std::vector<std::vector<double>> // mat[var][obs]
- *
- *  Computation:
- *
- *      For each lag tau[i], mutual information is computed as:
- *
- *          MI( mat[0], mat[i] )
- *
- *      using pc::ksginfo::mi.
- *
- *  Estimator variants (alg parameter):
- *
- *      alg = 0
- *            Kraskov–Stögbauer–Grassberger estimator I (KSG1)
- *
- *      alg = 1
- *            Kraskov–Stögbauer–Grassberger estimator II (KSG2)
- *
- *  Parallelization:
- *
- *      Independent lag computations can be parallelized
- *      using RcppThread::parallelFor.
- *
- *  Dependencies:
- *
- *      pc::ksginfo::mi
- *      RcppThread
- *
  *  Author: Wenbo Lyu (Github: @SpatLyu)
  *  License: GPL-3
  *************************************************************************/
