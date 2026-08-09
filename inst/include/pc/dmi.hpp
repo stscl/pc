@@ -99,11 +99,11 @@ namespace dmi
         // Configure threads
         threads = std::min(static_cast<size_t>(std::thread::hardware_concurrency()), threads);
 
-        // Matrix: rows = pred.size(), cols = tau.size() + 1
-        // Column 0: original values
-        // Column i: lagged values with lag = tau[i-1]
+        // Matrix: rows = tau.size() + 1, cols = pred.size()
+        // Row 0: original values
+        // Row i: lagged values with lag = tau[i-1]
         std::vector<std::vector<double>> mat(
-            n, std::vector<double>(m + 1, std::numeric_limits<double>::quiet_NaN())
+            m + 1, std::vector<double>(n, std::numeric_limits<double>::quiet_NaN())
         );
 
         // Fill the matrix
