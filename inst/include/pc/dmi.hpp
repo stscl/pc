@@ -96,7 +96,7 @@ namespace dmi
         // Fill row 0 first
         for (size_t col = 0; col < n; ++col)
         {   
-            mat[0][col] = pred[col];
+            mat[0][col] = vec[pred[col]];
         }
 
         // Fill lagged rows
