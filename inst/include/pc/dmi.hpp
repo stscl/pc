@@ -131,7 +131,7 @@ namespace dmi
         } 
         else 
         {
-            RcppThread::parallelFor(1, m, [&](size_t i) {
+            RcppThread::parallelFor(1, m+1, [&](size_t i) {
                 result[i - 1] = pc::ksginfo::mi(
                     mat,
                     0,      // reference column (current)
