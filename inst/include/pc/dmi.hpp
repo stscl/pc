@@ -1,25 +1,29 @@
 /**************************************************************************
  * File: projection.hpp
  *
- * Nonparametric time-delay projection using weighted nearest neighbors.
+ *   Provides a function for computing delayed mutual information (DMI)
+ *   between a reference variable and its lagged versions using a
+ *   k-nearest neighbors (KSG) estimator.
  *
- * Provides functionality for:
- *   - Predicting future signature vectors in a reconstructed space.
- *   - Performing local neighbor-based forecasting with distance weighting.
- *   - Supporting time-delay prediction via a configurable horizon (h).
+ *   The function is designed for efficient evaluation across multiple
+ *   lag values and supports optional parallel computation.
  *
- * The method:
- *   - Selects nearest neighbors based on a distance matrix.
- *   - Applies exponential weighting to emphasize closer neighbors.
- *   - Projects neighbor states forward in time (t + h).
- *   - Computes robust weighted averages with NaN handling and zero filtering.
+ * Features:
+ *   - Supports arbitrary lag vectors
+ *   - Handles missing lagged values via NaN padding
+ *   - Uses KSG-based mutual information estimation
+ *   - Optional multi-threading via RcppThread
  *
- * Designed for:
- *   - Nonlinear time series prediction
- *   - State-space reconstruction workflows
- *   - Causality analysis (e.g., cross mapping, symbolic methods)
+ * Dependencies:
+ *   - <vector>
+ *   - <limits>
+ *   - <thread>
+ *   - RcppThread (for parallel execution)
+ *   - pc::ksginfo::mi (external MI estimator)
  *
- * Parallel execution is supported via RcppThread.
+ * Usage:
+ *   Include this header and call dmi(...) with an input series,
+ *   index vector, and lag specification.
  *
  * Author: Wenbo Lyu (Github: @SpatLyu)
  * License: GPL-3
