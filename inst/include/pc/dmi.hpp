@@ -41,38 +41,40 @@ namespace pc
 
 namespace dmi
 { 
-    /**
-     * Predicts signature vectors for a subset of target points using weighted nearest neighbors.
+    /*
+     * Delayed Mutual Information (DMI) for Multiple Lags
      *
-     * This function performs local weighted prediction in the signature space as follows:
-     *   1. For each prediction index `p` in `pred_indices`, find its `num_neighbors` nearest neighbors
-     *      among `lib_indices` based on distances in `Dx[p][*]`, ignoring NaN distances and `p` itself.
-     *   2. Compute exponential weights scaled by the total distance sum to emphasize close points.
-     *      If all distances are zero, uniform weights are used instead.
-     *   3. For each dimension of the signature space:
-     *        - Count how many neighbor signatures are exactly zero.
-     *        - If the zero count exceeds `zero_tolerance`, set the predicted value to 0.
-     *        - Otherwise, compute a weighted average of valid (non-NaN) neighbor signatures.
-     *   4. Predictions are stored and updated only for indices in `pred_indices`; other entries remain undefined (NaN).
+     * This function computes delayed mutual information between a reference
+     * variable and its lagged values using a KSG-based estimator. The input
+     * series is indexed by a set of prediction locations, and lagged values
+     * are constructed according to the specified lag vector.
      *
-     * Parallelization:
-     *   - Controlled by the parameter `threads`.
-     *   - If `threads <= 1`, computation is serial (standard for-loop).
-     *   - Otherwise, the loop over prediction indices is executed in parallel via RcppThread::parallelFor.
+     * Internally, a matrix of size (m + 1) x n is built, where:
+     *   - m = tau.size() is the number of lag steps
+     *   - n = pred.size() is the number of samples
+     *   - Row 0 stores the reference values (indexed by pred)
+     *   - Row i (i >= 1) stores values lagged by tau[i - 1]
      *
-     * @param SMy            Signature space of the target variable Y. Shape: (N_obs, E−1)
-     * @param Dx             Distance matrix from prediction points to library points. Shape: (SMy.size(), SMy.size())
-     * @param lib_indices    Indices of valid library points used for neighbor search (subset of [0, SMy.size())).
-     * @param pred_indices   Indices of points to predict (subset of [0, SMy.size())).
-     * @param num_neighbors  Number of nearest neighbors to use. If == 0, defaults to E+1.
-     * @param zero_tolerance Maximum allowed zero values per dimension before forcing prediction to zero.
-     *                       If == 0, defaults to E−1.
-     * @param h              Prediction horizon (time shift). Defines how far ahead in time the prediction is performed.
-     *                       For each base index p, nearest neighbors are identified at time p, and their future states 
-     *                       at time (lib_row + h) are used to predict the target state at time (p + h).
-     * @param threads        Number of threads to use. If <= 1, runs serially; otherwise runs parallel.
+     * Missing lagged values (due to boundary issues) are filled with NaN.
+     * Mutual information is then computed between the reference row (row 0)
+     * and each lagged row using pc::ksginfo::mi.
      *
-     * @return A matrix of predicted signature vectors, sized SMy.size() × (E−1).
+     * Optionally, computations across lags can be parallelized.
+     *
+     * Parameters:
+     *   vec        - Input numeric vector representing the ordered series
+     *   pred       - Indices defining the sample positions (from past to present)
+     *   tau        - Vector of lag steps (non-negative integers)
+     *   k          - Number of nearest neighbors for KSG estimator (default: 3)
+     *   alg        - Algorithm variant for KSG estimator (default: 0)
+     *   base       - Logarithm base for mutual information (default: 2.0)
+     *   normalize  - Whether to normalize the MI values (default: false)
+     *   threads    - Number of threads for parallel execution (default: 1)
+     *
+     * Returns:
+     *   A vector of length tau.size(), where each element corresponds to the
+     *   estimated mutual information at the given lag. Values are initialized
+     *   as NaN and remain NaN if computation is not feasible.
      */
     inline std::vector<double> dmi(
         const std::vector<double>& vec,
