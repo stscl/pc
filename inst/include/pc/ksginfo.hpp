@@ -5,7 +5,6 @@
  *  using k-nearest neighbor estimators.
  *
  *  Algorithms:
- *
  *      Kozachenko–Leonenko entropy estimator
  *      Kraskov–Stögbauer–Grassberger MI estimator
  *
