@@ -24,18 +24,7 @@ Rcpp::NumericVector RcppDMI(
     std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
     const size_t n_obs = tg.size();
 
-    // Convert library indices (R 1-based → C++ 0-based)
-    std::vector<size_t> lib_std = Rcpp::as<std::vector<size_t>>(lib);
-    for (auto& idx : lib_std) 
-    {
-        if (idx < 1 || idx > n_obs) 
-        {
-            Rcpp::stop("lib index %d out of bounds [1, %d]",
-                       static_cast<int>(idx),
-                       static_cast<int>(n_obs));
-        }
-        idx -= 1;
-    }
+    std::vector<size_t> tau_std = Rcpp::as<std::vector<size_t>>(tau);
 
     // Convert prediction indices (R 1-based → C++ 0-based)
     std::vector<size_t> pred_std = Rcpp::as<std::vector<size_t>>(pred);
