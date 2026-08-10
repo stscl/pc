@@ -58,18 +58,7 @@ Rcpp::NumericVector RcppDMI(
         pred_std.end()
     );
 
-    // ---- filter lib/pred (remove NaN in target/source) ----
-    size_t write = 0;
-    for (size_t i = 0; i < lib_std.size(); ++i)
-    {
-        size_t idx = lib_std[i];
-        if (!std::isnan(tg[idx]))
-        {
-            lib_std[write++] = idx;
-        }
-    }
-    lib_std.resize(write);
-
+    // ---- filter pred (remove NaN in target/source) ----
     write = 0;
     for (size_t i = 0; i < pred_std.size(); ++i)
     {
