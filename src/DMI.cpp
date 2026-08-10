@@ -38,6 +38,9 @@ Rcpp::NumericVector RcppDMI(
 
     // Construct time delay step tau
     std::vector<size_t> tau_std = Rcpp::as<std::vector<size_t>>(tau);
+    if (tau_std.empty()) {
+        Rcpp::stop("tau vector cannot be empty.");
+    }
     size_t max_tau = static_cast<size_t>(*std::max_element(tau_std.begin(), tau_std.end()));
 
     // ---- sort predict indices ----
