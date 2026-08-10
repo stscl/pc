@@ -42,25 +42,13 @@ Rcpp::NumericVector RcppDMI(
     size_t max_tau = static_cast<size_t>(*std::max_element(tau_std.begin(), tau_std.end()));
 
     // ---- sort predict indices ----
-    std::sort(lib_std.begin(), lib_std.end());
-    lib_std.erase(
-        std::unique(lib_std.begin(), lib_std.end()),
-        lib_std.end()
-    );
-
     size_t max_lag = (tau == 0) 
             ? (max_E - 1)
             : ((max_E - 1) * static_cast<size_t>(std::abs(tau)));
 
-        lib_std.erase(
-            std::remove_if(lib_std.begin(), lib_std.end(), 
-                [&](size_t idx){ return idx + 1 < max_lag; }),
-            lib_std.end()
-        );
-
     pred_std.erase(
         std::remove_if(pred_std.begin(), pred_std.end(), 
-            [&](size_t idx){ return idx + 1 < max_lag; }),
+            [&](size_t idx){ return idx + 1 < max_tau; }),
         pred_std.end()
     );
 
