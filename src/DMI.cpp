@@ -78,18 +78,18 @@ Rcpp::NumericVector RcppDMI(
             base, normalize,
             static_cast<size_t>(std::abs(threads)));
 
-    // Convert the result back to Rcpp::NumericVector and set names as "E:1", "E:2", ..., "E:n"
+    // Convert the result back to Rcpp::NumericVector and set names as "tau:1", "tau:2", ..., "tau:n"
     Rcpp::NumericVector result = Rcpp::wrap(res);
     Rcpp::CharacterVector resnames(result.size());
     for (int i = 0; i < result.size(); ++i) {
-        resnames[i] = "E:" + std::to_string(i + 1);
+        resnames[i] = "tau:" + std::to_string(i + 1);
     }
     result.names() = resnames;
 
     // Terminal-friendly hint (one-time, non-intrusive)
-    Rcpp::Rcout << "[fnn] Input E values exceeding max embeddable dimension were truncated, and values < 2 were clamped to 2.\n"
+    Rcpp::Rcout << "[fnn] Input tau E values exceeding max embeddable dimension were truncated, and values < 2 were clamped to 2.\n"
                 << "[fnn] Max embedding dimension E_max is auto-computed, with results returned for dimensions 1 through E_max.\n"
-                << "[fnn] Output 'E:i' (where i = 1 to E_max-1) corresponds to the comparison between dimension i and i+1.\n";
+                << "[fnn] Output 'tau:i' (where i = 1 to E_max-1) corresponds to the comparison between dimension i and i+1.\n";
 
     return result;
 }
