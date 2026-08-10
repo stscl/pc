@@ -30,6 +30,7 @@ reference:
 - subtitle: embedding dimension choice
   contents:
   - fnn
+  - dmi
 
 - subtitle: optimal parameters search
   contents:
