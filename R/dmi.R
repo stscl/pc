@@ -6,7 +6,7 @@
                  k, threads, higher.parallel, NULL, NULL))
 }
 
-#' False Nearest Neighbors
+#' Delayed Mutual Information
 #'
 #' @param data Observation data.
 #' @param target Integer of column indice for the target variable.
@@ -27,13 +27,13 @@
 #'
 #' @return A vector.
 #' @export
-#' @name fnn
-#' @aliases fnn,data.frame-method
+#' @name dmi
+#' @aliases dmi,data.frame-method
 #' @references
 #' Kennel, M.B., Brown, R., Abarbanel, H.D.I., 1992. Determining embedding dimension for phase-space reconstruction using a geometrical construction. Physical Review A 45, 3403–3411.
 #'
 #' @examples
-#' crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
-#' pc::fnn(crash, 1, threads = 1)
+#' abun = readr::read_csv(system.file("case/abundance.csv", package = "pc"))
+#' pc::dmi(abun, 2)
 #'
 methods::setMethod("dmi", "data.frame", .dmi_ts)
