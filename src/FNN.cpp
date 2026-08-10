@@ -199,7 +199,7 @@ Rcpp::NumericVector RcppFNN(
     // --- Check if full set is used ---
     bool use_subset = (selected_indices.size() < Mx.size());
 
-    // --- Perform Pattern Causality Analysis ---
+    // --- Perform FNN Analysis ---
     std::vector<double> res;
 
     if (!use_subset)
@@ -244,7 +244,7 @@ Rcpp::NumericVector RcppFNN(
             pred_std[i] = index_map[pred_std[i]];
         }
 
-        // --- Run patcaus on subset ---
+        // --- Run fnn on subset ---
         res = pc::fnn::fnn(
             Mx_sub, lib_std, pred_std, rt_std, eps_std, dist_metric,
             static_cast<size_t>(std::abs(k)), 
