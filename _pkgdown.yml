@@ -29,8 +29,8 @@ reference:
 
 - subtitle: embedding dimension choice
   contents:
-  - fnn
   - dmi
+  - fnn
 
 - subtitle: optimal parameters search
   contents:
