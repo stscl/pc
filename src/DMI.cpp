@@ -69,22 +69,6 @@ Rcpp::NumericVector RcppDMI(
         }
     }
     pred_std.resize(write);
-    
-    t> selected_indices;
-    selected_indices.reserve(lib_std.size() + pred_std.size());
-    for (size_t i = 0; i < lib_std.size(); ++i)
-        selected_indices.push_back(lib_std[i]);
-    for (size_t i = 0; i < pred_std.size(); ++i)
-        selected_indices.push_back(pred_std[i]);
-    std::sort(selected_i// --- Prepare for data slicing ---
-    std::vector<size_ndices.begin(), selected_indices.end());
-    selected_indices.erase(
-        std::unique(selected_indices.begin(), selected_indices.end()),
-        selected_indices.end()
-    );
-
-    // --- Check if full set is used ---
-    bool use_subset = (selected_indices.size() < Mx.size());
 
     // --- Perform Delay Mutual Information Analysis ---
     std::vector<double> res = pc::dmi::dmi(
@@ -93,52 +77,6 @@ Rcpp::NumericVector RcppDMI(
             static_cast<size_t>(std::abs(alg)), 
             base, normalize,
             static_cast<size_t>(std::abs(threads)));
-
-    if (!use_subset)
-    {
-        // --- Full data: no slicing needed ---
-        res = pc::fnn::fnn(
-            Mx, lib_std, pred_std, rt_std, eps_std, dist_metric,
-            static_cast<size_t>(std::abs(k)), 
-            static_cast<size_t>(std::abs(threads)), 
-            static_cast<size_t>(std::abs(parallel_level)));
-    }
-    else
-    {   
-        // --- Slice Mx  ---
-        std::vector<std::vector<double>> Mx_sub;
-        Mx_sub.reserve(selected_indices.size());
-
-        for (size_t i = 0; i < selected_indices.size(); ++i)
-        {
-            size_t idx = selected_indices[i];
-            Mx_sub.push_back(Mx[idx]);
-        }
-
-        // --- Subset mode: build index map ---
-        std::unordered_map<size_t, size_t> index_map;
-        index_map.reserve(selected_indices.size());
-
-        for (size_t i = 0; i < selected_indices.size(); ++i)
-        {
-            index_map[selected_indices[i]] = i;
-        }
-
-        // --- Remap lib indices ---
-        for (size_t i = 0; i < lib_std.size(); ++i)
-        {
-            lib_std[i] = index_map[lib_std[i]];
-        }
-
-        // --- Remap pred indices ---
-        for (size_t i = 0; i < pred_std.size(); ++i)
-        {
-            pred_std[i] = index_map[pred_std[i]];
-        }
-
-        // --- Run patcaus on subset ---
-        
-    }
 
     // Convert the result back to Rcpp::NumericVector and set names as "E:1", "E:2", ..., "E:n"
     Rcpp::NumericVector result = Rcpp::wrap(res);
