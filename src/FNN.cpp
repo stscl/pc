@@ -161,27 +161,17 @@ Rcpp::NumericVector RcppFNN(
     );
 
     // ---- filter lib/pred (remove NaN in target/source) ----
-    size_t write = 0;
-    for (size_t i = 0; i < lib_std.size(); ++i)
-    {
-        size_t idx = lib_std[i];
-        if (!std::isnan(tg[idx]))
-        {
-            lib_std[write++] = idx;
-        }
-    }
-    lib_std.resize(write);
+    lib_std.erase(
+        std::remove_if(lib_std.begin(), lib_std.end(),
+            [&](size_t idx){ return std::isnan(tg[idx]); }),
+        lib_std.end()
+    );
 
-    write = 0;
-    for (size_t i = 0; i < pred_std.size(); ++i)
-    {
-        size_t idx = pred_std[i];
-        if (!std::isnan(tg[idx]))
-        {
-            pred_std[write++] = idx;
-        }
-    }
-    pred_std.resize(write);
+    pred_std.erase(
+        std::remove_if(pred_std.begin(), pred_std.end(),
+            [&](size_t idx){ return std::isnan(tg[idx]); }),
+        pred_std.end()
+    );
     
     // --- Prepare for data slicing ---
     std::vector<size_t> selected_indices;
