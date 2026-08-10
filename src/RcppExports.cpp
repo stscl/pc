@@ -12,6 +12,23 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// RcppDMI
+Rcpp::NumericVector RcppDMI(const Rcpp::NumericVector& target, const Rcpp::NumericVector& tau, const Rcpp::IntegerVector& pred, int k, int alg, double base, bool normalize, int threads);
+RcppExport SEXP _pc_RcppDMI(SEXP targetSEXP, SEXP tauSEXP, SEXP predSEXP, SEXP kSEXP, SEXP algSEXP, SEXP baseSEXP, SEXP normalizeSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type pred(predSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< int >::type alg(algSEXP);
+    Rcpp::traits::input_parameter< double >::type base(baseSEXP);
+    Rcpp::traits::input_parameter< bool >::type normalize(normalizeSEXP);
+    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppDMI(target, tau, pred, k, alg, base, normalize, threads));
+    return rcpp_result_gen;
+END_RCPP
+}
 // RcppFNN
 Rcpp::NumericVector RcppFNN(const Rcpp::NumericVector& target, const Rcpp::NumericVector& rt, const Rcpp::NumericVector& eps, const Rcpp::IntegerVector& lib, const Rcpp::IntegerVector& pred, const Rcpp::IntegerVector& E, int tau, int style, const std::string& dist_metric, int k, int threads, int parallel_level, Rcpp::Nullable<Rcpp::List> nb, Rcpp::Nullable<int> nrows);
 RcppExport SEXP _pc_RcppFNN(SEXP targetSEXP, SEXP rtSEXP, SEXP epsSEXP, SEXP libSEXP, SEXP predSEXP, SEXP ESEXP, SEXP tauSEXP, SEXP styleSEXP, SEXP dist_metricSEXP, SEXP kSEXP, SEXP threadsSEXP, SEXP parallel_levelSEXP, SEXP nbSEXP, SEXP nrowsSEXP) {
@@ -120,6 +137,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_pc_RcppDMI", (DL_FUNC) &_pc_RcppDMI, 8},
     {"_pc_RcppFNN", (DL_FUNC) &_pc_RcppFNN, 14},
     {"_pc_RcppPC", (DL_FUNC) &_pc_RcppPC, 16},
     {"_pc_RcppPCboot", (DL_FUNC) &_pc_RcppPCboot, 22},
