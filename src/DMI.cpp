@@ -57,16 +57,11 @@ Rcpp::NumericVector RcppDMI(
     );
 
     // ---- filter pred (remove NaN in target/source) ----
-    write = 0;
-    for (size_t i = 0; i < pred_std.size(); ++i)
-    {
-        size_t idx = pred_std[i];
-        if (!std::isnan(tg[idx]))
-        {
-            pred_std[write++] = idx;
-        }
-    }
-    pred_std.resize(write);
+    pred_std.erase(
+        std::remove_if(pred_std.begin(), pred_std.end(),
+            [&](size_t idx){ return std::isnan(tg[idx]); }),
+        pred_std.end()
+    );
 
     // --- Perform Delay Mutual Information Analysis ---
     std::vector<double> res = pc::dmi::dmi(
