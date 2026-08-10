@@ -70,14 +70,14 @@ Rcpp::NumericVector RcppDMI(
     }
     pred_std.resize(write);
     
-    // --- Prepare for data slicing ---
-    std::vector<size_t> selected_indices;
+    t> selected_indices;
     selected_indices.reserve(lib_std.size() + pred_std.size());
     for (size_t i = 0; i < lib_std.size(); ++i)
         selected_indices.push_back(lib_std[i]);
     for (size_t i = 0; i < pred_std.size(); ++i)
         selected_indices.push_back(pred_std[i]);
-    std::sort(selected_indices.begin(), selected_indices.end());
+    std::sort(selected_i// --- Prepare for data slicing ---
+    std::vector<size_ndices.begin(), selected_indices.end());
     selected_indices.erase(
         std::unique(selected_indices.begin(), selected_indices.end()),
         selected_indices.end()
@@ -86,8 +86,13 @@ Rcpp::NumericVector RcppDMI(
     // --- Check if full set is used ---
     bool use_subset = (selected_indices.size() < Mx.size());
 
-    // --- Perform Pattern Causality Analysis ---
-    std::vector<double> res;
+    // --- Perform Delay Mutual Information Analysis ---
+    std::vector<double> res = pc::dmi::dmi(
+            tg, tau_std, pred_std, 
+            static_cast<size_t>(std::abs(k)), 
+            static_cast<size_t>(std::abs(alg)), 
+            base, normalize,
+            static_cast<size_t>(std::abs(threads)));
 
     if (!use_subset)
     {
@@ -132,11 +137,7 @@ Rcpp::NumericVector RcppDMI(
         }
 
         // --- Run patcaus on subset ---
-        res = pc::fnn::fnn(
-            Mx_sub, lib_std, pred_std, rt_std, eps_std, dist_metric,
-            static_cast<size_t>(std::abs(k)), 
-            static_cast<size_t>(std::abs(threads)), 
-            static_cast<size_t>(std::abs(parallel_level)));
+        
     }
 
     // Convert the result back to Rcpp::NumericVector and set names as "E:1", "E:2", ..., "E:n"
