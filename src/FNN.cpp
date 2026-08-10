@@ -160,7 +160,7 @@ Rcpp::NumericVector RcppFNN(
         pred_std.end()
     );
 
-    // ---- filter lib/pred (remove NaN in target/source) ----
+    // ---- filter lib/pred (remove NaN in target) ----
     lib_std.erase(
         std::remove_if(lib_std.begin(), lib_std.end(),
             [&](size_t idx){ return std::isnan(tg[idx]); }),

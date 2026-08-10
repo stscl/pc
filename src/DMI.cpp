@@ -56,7 +56,7 @@ Rcpp::NumericVector RcppDMI(
         pred_std.end()
     );
 
-    // ---- filter pred (remove NaN in target/source) ----
+    // ---- filter pred (remove NaN in target) ----
     pred_std.erase(
         std::remove_if(pred_std.begin(), pred_std.end(),
             [&](size_t idx){ return std::isnan(tg[idx]); }),
