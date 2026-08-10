@@ -48,72 +48,14 @@ Rcpp::NumericVector RcppDMI(
     size_t max_E = static_cast<size_t>(*std::max_element(E_std.begin(), E_std.end()));
     if (max_E < 2) max_E = 2;
 
-    // Convert rt and eps
-    std::vector<double> rt_vec = Rcpp::as<std::vector<double>>(rt);
-    std::vector<double> eps_vec = Rcpp::as<std::vector<double>>(eps);
+    // ---- sort + unique lib/pred ----
+    std::sort(lib_std.begin(), lib_std.end());
+    lib_std.erase(
+        std::unique(lib_std.begin(), lib_std.end()),
+        lib_std.end()
+    );
 
-    // Expand rt and eps
-    std::vector<double> rt_std(max_E);
-    std::vector<double> eps_std(max_E);
-
-    // ---- rt ----
-    if (rt_vec.size() == 1) 
-    {
-        std::fill(rt_std.begin(), rt_std.end(), rt_vec[0]);
-    } 
-    else 
-    {
-        size_t src_len = rt_vec.size();
-        for (size_t i = 0; i < rt_std.size(); ++i) 
-        {
-            rt_std[i] = rt_vec[i % src_len];
-        }
-    }
-
-    // ---- eps ----
-    if (eps_vec.size() == 1) 
-    {
-        std::fill(eps_std.begin(), eps_std.end(), eps_vec[0]);
-    } 
-    else 
-    {
-        size_t src_len = eps_vec.size();
-        for (size_t i = 0; i < eps_std.size(); ++i) {
-            eps_std[i] = eps_vec[i % src_len];
-        }
-    }
-
-    // --- Embedding Construction ---
-    std::vector<std::vector<double>> Mx;
-
-    if (nb.isNotNull()) 
-    {
-        // Convert Rcpp::List to std::vector<std::vector<size_t>>
-        std::vector<std::vector<size_t>> nb_std = pc::convert::nb2std(nb.get());
-        Mx = pc::embed::embed(
-            tg, nb_std, max_E, 
-            static_cast<size_t>(std::abs(tau)), 
-            static_cast<size_t>(std::abs(style)));
-    } 
-    else if (nrows.isNotNull())
-    {   
-        size_t n_rows = static_cast<size_t>(std::abs(Rcpp::as<int>(nrows)));
-
-        std::vector<std::vector<double>> tm = 
-            pc::embed::gridVec2Mat(tg, n_rows);
-        Mx = pc::embed::embed(
-            tm, max_E, 
-            static_cast<size_t>(std::abs(tau)), 
-            static_cast<size_t>(std::abs(style)));
-    }
-    else  
-    {
-        Mx = pc::embed::embed(
-            tg, max_E, 
-            static_cast<size_t>(std::abs(tau)), 
-            static_cast<size_t>(std::abs(style)));
-
-        size_t max_lag = (tau == 0) 
+    size_t max_lag = (tau == 0) 
             ? (max_E - 1)
             : ((max_E - 1) * static_cast<size_t>(std::abs(tau)));
 
@@ -123,18 +65,10 @@ Rcpp::NumericVector RcppDMI(
             lib_std.end()
         );
 
-        pred_std.erase(
-            std::remove_if(pred_std.begin(), pred_std.end(), 
-                [&](size_t idx){ return idx + 1 < max_lag; }),
-            pred_std.end()
-        );
-    }
-
-    // ---- sort + unique lib/pred ----
-    std::sort(lib_std.begin(), lib_std.end());
-    lib_std.erase(
-        std::unique(lib_std.begin(), lib_std.end()),
-        lib_std.end()
+    pred_std.erase(
+        std::remove_if(pred_std.begin(), pred_std.end(), 
+            [&](size_t idx){ return idx + 1 < max_lag; }),
+        pred_std.end()
     );
 
     std::sort(pred_std.begin(), pred_std.end());
