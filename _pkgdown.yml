@@ -27,7 +27,7 @@ reference:
 
 - title: Pattern Causality Analysis
 
-- subtitle: embedding dimension choice
+- subtitle: Phase Space Reconstruction
   contents:
   - dmi
   - fnn
