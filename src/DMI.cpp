@@ -12,19 +12,13 @@
 // [[Rcpp::export(rng = false)]]
 Rcpp::NumericVector RcppDMI(
     const Rcpp::NumericVector& target,
-    const Rcpp::NumericVector& rt,
-    const Rcpp::NumericVector& eps,
-    const Rcpp::IntegerVector& lib,
+    const Rcpp::NumericVector& tau,
     const Rcpp::IntegerVector& pred,
-    const Rcpp::IntegerVector& E,
-    int tau = 1,
-    int style = 0,
-    const std::string& dist_metric = "euclidean",
     int k = 3,
-    int threads = 1,
-    int parallel_level = 0,
-    Rcpp::Nullable<Rcpp::List> nb = R_NilValue,
-    Rcpp::Nullable<int> nrows = R_NilValue)
+    int alg = 0,
+    double base = 2.0,
+    bool normalize = false,
+    int threads = 1)
 {
     // --- Input Conversion and Validation ---
     std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
