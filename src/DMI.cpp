@@ -24,8 +24,6 @@ Rcpp::NumericVector RcppDMI(
     std::vector<double> tg = Rcpp::as<std::vector<double>>(target);
     const size_t n_obs = tg.size();
 
-    std::vector<size_t> tau_std = Rcpp::as<std::vector<size_t>>(tau);
-
     // Convert prediction indices (R 1-based → C++ 0-based)
     std::vector<size_t> pred_std = Rcpp::as<std::vector<size_t>>(pred);
     for (auto& idx : pred_std) 
@@ -39,16 +37,11 @@ Rcpp::NumericVector RcppDMI(
         idx -= 1;
     }
 
-    // Construct embedding dimension E
-    std::vector<int> E_std = Rcpp::as<std::vector<int>>(E);
-    for (auto& singleE : E_std) 
-    {
-        if (singleE < 0) singleE = std::abs(singleE);
-    }
-    size_t max_E = static_cast<size_t>(*std::max_element(E_std.begin(), E_std.end()));
-    if (max_E < 2) max_E = 2;
+    // Construct time delay step tau
+    std::vector<size_t> tau_std = Rcpp::as<std::vector<size_t>>(tau);
+    size_t max_tau = static_cast<size_t>(*std::max_element(tau_std.begin(), tau_std.end()));
 
-    // ---- sort + unique lib/pred ----
+    // ---- sort predict indices ----
     std::sort(lib_std.begin(), lib_std.end());
     lib_std.erase(
         std::unique(lib_std.begin(), lib_std.end()),
