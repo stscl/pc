@@ -1,9 +1,8 @@
 .dmi_ts = \(data, target, tau = 1:10, pred = NULL, k = 3,
-            base = exp(1), normalize = FALSE, threads = 1) {
+            base = exp(1), normalize = FALSE, threads = length(tau), ...) {
   tv = .validate_var(data, target)[[1]]
   if (is.null(pred)) pred = which(!is.na(tv))
-  return(RcppFNN(tv, rt, eps, lib, pred, E, tau, style, dist.metric,
-                 k, threads, higher.parallel, NULL, NULL))
+  return(RcppDMI(tv, tau, pred, k, 0, base, normalize, threads))
 }
 
 #' Delayed Mutual Information
