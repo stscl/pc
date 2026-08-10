@@ -29,7 +29,7 @@
 #' @name dmi
 #' @aliases dmi,data.frame-method
 #' @references
-#' Kennel, M.B., Brown, R., Abarbanel, H.D.I., 1992. Determining embedding dimension for phase-space reconstruction using a geometrical construction. Physical Review A 45, 3403–3411.
+#' Fraser, A.M., Swinney, H.L., 1986. Independent coordinates for strange attractors from mutual information. Physical Review A 33, 1134–1140.
 #'
 #' @examples
 #' abun = readr::read_csv(system.file("case/abundance.csv", package = "pc"))
