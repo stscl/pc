@@ -5,7 +5,6 @@
 #include <utility>
 #include <numeric>
 #include <algorithm>
-#include <unordered_map>
 #include "pc.h"
 
 // Wrapper function to perform delayed mutual information analysis
@@ -44,7 +43,7 @@ Rcpp::NumericVector RcppDMI(
     // ---- sort predict indices ----
     pred_std.erase(
         std::remove_if(pred_std.begin(), pred_std.end(), 
-            [&](size_t idx){ return idx + 1 < max_tau; }),
+            [&](size_t idx){ return idx < max_tau; }),
         pred_std.end()
     );
 
