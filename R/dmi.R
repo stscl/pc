@@ -1,5 +1,5 @@
-.dmi_ts = \(data, target, tau = 1:10, pred = NULL, k = 3,
-            base = exp(1), normalize = FALSE, threads = length(tau), ...) {
+.dmi_ts = \(data, target, tau = 1:10, pred = NULL, k = 3, base = exp(1), 
+            normalize = FALSE, threads = length(tau), ...) {
   tv = .validate_var(data, target)[[1]]
   if (is.null(pred)) pred = which(!is.na(tv))
   return(RcppDMI(tv, tau, pred, k, 0, base, normalize, threads))
@@ -19,9 +19,6 @@
 #' @param rt (optional) Relative distance threshold.
 #' @param eps (optional) Absolute distance threshold.
 #' @param threads (optional) Number of threads used.
-#' @param higher.parallel (optional) Whether to use a higher level of parallelism.
-#' @param detrend (optional) Whether to remove the linear trend.
-#' @param nb (optional) Neighbours list.
 #' @param ... Additional arguments to absorb unused inputs in method dispatch.
 #'
 #' @return A vector.
