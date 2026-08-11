@@ -7,19 +7,9 @@
 
 #' Delayed Mutual Information
 #'
-#' @param data Observation data.
-#' @param target Integer of column indice for the target variable.
-#' @param E (optional) Embedding dimensions.
-#' @param k (optional) Number of nearest neighbors used for evaluation.
-#' @param tau (optional) Step of lag.
-#' @param style (optional) Embedding style (`0` includes current state, `1` excludes it).
-#' @param lib (optional) Libraries indices.
-#' @param pred (optional) Predictions indices.
-#' @param dist.metric (optional) Distance measure to be used.
-#' @param rt (optional) Relative distance threshold.
-#' @param eps (optional) Absolute distance threshold.
-#' @param threads (optional) Number of threads used.
-#' @param ... Additional arguments to absorb unused inputs in method dispatch.
+#' @inheritParams fnn
+#' @param base (optional) Logarithm base of the entropy.
+#' @param normalize (optional) Whether to normalize MI values.
 #'
 #' @return A vector.
 #' @export
