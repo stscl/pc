@@ -30,6 +30,7 @@
 #' @aliases dmi,data.frame-method
 #' @references
 #' Fraser, A.M., Swinney, H.L., 1986. Independent coordinates for strange attractors from mutual information. Physical Review A 33, 1134–1140.
+#' Kraskov, A., Stogbauer, H., Grassberger, P., 2004. Estimating mutual information. Physical Review E 69, 066138.
 #'
 #' @examples
 #' abun = readr::read_csv(system.file("case/abundance.csv", package = "pc"))
