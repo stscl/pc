@@ -12,6 +12,13 @@
 - Clarify output indexing and boundary handling in `fnn` generic
   ([\#69](https://github.com/stscl/pc/issues/69)).
 
+#### breaking changes
+
+- Euclidean/Manhattan distances now automatically compensate for
+  dimensions skipped due to `NA/NaN`, aligned with base R
+  [`dist()`](https://rdrr.io/r/stats/dist.html) function
+  ([\#79](https://github.com/stscl/pc/issues/79)).
+
 ## pc 0.2
 
 CRAN release: 2026-04-10
