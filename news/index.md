@@ -19,6 +19,12 @@
   [`dist()`](https://rdrr.io/r/stats/dist.html) function
   ([\#79](https://github.com/stscl/pc/issues/79)).
 
+#### bug fixes
+
+- Fix incorrect prediction horizon parameter in the time series pattern
+  causality implementation
+  ([\#80](https://github.com/stscl/pc/issues/80)).
+
 ## pc 0.2
 
 CRAN release: 2026-04-10
