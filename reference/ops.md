@@ -175,5 +175,5 @@ A list.
 ``` r
 crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
 pc::ops(crash, 1, 2, E = 3:10, maximize = "positive", threads = 1)
-#> The suggested E, k, tau is 8, 8 and 1 
+#> The suggested E, k, tau is 3, 7 and 1 
 ```
