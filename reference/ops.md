@@ -8,8 +8,8 @@ Optimal Parameter Search for Pattern Causality
 # S4 method for class 'data.frame'
 ops(
   data,
-  target,
   source,
+  target,
   E = 3:5,
   k = E,
   tau = 1,
@@ -30,8 +30,8 @@ ops(
 # S4 method for class 'sf'
 ops(
   data,
-  target,
   source,
+  target,
   E = 3:5,
   k = E + 1,
   tau = 1,
@@ -53,8 +53,8 @@ ops(
 # S4 method for class 'SpatRaster'
 ops(
   data,
-  target,
   source,
+  target,
   E = 3:5,
   k = E + 1,
   tau = 1,
@@ -79,13 +79,13 @@ ops(
 
   Observation data.
 
-- target:
-
-  Integer of column indice for the target variable.
-
 - source:
 
   Integer of column indice for the source variable.
+
+- target:
+
+  Integer of column indice for the target variable.
 
 - E:
 
@@ -175,5 +175,5 @@ A list.
 ``` r
 crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
 pc::ops(crash, 1, 2, E = 3:10, maximize = "positive", threads = 1)
-#> The suggested E, k, tau is 3, 7 and 1 
+#> The suggested E, k, tau is 7, 10 and 1 
 ```
