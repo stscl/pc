@@ -14,6 +14,9 @@
 
 #### breaking changes
 
+- Reverse argument order for variable indices to `(source, target)`
+  ([\#85](https://github.com/stscl/pc/issues/85)).
+
 - Impose geometric constraint `k >= E+1` in `ops` generic
   ([\#81](https://github.com/stscl/pc/issues/81)).
 

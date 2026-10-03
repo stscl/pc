@@ -165,15 +165,14 @@ A list.
 
   The selected optimal parameter combination.
 
-- `xmap`:
+- `causality`:
 
-  A data.frame containing cross-mapping performance across parameter
-  settings.
+  A data.frame containing results across parameter settings.
 
 ## Examples
 
 ``` r
 crash = sf::read_sf(system.file("case/crash.gpkg", package = "pc"))
-pc::ops(crash, 1, 2, E = 3:10, maximize = "positive", threads = 1)
-#> The suggested E, k, tau is 7, 10 and 1 
+pc::ops(crash, 2, 1, E = 3:10, maximize = "positive", threads = 1)
+#> The suggested E, k, tau is 3, 7 and 1 
 ```
