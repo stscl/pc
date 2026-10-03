@@ -61,6 +61,10 @@ dmi(
 
 A vector.
 
+## Note
+
+`dmi` is only supported for time-series inputs.
+
 ## References
 
 Fraser, A.M., Swinney, H.L., 1986. Independent coordinates for strange
