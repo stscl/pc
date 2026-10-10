@@ -4,6 +4,8 @@
 
 ## pc 0.3
 
+CRAN release: 2026-10-10
+
 ### new
 
 - Provide `dmi` generic for *delayed mutual information* method
